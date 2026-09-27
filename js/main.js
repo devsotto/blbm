@@ -141,129 +141,6 @@
   }
 
   /* ----------------------------------------------------------------------
-     1c. Sizzle — charcoal crackle built from WebAudio noise (no assets)
-     ---------------------------------------------------------------------- */
-  function initSizzle() {
-    const btn = document.getElementById('sizzleToggle');
-    const label = document.getElementById('sizzleLabel');
-    if (!btn) return;
-
-    const hero = btn.closest('.hero');
-    let ctx = null, master = null, bed = null, timer = 0, on = false, inView = true;
-
-    function build() {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return false;
-
-      ctx = new AC();
-      master = ctx.createGain();
-      master.gain.value = 0;
-      master.connect(ctx.destination);
-
-      // --- continuous bed: filtered noise, the roar under the crackle
-      const len = Math.floor(ctx.sampleRate * 3);
-      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
-      const data = buf.getChannelData(0);
-      let last = 0;
-      for (let i = 0; i < len; i++) {
-        const white = Math.random() * 2 - 1;
-        last = 0.86 * last + 0.14 * white;
-        data[i] = white * 0.5 + last * 1.4;
-      }
-
-      const src = ctx.createBufferSource();
-      src.buffer = buf;
-      src.loop = true;
-
-      const band = ctx.createBiquadFilter();
-      band.type = 'bandpass';
-      band.frequency.value = 2400;
-      band.Q.value = 0.65;
-
-      bed = ctx.createGain();
-      bed.gain.value = 0.16;
-
-      src.connect(band).connect(bed).connect(master);
-      src.start(0);
-
-      return true;
-    }
-
-    function crackle() {
-      if (!on || ctx.state !== 'running') return;
-
-      const dur = 0.03 + Math.random() * 0.1;
-      const now = ctx.currentTime;
-      const len = Math.max(1, Math.floor(ctx.sampleRate * dur));
-      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
-      const data = buf.getChannelData(0);
-      for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
-
-      const src = ctx.createBufferSource();
-      src.buffer = buf;
-
-      const band = ctx.createBiquadFilter();
-      band.type = 'bandpass';
-      band.frequency.value = 900 + Math.random() * 3600;
-      band.Q.value = 1.1 + Math.random() * 2;
-
-      const g = ctx.createGain();
-      const peak = 0.05 + Math.random() * 0.16;
-      g.gain.setValueAtTime(0.0001, now);
-      g.gain.exponentialRampToValueAtTime(peak, now + 0.006);
-      g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
-
-      src.connect(band).connect(g).connect(master);
-      src.start(now);
-      src.stop(now + dur + 0.02);
-    }
-
-    function loop() {
-      crackle();
-      timer = window.setTimeout(loop, 55 + Math.random() * 340);
-    }
-
-    function level(target, time) {
-      if (!ctx) return;
-      const now = ctx.currentTime;
-      master.gain.cancelScheduledValues(now);
-      master.gain.setValueAtTime(master.gain.value, now);
-      master.gain.linearRampToValueAtTime(target, now + (time || 0.5));
-    }
-
-    btn.addEventListener('click', async () => {
-      if (!ctx && !build()) return;
-      if (ctx.state === 'suspended') await ctx.resume();
-
-      on = !on;
-      btn.setAttribute('aria-pressed', String(on));
-      if (label) label.textContent = on ? 'Mute the sizzle' : 'Hear the sizzle';
-
-      if (on) {
-        level(inView ? 1 : 0, 0.45);
-        window.clearTimeout(timer);
-        loop();
-      } else {
-        level(0, 0.3);
-        window.clearTimeout(timer);
-      }
-    });
-
-    if (hero && 'IntersectionObserver' in window) {
-      new IntersectionObserver((entries) => {
-        inView = entries[0].isIntersecting;
-        if (!ctx || !on) return;
-        level(inView ? 1 : 0, 0.35);
-      }, { threshold: 0 }).observe(hero);
-    }
-
-    document.addEventListener('visibilitychange', () => {
-      if (!ctx || !on) return;
-      level(document.hidden || !inView ? 0 : 1, 0.25);
-    });
-  }
-
-  /* ----------------------------------------------------------------------
      2. Reveal on scroll — staggered entry, transform/opacity only
      ---------------------------------------------------------------------- */
   function initReveal() {
@@ -883,7 +760,174 @@
   }
 
   /* ----------------------------------------------------------------------
-     6. Misc
+     6. Contact form — validation + visual CAPTCHA
+     ---------------------------------------------------------------------- */
+  const CAPTCHA_LEN = 4;
+  const CAPTCHA_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
+  function initContactForm() {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+
+    const visual = document.getElementById('captchaVisual');
+    const codeInput = document.getElementById('cfCaptcha');
+    const refreshBtn = document.getElementById('captchaRefresh');
+    const statusEl = document.getElementById('formStatus');
+    const subjectEl = document.getElementById('cfSubject');
+    let code = '';
+
+    const FIELDS = {
+      cfName: {
+        test: (v) => v.length >= 2,
+        msg: 'Please tell us your name.'
+      },
+      cfEmail: {
+        test: (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v),
+        msg: 'Please enter a valid e-mail address.'
+      },
+      cfPhone: {
+        optional: true,
+        test: (v) => /^[+()\d\s-]{7,20}$/.test(v),
+        msg: 'That phone number looks off — digits, spaces and + only.'
+      },
+      cfMessage: {
+        test: (v) => v.length >= 5,
+        msg: 'A few more words, please — what do you need?'
+      },
+      cfCaptcha: {
+        test: (v) => v.toUpperCase() === code,
+        msg: 'That code does not match. Try the new one.'
+      }
+    };
+
+    function drawCaptcha() {
+      const W = 178, H = 66;
+      let out = '';
+      for (let i = 0; i < CAPTCHA_LEN; i++) {
+        out += CAPTCHA_ALPHABET[Math.floor(Math.random() * CAPTCHA_ALPHABET.length)];
+      }
+      code = out;
+
+      const palette = ['#3A2312', '#D48C28', '#3E6B34', '#8C9E5B', '#B87418'];
+      let lines = '';
+      for (let i = 0; i < 4; i++) {
+        lines += '<path d="M0 ' + (Math.random() * H).toFixed(1) +
+          ' Q ' + (W / 2) + ' ' + (Math.random() * H).toFixed(1) +
+          ' ' + W + ' ' + (Math.random() * H).toFixed(1) +
+          '" fill="none" stroke="rgba(62,107,52,.32)" stroke-width="1.4"/>';
+      }
+
+      let chars = '';
+      for (let i = 0; i < code.length; i++) {
+        const x = 27 + i * 39 + (Math.random() * 7 - 3.5);
+        const y = 45 + (Math.random() * 9 - 4.5);
+        const rot = (Math.random() * 30 - 15).toFixed(1);
+        const size = (30 + Math.random() * 7).toFixed(1);
+        const fill = palette[Math.floor(Math.random() * palette.length)];
+        chars += '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) +
+          '" transform="rotate(' + rot + ' ' + x.toFixed(1) + ' ' + y.toFixed(1) + ')"' +
+          ' font-family="Fraunces, Georgia, serif" font-size="' + size + '"' +
+          ' font-weight="700" fill="' + fill + '" text-anchor="middle">' + code[i] + '</text>';
+      }
+
+      if (visual) {
+        visual.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" xmlns="http://www.w3.org/2000/svg" ' +
+          'preserveAspectRatio="xMidYMid meet" aria-hidden="true">' + lines + chars + '</svg>';
+      }
+      if (codeInput) codeInput.value = '';
+      setError(codeInput, '');
+    }
+
+    function setError(input, message) {
+      if (!input) return;
+      const err = document.getElementById(input.id + 'Err');
+      input.classList.toggle('is-invalid', Boolean(message));
+      input.setAttribute('aria-invalid', message ? 'true' : 'false');
+      if (err) err.textContent = message;
+    }
+
+    function validateField(input) {
+      const rule = FIELDS[input.id];
+      if (!rule) return true;
+      const value = input.value.trim();
+      if (rule.optional && !value) { setError(input, ''); return true; }
+      const ok = rule.test(value);
+      setError(input, ok ? '' : rule.msg);
+      return ok;
+    }
+
+    function showStatus(kind, html) {
+      if (!statusEl) return;
+      statusEl.className = 'form-status is-shown is-' + kind;
+      statusEl.innerHTML = html;
+    }
+
+    Object.keys(FIELDS).forEach((id) => {
+      const input = document.getElementById(id);
+      if (!input) return;
+      input.addEventListener('blur', () => validateField(input));
+      input.addEventListener('input', () => {
+        if (input.classList.contains('is-invalid')) validateField(input);
+      });
+    });
+
+    if (refreshBtn) refreshBtn.addEventListener('click', drawCaptcha);
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      let firstBad = null;
+      Object.keys(FIELDS).forEach((id) => {
+        const input = document.getElementById(id);
+        if (input && !validateField(input) && !firstBad) firstBad = input;
+      });
+
+      if (firstBad) {
+        showStatus('error', 'Please fix the highlighted fields and try again.');
+        firstBad.focus();
+        return;
+      }
+
+      const name = document.getElementById('cfName').value.trim();
+      const email = document.getElementById('cfEmail').value.trim();
+      const phone = document.getElementById('cfPhone').value.trim();
+      const subjectText = subjectEl
+        ? subjectEl.options[subjectEl.selectedIndex].text
+        : 'General Inquiries';
+      const message = document.getElementById('cfMessage').value.trim();
+
+      const body = [
+        'Name: ' + name,
+        'E-mail: ' + email,
+        'Phone: ' + (phone || '—'),
+        '',
+        message
+      ].join('\n');
+
+      const mailto = 'mailto:balamban.liemponline@gmail.com' +
+        '?subject=' + encodeURIComponent('[' + subjectText + '] Message from ' + name) +
+        '&body=' + encodeURIComponent(body);
+
+      showStatus(
+        'success',
+        'Salamat, ' + name.replace(/[<>&]/g, '') + '! Your message passed the check — ' +
+        '<a href="' + mailto + '">send it now from your e-mail app</a>, ' +
+        'or call <a href="tel:+639165146144">0916 514 6144</a>.'
+      );
+    });
+
+    // franchise CTAs pre-select the subject before scrolling to the form
+    document.querySelectorAll('a[data-subject]').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (subjectEl) subjectEl.value = link.dataset.subject;
+      });
+    });
+
+    drawCaptcha();
+  }
+
+  /* ----------------------------------------------------------------------
+     7. Misc
      ---------------------------------------------------------------------- */
   function initYear() {
     const el = document.getElementById('year');
@@ -893,11 +937,11 @@
   function boot() {
     buildBanderitas();
     initEmbers();
-    initSizzle();
     initReveal();
     initNav();
     initHerbs();
     initLocator();
+    initContactForm();
     initYear();
   }
 
