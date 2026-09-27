@@ -1,0 +1,909 @@
+/* ==========================================================================
+   Balamban Liempo — interactions
+   ========================================================================== */
+(function () {
+  'use strict';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ----------------------------------------------------------------------
+     1. Banderitas — festive fiesta pennants strung across the hero
+     ---------------------------------------------------------------------- */
+  function buildBanderitas() {
+    const group = document.querySelector('.banderitas .flags');
+    if (!group) return;
+
+    const NS = 'http://www.w3.org/2000/svg';
+    const colors = ['#D48C28', '#3E6B34', '#8C9E5B', '#F5EBE0', '#E9A63F'];
+    const count = 30;
+    const w = 16, h = 26;
+
+    // two quadratic segments mirroring the drawn string path
+    const seg = [
+      { p0: [0, 12], c: [300, 62], p1: [600, 22] },
+      { p0: [600, 22], c: [900, -18], p1: [1200, 30] }
+    ];
+
+    const pointAt = (t) => {
+      const s = seg[t <= 0.5 ? 0 : 1];
+      const u = t <= 0.5 ? t * 2 : (t - 0.5) * 2;
+      const m = 1 - u;
+      return [
+        m * m * s.p0[0] + 2 * m * u * s.c[0] + u * u * s.p1[0],
+        m * m * s.p0[1] + 2 * m * u * s.c[1] + u * u * s.p1[1]
+      ];
+    };
+
+    for (let i = 0; i < count; i++) {
+      const t = (i + 0.5) / count;
+      const [x, y] = pointAt(t);
+
+      const tri = document.createElementNS(NS, 'polygon');
+      tri.setAttribute('points',
+        `${x - w / 2},${y} ${x + w / 2},${y} ${x},${y + h}`);
+      tri.setAttribute('fill', colors[i % colors.length]);
+      tri.setAttribute('opacity', '0.94');
+      tri.setAttribute('class', 'flag');
+      tri.style.animationDelay = (i * 0.11).toFixed(2) + 's';
+      group.appendChild(tri);
+    }
+  }
+
+  /* ----------------------------------------------------------------------
+     1b. Embers — sparks lifting off the charcoal pit in the hero
+     ---------------------------------------------------------------------- */
+  function initEmbers() {
+    const canvas = document.getElementById('emberCanvas');
+    if (!canvas || reduced) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const hero = canvas.closest('.hero');
+    const COLORS = ['233,166,63', '212,140,40', '245,235,224', '140,158,91'];
+    const COUNT = 44;
+    const parts = [];
+
+    let w = 0, h = 0, raf = 0, visible = true;
+
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = canvas.getBoundingClientRect();
+      w = rect.width; h = rect.height;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function spawn(p, initial) {
+      p.x = Math.random() * w;
+      p.y = initial ? Math.random() * h : h + 12 + Math.random() * 40;
+      p.size = 0.7 + Math.random() * 2.1;
+      p.speed = 0.22 + Math.random() * 0.8;
+      p.drift = (Math.random() - 0.5) * 0.42;
+      p.phase = Math.random() * Math.PI * 2;
+      p.sway = 0.35 + Math.random() * 1.1;
+      p.life = 0;
+      p.max = 320 + Math.random() * 420;
+      p.color = COLORS[(Math.random() * COLORS.length) | 0];
+      p.alpha = 0.3 + Math.random() * 0.55;
+      return p;
+    }
+
+    for (let i = 0; i < COUNT; i++) parts.push(spawn({}, true));
+
+    function frame() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'lighter';
+
+      for (let i = 0; i < parts.length; i++) {
+        const p = parts[i];
+        p.life++;
+        if (p.life > p.max || p.y < -20) { spawn(p, false); continue; }
+
+        p.y -= p.speed;
+        p.x += p.drift + Math.sin(p.phase + p.life * 0.022) * p.sway * 0.4;
+
+        const t = p.life / p.max;
+        const fade = t < 0.12 ? t / 0.12 : t > 0.68 ? (1 - t) / 0.32 : 1;
+        ctx.fillStyle = 'rgba(' + p.color + ',' + (p.alpha * fade).toFixed(3) + ')';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      raf = visible ? requestAnimationFrame(frame) : 0;
+    }
+
+    function start() {
+      if (raf || !visible) return;
+      raf = requestAnimationFrame(frame);
+    }
+
+    resize();
+    start();
+
+    window.addEventListener('resize', () => { resize(); }, { passive: true });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (raf) cancelAnimationFrame(raf);
+        raf = 0;
+      } else start();
+    });
+
+    if (hero && 'IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        visible = entries[0].isIntersecting;
+        if (visible) start();
+        else if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      }, { threshold: 0 }).observe(hero);
+    }
+  }
+
+  /* ----------------------------------------------------------------------
+     1c. Sizzle — charcoal crackle built from WebAudio noise (no assets)
+     ---------------------------------------------------------------------- */
+  function initSizzle() {
+    const btn = document.getElementById('sizzleToggle');
+    const label = document.getElementById('sizzleLabel');
+    if (!btn) return;
+
+    const hero = btn.closest('.hero');
+    let ctx = null, master = null, bed = null, timer = 0, on = false, inView = true;
+
+    function build() {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return false;
+
+      ctx = new AC();
+      master = ctx.createGain();
+      master.gain.value = 0;
+      master.connect(ctx.destination);
+
+      // --- continuous bed: filtered noise, the roar under the crackle
+      const len = Math.floor(ctx.sampleRate * 3);
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      let last = 0;
+      for (let i = 0; i < len; i++) {
+        const white = Math.random() * 2 - 1;
+        last = 0.86 * last + 0.14 * white;
+        data[i] = white * 0.5 + last * 1.4;
+      }
+
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+      src.loop = true;
+
+      const band = ctx.createBiquadFilter();
+      band.type = 'bandpass';
+      band.frequency.value = 2400;
+      band.Q.value = 0.65;
+
+      bed = ctx.createGain();
+      bed.gain.value = 0.16;
+
+      src.connect(band).connect(bed).connect(master);
+      src.start(0);
+
+      return true;
+    }
+
+    function crackle() {
+      if (!on || ctx.state !== 'running') return;
+
+      const dur = 0.03 + Math.random() * 0.1;
+      const now = ctx.currentTime;
+      const len = Math.max(1, Math.floor(ctx.sampleRate * dur));
+      const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+      const data = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+
+      const src = ctx.createBufferSource();
+      src.buffer = buf;
+
+      const band = ctx.createBiquadFilter();
+      band.type = 'bandpass';
+      band.frequency.value = 900 + Math.random() * 3600;
+      band.Q.value = 1.1 + Math.random() * 2;
+
+      const g = ctx.createGain();
+      const peak = 0.05 + Math.random() * 0.16;
+      g.gain.setValueAtTime(0.0001, now);
+      g.gain.exponentialRampToValueAtTime(peak, now + 0.006);
+      g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+
+      src.connect(band).connect(g).connect(master);
+      src.start(now);
+      src.stop(now + dur + 0.02);
+    }
+
+    function loop() {
+      crackle();
+      timer = window.setTimeout(loop, 55 + Math.random() * 340);
+    }
+
+    function level(target, time) {
+      if (!ctx) return;
+      const now = ctx.currentTime;
+      master.gain.cancelScheduledValues(now);
+      master.gain.setValueAtTime(master.gain.value, now);
+      master.gain.linearRampToValueAtTime(target, now + (time || 0.5));
+    }
+
+    btn.addEventListener('click', async () => {
+      if (!ctx && !build()) return;
+      if (ctx.state === 'suspended') await ctx.resume();
+
+      on = !on;
+      btn.setAttribute('aria-pressed', String(on));
+      if (label) label.textContent = on ? 'Mute the sizzle' : 'Hear the sizzle';
+
+      if (on) {
+        level(inView ? 1 : 0, 0.45);
+        window.clearTimeout(timer);
+        loop();
+      } else {
+        level(0, 0.3);
+        window.clearTimeout(timer);
+      }
+    });
+
+    if (hero && 'IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        inView = entries[0].isIntersecting;
+        if (!ctx || !on) return;
+        level(inView ? 1 : 0, 0.35);
+      }, { threshold: 0 }).observe(hero);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (!ctx || !on) return;
+      level(document.hidden || !inView ? 0 : 1, 0.25);
+    });
+  }
+
+  /* ----------------------------------------------------------------------
+     2. Reveal on scroll — staggered entry, transform/opacity only
+     ---------------------------------------------------------------------- */
+  function initReveal() {
+    const items = document.querySelectorAll('.reveal');
+    if (!items.length) return;
+
+    items.forEach((el) => {
+      const delay = el.dataset.delay;
+      if (delay) el.style.setProperty('--reveal-delay', delay + 'ms');
+    });
+
+    if (reduced || !('IntersectionObserver' in window)) {
+      items.forEach((el) => el.classList.add('is-in'));
+      return;
+    }
+
+    const RATIO = 0.12;
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const tall = entry.boundingClientRect.height > window.innerHeight;
+        if (!tall && entry.intersectionRatio < RATIO) return;
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: [0, RATIO] });
+
+    items.forEach((el) => io.observe(el));
+  }
+
+  /* ----------------------------------------------------------------------
+     3. Sticky nav shadow + scroll-spy for the current section
+     ---------------------------------------------------------------------- */
+  function initNav() {
+    const nav = document.getElementById('blNav');
+    const toggler = nav && nav.querySelector('.navbar-toggler');
+    const collapseEl = document.getElementById('navMenu');
+
+    if (nav) {
+      const onScroll = () => nav.classList.toggle('is-stuck', window.scrollY > 40);
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+    }
+
+    // close the mobile drawer after picking a link
+    if (collapseEl) {
+      collapseEl.querySelectorAll('a[href^="#"]').forEach((a) => {
+        a.addEventListener('click', () => {
+          const instance = bootstrap.Collapse.getInstance(collapseEl);
+          if (instance && collapseEl.classList.contains('show')) instance.hide();
+        });
+      });
+    }
+
+    // scroll-spy
+    const links = Array.from(document.querySelectorAll('.bl-nav .nav-link[href^="#"]'));
+    const targets = links
+      .map((l) => document.querySelector(l.getAttribute('href')))
+      .filter(Boolean);
+
+    if (!targets.length || !('IntersectionObserver' in window)) return;
+
+    const visible = new Map();
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach((e) => visible.set(e.target.id, e.intersectionRatio));
+      let best = null, bestRatio = 0;
+      visible.forEach((ratio, id) => {
+        if (ratio > bestRatio) { bestRatio = ratio; best = id; }
+      });
+      links.forEach((l) => {
+        l.classList.toggle('is-current', best !== null && l.getAttribute('href') === '#' + best);
+      });
+    }, { threshold: [0, 0.2, 0.5, 0.75], rootMargin: '-15% 0px -45% 0px' });
+
+    targets.forEach((t) => spy.observe(t));
+  }
+
+  /* ----------------------------------------------------------------------
+     4. Herb stuffing pop-outs
+     ---------------------------------------------------------------------- */
+  const HERBS = [
+    {
+      name: 'Lemongrass', cebu: 'Tanglad',
+      text: 'The backbone of Cebuano lechon. Stalks are bruised and laid along the cavity so the steam carrying the citrus aroma cooks the meat from the inside out.',
+      note: 'Why it matters: it is the top note you smell before the first bite.'
+    },
+    {
+      name: 'Scallion', cebu: 'Sibuyas dahon',
+      text: 'Long green onion leaves packed in whole. They break down during the roast and leave a sweet, faintly sharp liquor that bastes the belly.',
+      note: 'Why it matters: gives the stuffing its deep green colour.'
+    },
+    {
+      name: 'Green onion & chives', cebu: 'Balatoy',
+      text: 'A finer cut worked in with the scallion for the background savoury note. This is the "secret green ingredient" people try to reverse-engineer.',
+      note: 'Why it matters: the savoury backbone under the herbs.'
+    },
+    {
+      name: 'Garlic', cebu: 'Ahos',
+      text: 'Crushed cloves tucked between the herb bundle. Roasting mellows the raw edge into something nutty that reads as part of the crackling.',
+      note: 'Why it matters: bridges the herbs and the pork fat.'
+    },
+    {
+      name: 'Black pepper', cebu: 'Paminta',
+      text: 'Cracked peppercorns through the belly. Enough to warm the finish without turning the roast into a pepper dish.',
+      note: 'Why it matters: the slow heat behind the initial crunch.'
+    },
+    {
+      name: 'Bay leaf', cebu: 'Laurel',
+      text: 'Dried laurel leaves laid against the meat. They lend the faintest resinous, tea-like note that reads as "lechon" to anyone who grew up in Cebu.',
+      note: 'Why it matters: the aroma of a Sunday family salo-salo.'
+    },
+    {
+      name: 'Chili (spicy line)', cebu: 'Sili',
+      text: 'Added only to BL Spicy and Balambanok Spicy. Sili is worked into the same herb bundle so the heat infuses the meat rather than sitting on the skin.',
+      note: 'Why it matters: heat inside the roast, not a sauce on top.'
+    }
+  ];
+
+  function initHerbs() {
+    const chipWrap = document.querySelector('.herb-chips');
+    const detail = document.getElementById('herbDetail');
+    const popout = document.getElementById('herbPopout');
+    if (!chipWrap || !detail) return;
+
+    let current = 0;
+
+    HERBS.forEach((herb, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'herb-chip' + (i === 0 ? ' is-active' : '');
+      btn.textContent = herb.name;
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      btn.addEventListener('click', () => {
+        // second tap on the active ingredient opens the pop-out
+        if (current === i && popout) return openPopout(i);
+        select(i);
+      });
+      chipWrap.appendChild(btn);
+    });
+
+    const chips = Array.from(chipWrap.querySelectorAll('.herb-chip'));
+
+    function select(index) {
+      const herb = HERBS[index];
+      current = index;
+
+      chips.forEach((c, i) => {
+        c.classList.toggle('is-active', i === index);
+        c.setAttribute('aria-selected', i === index ? 'true' : 'false');
+      });
+
+      detail.classList.remove('is-swapping');
+      // force reflow so the animation restarts on repeat clicks
+      void detail.offsetWidth;
+
+      detail.innerHTML =
+        '<span class="herb-detail-kicker">Cebuano stuffing</span>' +
+        '<h3 class="herb-detail-title">' + herb.name +
+        '<span class="herb-detail-cebu">' + herb.cebu + '</span></h3>' +
+        '<p class="herb-detail-text">' + herb.text + '</p>' +
+        '<p class="herb-detail-note"><strong>Note.</strong> ' + herb.note + '</p>' +
+        '<button class="herb-popout-trigger" type="button">' +
+        'Open the pop-out<span aria-hidden="true"> &rarr;</span></button>';
+
+      detail.classList.add('is-swapping');
+    }
+
+    detail.addEventListener('click', (e) => {
+      if (e.target.closest('.herb-popout-trigger')) openPopout(current);
+    });
+
+    function openPopout(index) {
+      const herb = HERBS[index];
+      if (!popout) return;
+
+      popout.querySelector('.herb-popout-name').textContent = herb.name;
+      popout.querySelector('.herb-popout-cebu').textContent = herb.cebu;
+      document.getElementById('herbPopoutText').textContent = herb.text;
+      document.getElementById('herbPopoutNote').innerHTML =
+        '<strong>Note.</strong> ' + herb.note;
+      document.getElementById('herbPopoutCebu2').textContent = herb.cebu;
+
+      if (typeof popout.showModal === 'function') popout.showModal();
+      else popout.setAttribute('open', '');
+    }
+
+    if (popout) {
+      const close = () => {
+        if (typeof popout.close === 'function') popout.close();
+        else popout.removeAttribute('open');
+      };
+
+      document.getElementById('herbPopoutClose').addEventListener('click', close);
+      popout.addEventListener('click', (e) => {
+        if (e.target === popout) close();
+      });
+    }
+
+    select(0);
+  }
+
+  /* ----------------------------------------------------------------------
+     5. Store locator — real branch directory with region + text filtering
+     ---------------------------------------------------------------------- */
+  const BRANCHES = [
+    // ---- Luzon ----
+    ['P. Tuazon', 'P. Tuazon Street, Project 4, Quezon City', 'luzon'],
+    ['Antipolo', '60 Hon. B. Soliven Avenue, Antipolo', 'luzon'],
+    ['Mandaluyong', '1550 Sierra Madre, Mandaluyong, Metro Manila', 'luzon'],
+    ['Sta. Rosa, Laguna', 'Brgy. Balibago, Sta. Rosa City — beside Uno1 Fuel Gasoline Station', 'luzon'],
+    ['Biñan, Laguna', 'National Highway, Canlalay, Biñan City, Laguna', 'luzon'],
+
+    // ---- Visayas — Cebu ----
+    ['Panagdait', 'F. Cabahug St., Kasambagan, Cebu City', 'visayas', 'Dine-in'],
+    ['Escario', 'Escario St., Cebu City', 'visayas'],
+    ['Banawa', 'P. Duterte St., Banawa, Cebu City', 'visayas'],
+    ['Guadalupe', 'V. Rama, Cebu City', 'visayas'],
+    ['Bulacao', 'Prince Warehouse, Bulacao, Cebu City', 'visayas'],
+    ['Urgello', 'Urgello, Cebu City', 'visayas'],
+    ['Katipunan', 'Katipunan St., Brgy. Tisa, Cebu City', 'visayas'],
+    ['Talamban 2', 'Minza St. cor. Kauswagan Road, Cebu City', 'visayas'],
+    ['Punta', 'F. Llamas St., Punta Princesa, Cebu City', 'visayas'],
+    ['Minglanilla', 'Minglanilla Proper, Cebu', 'visayas'],
+    ['Pakigne', 'Pakigne, Minglanilla, Cebu', 'visayas'],
+    ['Cortes', 'Cabahug Street, Ibabao, Mandaue City', 'visayas'],
+    ['Sugbo Merkado', 'Sugbo Merkado, IT Park, Cebu City', 'visayas', 'Dine-in & take-out'],
+    ['BL Cordova', 'Cordova Poblacion, beside Mimi’s Petshop', 'visayas'],
+    ['Gabi, Cordova', 'M.L. Quezon National Highway, Brgy. Gabi, Cordova', 'visayas'],
+    ['Tisa, Labangon', 'Tisa, Labangon, Cebu City', 'visayas'],
+    ['Atlantis', 'Atlantis Food Park, Liloan', 'visayas', 'Dine-in & take-out'],
+    ['Bogo 2', 'Colon St., Bogo City', 'visayas'],
+    ['Paknaan', 'Plaridel St., Paknaan, Mandaue City', 'visayas'],
+    ['Naga', 'Poblacion, Naga City', 'visayas'],
+    ['Calawisan', 'Babag 1 cor. Calawisan, Cebu City', 'visayas'],
+    ['Moalboal', 'Poblacion, Moalboal, Cebu', 'visayas'],
+    ['Marigondon', 'Kadulang, Marigondon, Lapu-Lapu City', 'visayas'],
+    ['Carmen', 'Washington St., Cogon West, Carmen, Cebu', 'visayas'],
+    ['Danao 2', 'Sabang, Danao City', 'visayas'],
+    ['Talamban 1', 'Piazza Elisea, Nasipit, Talamban, Cebu City', 'visayas'],
+    ['Pardo', 'Pardo, Cebu City', 'visayas'],
+    ['Lahug', 'Lot 1 & 2 Block 2, Gorordo Ave., Lahug, Cebu City', 'visayas'],
+    ['Buanoy, Balamban', 'Buanoy, Balamban, Cebu', 'visayas'],
+    ['Bogo 1', 'Surdirovio St., Sto. Rosario, Bogo City', 'visayas'],
+    ['Danao 1', 'F. Rallota St., Danao City', 'visayas'],
+    ['Carcar', 'P. Nellas St., Carcar City', 'visayas'],
+    ['Banilad', 'Banilad, Cebu City', 'visayas'],
+    ['Casuntingan', '828-L Quezon St., Casuntingan, Mandaue City', 'visayas'],
+    ['Dalaguete', 'Poblacion, Dalaguete', 'visayas'],
+    ['Dumlog', 'Dumlog, Talisay City', 'visayas'],
+    ['Mohon', 'Upper Mohon, Talisay City', 'visayas'],
+    ['Pajak', 'Pajak, Lapu-Lapu City', 'visayas'],
+    ['Pusok', 'Pusok, Lapu-Lapu City', 'visayas'],
+    ['Sangi', 'Sangi, Toledo City', 'visayas'],
+
+    // ---- Visayas — Iloilo / Bacolod ----
+    ['Alta Tierra', 'Alta Tierra Village, McArthur Hiway, Taboc Suba, Jaro, Iloilo', 'visayas'],
+    ['Pavia', 'Zone 1, Aganan, Pavia, Iloilo', 'visayas'],
+    ['Baluarte (East)', 'Lopez Jaena St., Barangay East, Iloilo City', 'visayas'],
+    ['Baluarte (Molo)', 'Molo, Iloilo City', 'visayas'],
+    ['Lapuz', 'Jalandoni, Lapuz, Iloilo City', 'visayas'],
+    ['Villa', 'Quezon St., Arevalo, Iloilo City', 'visayas'],
+    ['Lapaz', 'La Granja Sur, Lapaz, Iloilo City', 'visayas'],
+    ['Singko', 'Banga Singko, Brgy. Jibao-an, Pavia, Iloilo City', 'visayas'],
+    ['Tagbak', 'North Central, Iloilo Transport Terminal, Brgy. Tagbak, Jaro, Iloilo City', 'visayas'],
+    ['Libertad', 'Unit 1, Uptown Arcade, Libertad Ext., Taculing, Bacolod City', 'visayas'],
+    ['Libertad Taculing', 'Hernaez St., Libertad Taculing Ext., Bacolod City', 'visayas'],
+    ['Burgos', 'Near Lopez East Center, Villamonte, Bacolod City', 'visayas'],
+    ['Kabankalan', 'Guanzon St., Brgy. 5, Kabankalan City', 'visayas'],
+    ['Fortune Town', 'Celina Homes Subdivision, Brgy. Estefania, Bacolod City', 'visayas'],
+    ['Silay', 'Balamban Liempo Silay, Bacolod', 'visayas'],
+
+    // ---- Visayas — Eastern / Dumaguete / Bohol ----
+    ['Caibaan', 'Brgy. 95, Caibaan, Tacloban City, Leyte', 'visayas'],
+    ['San Jose', 'San Jose, Brgy. 84, Tacloban City', 'visayas'],
+    ['VNG', 'Calanipawan, Brgy. 96, Tacloban City', 'visayas'],
+    ['Nula Tula', 'PHHC Subn, Brgy. 72, Tacloban City', 'visayas'],
+    ['Campetic', 'Brgy. Pawing, Palo, Leyte', 'visayas'],
+    ['Apitong', 'Brgy. 110 Utap, Tacloban City', 'visayas'],
+    ['Real', 'Brgy. 60 Aslum, Sagkahan, Tacloban City', 'visayas'],
+    ['Sogod', 'Sogod, Southern Leyte', 'visayas'],
+    ['Duma 1', 'San Jose Extension, Daro, Dumaguete', 'visayas'],
+    ['Duma 2', '36 North National Highway, West Bantayan, Dumaguete', 'visayas'],
+    ['Duma 3', 'Bagacay, Dumaguete', 'visayas'],
+    ['Tagbilaran', 'Near ACE Medical Center, Tagbilaran, Bohol', 'visayas'],
+    ['Dauis', 'Dauis, Bohol', 'visayas'],
+
+    // ---- Mindanao — CDO / Bukidnon ----
+    ['Nazareth', 'Nazareth, Cagayan de Oro', 'mindanao'],
+    ['Cogon', 'Pres. Quirino–Hayee Sts., Brgy. 37, Cagayan de Oro', 'mindanao'],
+    ['Patag', 'Brgy. Patag, Cagayan de Oro', 'mindanao'],
+    ['Gusa', 'Brgy. Gusa, Cagayan de Oro', 'mindanao'],
+    ['Canitoan', 'Zone 6, Calaanan, Canitoan, Cagayan de Oro', 'mindanao'],
+    ['Calaanan', 'Canitoan, Cagayan de Oro City', 'mindanao'],
+    ['BL Agusan', 'Agusan, Cagayan de Oro', 'mindanao'],
+    ['Valencia', 'Poblacion, Valencia City', 'mindanao'],
+    ['Malaybalay', 'Brgy. 2, Malaybalay City, Bukidnon', 'mindanao'],
+
+    // ---- Mindanao — Davao / SOX ----
+    ['Bacaca', 'Lenares Bldg., Garcia Heights, Bajada, Brgy. 19-B, Davao City', 'mindanao'],
+    ['Catalunan', 'Catalunan Grande, Davao City', 'mindanao'],
+    ['Buhangin', 'San Nicolas, Buhangin, Davao City', 'mindanao'],
+    ['Tagum 1', 'Visayan Village, Tagum City', 'mindanao'],
+    ['Tagum 2', 'Magugpo, Poblacion, Tagum City', 'mindanao'],
+    ['Tagum 3', 'Pioneer Ave., Ferido Bldg., Tagum City', 'mindanao'],
+    ['Gensan 1', 'Rivera St., Lagao, General Santos City', 'mindanao'],
+    ['Gensan 2', 'Adarante St., General Santos City', 'mindanao'],
+    ['Digos', 'Digos City, Davao del Sur', 'mindanao'],
+    ['Kidapawan', 'Quezon Boulevard, Kidapawan', 'mindanao'],
+    ['Toril', 'Crossing Bayabas, Toril, Davao City', 'mindanao'],
+    ['Dipolog', 'Osmeña Street, beside Minute Burger, Dipolog', 'mindanao'],
+    ['Dipolog (Miputak)', 'Miputak, Dipolog', 'mindanao'],
+    ['Surigao City', 'Surigao City, Surigao del Norte', 'mindanao']
+  ];
+
+
+  // Approximate branch coordinates (city/barangay centroid) used by the map.
+  const COORDS = {
+    "P. Tuazon": [14.62835, 121.03166],
+    "Antipolo": [14.58720, 121.17592],
+    "Mandaluyong": [14.57458, 121.04788],
+    "Sta. Rosa, Laguna": [14.31460, 121.11370],
+    "Bi\u00f1an, Laguna": [14.34359, 121.06860],
+    "Panagdait": [10.32560, 123.91649],
+    "Escario": [10.31829, 123.89873],
+    "Banawa": [10.30763, 123.87596],
+    "Guadalupe": [10.29719, 123.88884],
+    "Bulacao": [10.27373, 123.84941],
+    "Urgello": [10.30485, 123.89308],
+    "Katipunan": [10.29500, 123.87700],
+    "Talamban 2": [10.36936, 123.91693],
+    "Punta": [10.29845, 123.86976],
+    "Minglanilla": [10.24603, 123.79606],
+    "Pakigne": [10.25111, 123.80557],
+    "Cortes": [10.33700, 123.93400],
+    "Sugbo Merkado": [10.31250, 123.90700],
+    "BL Cordova": [10.25219, 123.94947],
+    "Gabi, Cordova": [10.26352, 123.96167],
+    "Tisa, Labangon": [10.30032, 123.87405],
+    "Atlantis": [10.41600, 123.96600],
+    "Bogo 2": [11.05127, 124.00351],
+    "Paknaan": [10.34622, 123.96021],
+    "Naga": [10.20780, 123.75050],
+    "Calawisan": [10.28383, 123.93821],
+    "Moalboal": [9.94097, 123.38980],
+    "Marigondon": [10.27442, 123.97608],
+    "Carmen": [10.59421, 124.01702],
+    "Danao 2": [10.51956, 124.02713],
+    "Talamban 1": [10.36936, 123.91693],
+    "Pardo": [10.27943, 123.85542],
+    "Lahug": [10.33093, 123.89813],
+    "Buanoy, Balamban": [10.46865, 123.70072],
+    "Bogo 1": [11.05127, 124.00351],
+    "Danao 1": [10.51956, 124.02713],
+    "Carcar": [10.10556, 123.64067],
+    "Banilad": [10.34652, 123.91111],
+    "Casuntingan": [10.34530, 123.93054],
+    "Dalaguete": [9.76248, 123.53154],
+    "Dumlog": [10.24501, 123.83955],
+    "Mohon": [10.24937, 123.82715],
+    "Pajak": [10.29932, 123.97910],
+    "Pusok": [10.32453, 123.97430],
+    "Sangi": [10.35000, 123.63500],
+    "Alta Tierra": [10.73000, 122.56000],
+    "Pavia": [10.76936, 122.53370],
+    "Baluarte (East)": [10.69210, 122.54935],
+    "Baluarte (Molo)": [10.69704, 122.54407],
+    "Lapuz": [10.70423, 122.57390],
+    "Villa": [10.68761, 122.52161],
+    "Lapaz": [10.69700, 122.56500],
+    "Singko": [10.77300, 122.54800],
+    "Tagbak": [10.74400, 122.57000],
+    "Libertad": [10.61700, 122.96400],
+    "Libertad Taculing": [10.64754, 122.96213],
+    "Burgos": [10.65000, 122.97200],
+    "Kabankalan": [9.99195, 122.81397],
+    "Fortune Town": [10.65600, 122.96200],
+    "Silay": [10.79941, 122.97561],
+    "Caibaan": [11.20600, 124.99137],
+    "San Jose": [11.20414, 125.02149],
+    "VNG": [11.20740, 124.99871],
+    "Nula Tula": [11.25032, 124.97409],
+    "Campetic": [11.18223, 125.00256],
+    "Apitong": [11.22595, 124.99084],
+    "Real": [11.22562, 125.00156],
+    "Sogod": [10.38459, 124.98080],
+    "Duma 1": [9.33500, 123.30200],
+    "Duma 2": [9.33500, 123.31200],
+    "Duma 3": [9.29967, 123.29328],
+    "Tagbilaran": [9.64026, 123.85598],
+    "Dauis": [9.62525, 123.86517],
+    "Nazareth": [8.46934, 124.64704],
+    "Cogon": [8.47300, 124.64300],
+    "Patag": [8.48812, 124.62716],
+    "Gusa": [8.47477, 124.68514],
+    "Canitoan": [8.46932, 124.60567],
+    "Calaanan": [8.47212, 124.59346],
+    "BL Agusan": [8.48870, 124.73794],
+    "Valencia": [7.91112, 125.09337],
+    "Malaybalay": [8.15885, 125.12517],
+    "Bacaca": [7.07800, 125.60800],
+    "Catalunan": [7.08016, 125.54379],
+    "Buhangin": [7.11203, 125.61749],
+    "Tagum 1": [7.43184, 125.80379],
+    "Tagum 2": [7.44874, 125.80165],
+    "Tagum 3": [7.44708, 125.80949],
+    "Gensan 1": [6.12512, 125.19253],
+    "Gensan 2": [6.11222, 125.17219],
+    "Digos": [6.74410, 125.35553],
+    "Kidapawan": [7.00822, 125.08958],
+    "Toril": [7.02296, 125.49482],
+    "Dipolog": [8.58636, 123.34488],
+    "Dipolog (Miputak)": [8.58244, 123.33833],
+    "Surigao City": [9.79050, 125.49357],
+  };
+
+  const REGION_LABEL = { luzon: 'Luzon', visayas: 'Visayas', mindanao: 'Mindanao' };
+  const REGION_ORDER = ['visayas', 'luzon', 'mindanao'];
+
+  /* ----------------------------------------------------------------------
+     5b. Interactive map — Leaflet pins kept in lock-step with the list
+     ---------------------------------------------------------------------- */
+  function initMap() {
+    const el = document.getElementById('branchMap');
+    const wrap = document.getElementById('branchMapWrap');
+    const hide = () => { if (wrap) wrap.hidden = true; };
+    if (!el || typeof L === 'undefined') { hide(); return null; }
+
+    let map;
+    try {
+      map = L.map(el, { scrollWheelZoom: false, zoomControl: true })
+        .setView([10.55, 123.95], 7);
+    } catch (err) {
+      hide();
+      return null;
+    }
+
+    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    let tilesDown = false;
+    tiles.on('tileerror', () => {
+      if (tilesDown) return;
+      tilesDown = true;
+      document.body.classList.add('map-tiles-down');
+    });
+
+    document.body.classList.add('map-ready');
+
+    const layer = L.layerGroup().addTo(map);
+    const markers = new Map();
+    let lastKey = '';
+
+    function popupFor(entry) {
+      const box = document.createElement('div');
+      box.className = 'bl-popup';
+      const name = document.createElement('strong');
+      name.textContent = entry[0];
+      const addr = document.createElement('span');
+      addr.textContent = entry[1];
+      const meta = document.createElement('em');
+      meta.textContent = REGION_LABEL[entry[2]] + (entry[3] ? ' · ' + entry[3] : '');
+      box.append(name, addr, meta);
+      return box;
+    }
+
+    function setVisible(list) {
+      layer.clearLayers();
+      markers.clear();
+
+      const pts = [];
+      list.forEach((entry) => {
+        const ll = COORDS[entry[0]];
+        if (!ll) return;
+        const marker = L.marker(ll, {
+          icon: L.divIcon({
+            className: 'bl-pin',
+            html: '<span class="bl-pin-core"></span>',
+            iconSize: [18, 18],
+            iconAnchor: [9, 9],
+            popupAnchor: [0, -11]
+          }),
+          title: entry[0],
+          alt: entry[0]
+        });
+        marker.bindPopup(popupFor(entry), { closeButton: false, className: 'bl-popup-shell' });
+        marker.addTo(layer);
+        markers.set(entry[0], marker);
+        pts.push(ll);
+      });
+
+      const key = list.map((e) => e[0]).join('|');
+      if (key === lastKey) return;
+      lastKey = key;
+
+      if (!pts.length) return;
+      if (pts.length === 1) {
+        map.setView(pts[0], 13, { animate: !reduced });
+      } else {
+        map.fitBounds(L.latLngBounds(pts), { padding: [28, 28], maxZoom: 11 });
+      }
+    }
+
+    function focus(entry) {
+      const ll = COORDS[entry[0]];
+      const marker = markers.get(entry[0]);
+      if (!ll) return;
+      map.flyTo(ll, Math.max(map.getZoom(), 12), { duration: reduced ? 0 : 0.75 });
+      if (marker) marker.openPopup();
+    }
+
+    window.setTimeout(() => map.invalidateSize(), 250);
+
+    return { setVisible: setVisible, focus: focus };
+  }
+
+  function initLocator() {
+    const wrap = document.getElementById('branchGroups');
+    const countEl = document.getElementById('branchCount');
+    const emptyEl = document.getElementById('branchEmpty');
+    const searchEl = document.getElementById('branchSearch');
+    const chips = Array.from(document.querySelectorAll('.locator-filters .chip'));
+    if (!wrap) return;
+
+    const mapApi = initMap();
+    let region = 'all';
+    let query = '';
+
+    // fill the filter counters once
+    chips.forEach((chip) => {
+      const key = chip.dataset.region;
+      const n = key === 'all'
+        ? BRANCHES.length
+        : BRANCHES.filter((b) => b[2] === key).length;
+      const slot = chip.querySelector('[data-count-for]');
+      if (slot) slot.textContent = '(' + n + ')';
+    });
+
+    function matches(entry) {
+      const [name, addr, reg] = entry;
+      if (region !== 'all' && reg !== region) return false;
+      if (query && !(name + ' ' + addr).toLowerCase().includes(query)) return false;
+      return true;
+    }
+
+    function render() {
+      const visible = BRANCHES.filter(matches);
+      wrap.innerHTML = '';
+      if (mapApi) mapApi.setVisible(visible);
+
+      if (!visible.length) {
+        emptyEl.hidden = false;
+        countEl.textContent = 'No branches found';
+        return;
+      }
+      emptyEl.hidden = true;
+
+      const groups = REGION_ORDER
+        .map((reg) => [reg, visible.filter((b) => b[2] === reg)])
+        .filter(([, list]) => list.length);
+
+      groups.forEach(([reg, list]) => {
+        const h = document.createElement('h3');
+        h.className = 'branch-region';
+        h.textContent = REGION_LABEL[reg] + ' · ' + list.length;
+        wrap.appendChild(h);
+
+        list.forEach((entry) => {
+          const [name, addr, , flag] = entry;
+          const card = document.createElement('button');
+          card.type = 'button';
+          card.className = 'branch-card';
+          card.dataset.branch = String(BRANCHES.indexOf(entry));
+          card.innerHTML =
+            '<span class="branch-name"></span>' +
+            '<span class="branch-addr"></span>' +
+            (flag ? '<span class="branch-flag"></span>' : '') +
+            '<span class="branch-map-cue" aria-hidden="true">show on map &rarr;</span>';
+
+          card.querySelector('.branch-name').textContent = name;
+          card.querySelector('.branch-addr').textContent = addr;
+          if (flag) card.querySelector('.branch-flag').textContent = flag;
+          wrap.appendChild(card);
+        });
+      });
+
+      countEl.textContent =
+        'Showing ' + visible.length + ' of ' + BRANCHES.length + ' branches';
+    }
+
+    wrap.addEventListener('click', (e) => {
+      const card = e.target.closest('.branch-card');
+      if (!card || !mapApi) return;
+      const entry = BRANCHES[Number(card.dataset.branch)];
+      if (entry) mapApi.focus(entry);
+    });
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        region = chip.dataset.region;
+        chips.forEach((c) => c.classList.toggle('is-active', c === chip));
+        render();
+      });
+    });
+
+    if (searchEl) {
+      searchEl.addEventListener('input', () => {
+        query = searchEl.value.trim().toLowerCase();
+        render();
+      });
+    }
+
+    render();
+  }
+
+  /* ----------------------------------------------------------------------
+     6. Misc
+     ---------------------------------------------------------------------- */
+  function initYear() {
+    const el = document.getElementById('year');
+    if (el) el.textContent = String(new Date().getFullYear());
+  }
+
+  function boot() {
+    buildBanderitas();
+    initEmbers();
+    initSizzle();
+    initReveal();
+    initNav();
+    initHerbs();
+    initLocator();
+    initYear();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();

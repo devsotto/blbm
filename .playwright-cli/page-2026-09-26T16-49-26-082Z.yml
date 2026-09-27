@@ -1,0 +1,91 @@
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - img "Balamban Liempo"
+      - generic [ref=e5]:
+        - generic [ref=e6]: Balamban Liempo
+        - generic [ref=e7]: Franchise Application
+    - generic [ref=e8]:
+      - strong [ref=e9]: Form BL-FR-01
+      - generic [ref=e10]: Rev. 2026
+      - generic [ref=e11]: Page 1 of 1
+  - paragraph [ref=e12]:
+    - link "← Back to the website" [ref=e13] [cursor=pointer]:
+      - /url: ../index.html#franchise
+    - button "Print / Save as PDF" [ref=e14] [cursor=pointer]
+  - heading [level=1] [ref=e15]:
+    - text: Put a charcoal pit
+    - emphasis [ref=e16]: in your city.
+  - paragraph [ref=e17]: Fill this form in full — the more we know about you and your proposed site, the faster the site review goes. Print it, sign it, and send it to the franchise team with your preferred contact details.
+  - generic [ref=e18]: 1 — Applicant
+  - heading "Who is applying" [level=2] [ref=e19]
+  - generic [ref=e20]:
+    - generic [ref=e21]: Full name
+    - generic [ref=e24]: Mobile / Viber
+    - generic [ref=e27]: Email address
+    - generic [ref=e30]: Current occupation
+    - generic [ref=e33]: Complete business / home address
+    - generic [ref=e36]: City / Province
+    - generic [ref=e39]: Facebook profile (optional)
+  - generic [ref=e42]: 2 — Proposed site
+  - heading "Where you want to open" [level=2] [ref=e43]
+  - generic [ref=e44]:
+    - generic [ref=e45]: Proposed location / landmark
+    - generic [ref=e48]: City / Municipality
+    - generic [ref=e51]: Province / Island group
+    - generic [ref=e54]: Floor area (sqm)
+    - generic [ref=e57]: Frontage / seating capacity
+    - generic [ref=e60]:
+      - generic [ref=e61]: Site status
+      - generic [ref=e62]:
+        - generic [ref=e63]: Owned
+        - generic [ref=e65]: For lease — ready to occupy
+        - generic [ref=e67]: For lease — needs build-out
+        - generic [ref=e69]: Still scouting
+    - generic [ref=e71]: Nearby foot traffic drivers (schools, malls, offices, terminals)
+  - generic [ref=e74]: 3 — Capacity
+  - heading "Investment readiness" [level=2] [ref=e75]
+  - generic [ref=e76]:
+    - generic [ref=e77]:
+      - generic [ref=e78]: Available capital (PHP)
+      - generic [ref=e79]:
+        - generic [ref=e80]: Below 1M
+        - generic [ref=e82]: 1M – 2M
+        - generic [ref=e84]: 2M – 3.5M
+        - generic [ref=e86]: 3.5M – 5M
+        - generic [ref=e88]: 5M and above
+    - generic [ref=e90]:
+      - generic [ref=e91]: Food & beverage experience
+      - generic [ref=e92]:
+        - generic [ref=e93]: None — first venture
+        - generic [ref=e95]: Owner-operator of an existing store
+        - generic [ref=e97]: Former restaurant / kitchen staff
+        - generic [ref=e99]: Runs a franchise already
+    - generic [ref=e101]:
+      - generic [ref=e102]: Interested in
+      - generic [ref=e103]:
+        - generic [ref=e104]: Single branch
+        - generic [ref=e106]: Multi-branch (city exclusivity)
+        - generic [ref=e108]: Provincial / regional development
+  - generic [ref=e111]:
+    - generic [ref=e112]: Why Balamban Liempo? Tell us about your market
+    - generic [ref=e114]: Competition in the area, target customers, and how you plan to run day-to-day operations.
+  - generic [ref=e115]: 4 — Declaration
+  - heading "Before you sign" [level=2] [ref=e116]
+  - generic [ref=e117]:
+    - generic [ref=e118]: I have read the franchise overview and understand that site approval comes first.
+    - generic [ref=e120]: The information above is true and complete to the best of my knowledge.
+    - generic [ref=e122]: I authorize the franchise team to contact me about my application.
+  - generic [ref=e124]:
+    - generic [ref=e125]: Signature over printed name
+    - generic [ref=e128]: Date signed
+  - paragraph [ref=e131]:
+    - text: Send the completed form to
+    - strong [ref=e132]: balamban.liemponline@gmail.com
+    - text: or message the official Facebook page. Franchise packets (full investment sheet, ROI guide and operations manual) are released after the initial site screening.
+  - generic [ref=e133]:
+    - generic [ref=e134]:
+      - strong [ref=e135]: Balamban Liempo
+      - text: · Tastier than lechon
+    - generic [ref=e136]: balambanliempo.com · 0916 514 6144
+    - generic [ref=e137]: 6× SunStar Best of Cebu

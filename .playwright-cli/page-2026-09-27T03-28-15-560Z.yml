@@ -1,0 +1,922 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - generic [ref=e4]:
+    - paragraph [ref=e5]:
+      - text: Charcoal-roasted daily in Cebu ·
+      - strong [ref=e6]: Nationwide branches
+    - generic [ref=e7]:
+      - link "0916 514 6144" [ref=e8] [cursor=pointer]:
+        - /url: tel:+639165146144
+      - link "balamban.liemponline@gmail.com" [ref=e10] [cursor=pointer]:
+        - /url: mailto:balamban.liemponline@gmail.com
+  - navigation "Main" [ref=e11]:
+    - generic [ref=e12]:
+      - link [ref=e13] [cursor=pointer]:
+        - /url: "#home"
+        - img "Balamban Liempo" [ref=e14]
+      - list [ref=e16]:
+        - listitem [ref=e17]:
+          - link "Menu" [ref=e18] [cursor=pointer]:
+            - /url: "#products"
+        - listitem [ref=e19]:
+          - link "The Herb Secret" [ref=e20] [cursor=pointer]:
+            - /url: "#herbs"
+        - listitem [ref=e21]:
+          - link "Awards" [ref=e22] [cursor=pointer]:
+            - /url: "#awards"
+        - listitem [ref=e23]:
+          - link "Locations" [ref=e24] [cursor=pointer]:
+            - /url: "#locations"
+        - listitem [ref=e25]:
+          - link "Franchise" [ref=e26] [cursor=pointer]:
+            - /url: "#franchise"
+        - listitem [ref=e27]:
+          - link "Order Online" [ref=e28] [cursor=pointer]:
+            - /url: https://www.balambanliempo.com/delivery.html
+  - main [ref=e29]:
+    - generic [ref=e30]:
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - generic [ref=e36]: Est. Cebu · The pioneer of herb-stuffed liempo
+          - heading "Mangaon ta! Taste the king of liempo." [level=1] [ref=e37]:
+            - generic [ref=e38]: Mangaon ta!
+            - generic [ref=e39]: Taste the king of liempo.
+          - paragraph [ref=e40]:
+            - text: Crackling golden skin, tender succulent meat, and a cavity packed with native Cebuano herbs.
+            - emphasis [ref=e41]: Tastier than lechon
+            - text: — and we have the trophies to prove it.
+          - generic [ref=e42]:
+            - link "Order Online / Delivery" [ref=e43] [cursor=pointer]:
+              - /url: https://www.balambanliempo.com/delivery.html
+            - link "Find a Store Near You" [ref=e44] [cursor=pointer]:
+              - /url: "#locations"
+          - generic [ref=e45]:
+            - button "Hear the sizzle" [ref=e46] [cursor=pointer]
+            - generic [ref=e52]: live from the charcoal pit
+          - list [ref=e53]:
+            - listitem [ref=e54]:
+              - strong [ref=e55]: 6×
+              - generic [ref=e56]: SunStar Best of Cebu
+            - listitem [ref=e57]:
+              - strong [ref=e58]: 600g
+              - generic [ref=e59]: uncooked per liempo
+            - listitem [ref=e60]:
+              - strong [ref=e61]: 90+
+              - generic [ref=e62]: branches nationwide
+        - generic [ref=e64]:
+          - generic [ref=e65]: SunStar Best of Cebu
+          - generic [ref=e66]: BestLiempo
+          - generic [ref=e68]: Grand Slam · 6×
+      - generic [aria-hidden] [ref=e69]: scroll
+    - generic [ref=e72]:
+      - generic [ref=e73]: Tastier than lechon
+      - generic [ref=e74]: ◆
+      - generic [ref=e75]: Herb-stuffed charcoal roast
+      - generic [ref=e76]: ◆
+      - generic [ref=e77]: Golden crackling skin
+      - generic [ref=e78]: ◆
+      - generic [ref=e79]: Best liempo in Cebu
+      - generic [ref=e80]: ◆
+      - generic [ref=e81]: Mangaon ta
+      - generic [ref=e82]: ◆
+      - generic [ref=e83]: Tastier than lechon
+      - generic [ref=e84]: ◆
+      - generic [ref=e85]: Herb-stuffed charcoal roast
+      - generic [ref=e86]: ◆
+      - generic [ref=e87]: Golden crackling skin
+      - generic [ref=e88]: ◆
+      - generic [ref=e89]: Best liempo in Cebu
+      - generic [ref=e90]: ◆
+      - generic [ref=e91]: Mangaon ta
+      - generic [ref=e92]: ◆
+    - generic [ref=e94]:
+      - generic [ref=e95]:
+        - generic [ref=e96]: Ang Menu
+        - heading "Two roasts. Four ways to feast." [level=2] [ref=e97]: Two roasts.Four ways to feast.
+        - paragraph [ref=e98]: Everything is stuffed by hand with the same native green herbs used in authentic Cebu lechon, then roasted over live charcoal until the skin snaps.
+      - generic [ref=e99]:
+        - article [ref=e100]:
+          - figure "Signature" [ref=e101]:
+            - img "Whole Balamban Liempo with crackling golden skin and green herb stuffing" [ref=e102]
+          - generic [ref=e104]:
+            - generic [ref=e105]: "01"
+            - heading "Balamban Liempo" [level=3] [ref=e106]
+            - paragraph [ref=e107]: Crackling, golden brown skin over very tender, succulent meat, with flavorful and aromatic herbs and other secret green ingredients tucked through the belly.
+            - list [ref=e108]:
+              - listitem [ref=e109]:
+                - generic [ref=e110]: Heat
+                - text: Original
+              - listitem [ref=e111]:
+                - generic [ref=e112]: Net
+                - text: 500g cooked
+              - listitem [ref=e113]:
+                - generic [ref=e114]: Best for
+                - text: Handaan & salo-salo
+            - link "Read more" [ref=e115] [cursor=pointer]:
+              - /url: https://www.balambanliempo.com/BalambanLiempo.html
+              - text: Read more
+              - generic [aria-hidden] [ref=e116]: →
+        - article [ref=e117]:
+          - figure "Spicy" [ref=e118]:
+            - img "Spicy Balamban Liempo sliced on a board with chili" [ref=e119]
+          - generic [ref=e121]:
+            - generic [ref=e122]: "02"
+            - heading "BL Spicy" [level=3] [ref=e123]
+            - paragraph [ref=e124]: A twist on the signature Balamban Liempo and Balambanok — our answer to the steady stream of customers asking for heat at the table. Same herb backbone, sharper finish.
+            - list [ref=e125]:
+              - listitem [ref=e126]:
+                - generic [ref=e127]: Heat
+                - text: Spicy
+              - listitem [ref=e128]:
+                - generic [ref=e129]: Net
+                - text: 500g cooked
+              - listitem [ref=e130]:
+                - generic [ref=e131]: Best for
+                - text: Suka & sili pairing
+            - link "Read more" [ref=e132] [cursor=pointer]:
+              - /url: https://www.balambanliempo.com/BLSpicy.html
+              - text: Read more
+              - generic [aria-hidden] [ref=e133]: →
+        - article [ref=e134]:
+          - figure "Roast Chicken" [ref=e135]:
+            - img "Balambanok roasted chicken stuffed with herbs" [ref=e136]
+          - generic [ref=e138]:
+            - generic [ref=e139]: "03"
+            - heading "Balambanok" [level=3] [ref=e140]
+            - paragraph [ref=e141]: A special concoction of herbs tucked inside producing a careful balance of flavors, complemented by luscious, lip-smacking goodness down to the last insatiable bite.
+            - list [ref=e142]:
+              - listitem [ref=e143]:
+                - generic [ref=e144]: Heat
+                - text: Original
+              - listitem [ref=e145]:
+                - generic [ref=e146]: Cut
+                - text: Whole roasted chicken
+              - listitem [ref=e147]:
+                - generic [ref=e148]: Best for
+                - text: Pamilya dinner
+            - link "Read more" [ref=e149] [cursor=pointer]:
+              - /url: https://www.balambanliempo.com/balambanok.html
+              - text: Read more
+              - generic [aria-hidden] [ref=e150]: →
+        - article [ref=e151]:
+          - figure "Spicy" [ref=e152]:
+            - img "Liempo served over banana leaf with puso hanging rice" [ref=e153]
+          - generic [ref=e155]:
+            - generic [ref=e156]: "04"
+            - heading "Balambanok Spicy" [level=3] [ref=e157]
+            - paragraph [ref=e158]: "The Balambanok roast with chilis worked into the stuffing. Serve it the Cebuano way: laid over banana leaf beside puso and a saucer of native vinegar."
+            - list [ref=e159]:
+              - listitem [ref=e160]:
+                - generic [ref=e161]: Heat
+                - text: Spicy
+              - listitem [ref=e162]:
+                - generic [ref=e163]: Cut
+                - text: Whole roasted chicken
+              - listitem [ref=e164]:
+                - generic [ref=e165]: Best for
+                - text: Pulutan & parties
+            - link "Read more" [ref=e166] [cursor=pointer]:
+              - /url: https://www.balambanliempo.com/BLSpicy.html
+              - text: Read more
+              - generic [aria-hidden] [ref=e167]: →
+    - generic [ref=e170]:
+      - generic [ref=e171]:
+        - generic [ref=e172]: Nganong kami?
+        - heading "Herbs. Size. Price." [level=2] [ref=e173]
+        - paragraph [ref=e174]: Three reasons people keep talking about it long after the plate is cleared.
+        - link "See what's new" [ref=e175] [cursor=pointer]:
+          - /url: https://www.balambanliempo.com/whatsnew.html
+      - list [ref=e176]:
+        - listitem [ref=e177]:
+          - generic [ref=e178]: "01"
+          - generic [ref=e179]:
+            - heading "Herbs" [level=3] [ref=e180]
+            - paragraph [ref=e181]: Stacked with the unique and special herbs used in authentic Cebu lechon. A distinct flavor people talk about long after they have tasted the recipe.
+        - listitem [ref=e182]:
+          - generic [ref=e183]: "02"
+          - generic [ref=e184]:
+            - heading "Size" [level=3] [ref=e185]
+            - paragraph [ref=e186]: 600g uncooked, which cooks down to a full 1/2 kilo served. Most take-out liempos put out 250–300g. Ours is not a snack.
+        - listitem [ref=e187]:
+          - generic [ref=e188]: "03"
+          - generic [ref=e189]:
+            - heading "Price" [level=3] [ref=e190]
+            - paragraph [ref=e191]: Average lechon runs ₱375/kilo in Cebu and about ₱600 in Metro Manila. Measured by the kilo, Balamban Liempo comes in better priced — gram per gram, other liempos cost more.
+    - generic [ref=e193]:
+      - generic [ref=e194]:
+        - generic [ref=e195]:
+          - generic [ref=e196]: Ang Sekreto
+          - heading "What's stuffed inside matters." [level=2] [ref=e197]: What's stuffedinside matters.
+        - paragraph [ref=e198]: Tap an ingredient to select it, then open the pop-out for the full story. This is the green cavity that makes a Balamban liempo taste nothing like ordinary lechon.
+      - generic [ref=e199]:
+        - generic [ref=e200]:
+          - img "Close-up of chopped liempo with green herbs spilling from the stuffing" [ref=e202]
+          - generic [aria-hidden] [ref=e203]: select a herb
+        - generic [ref=e208]:
+          - tablist "Stuffing ingredients" [ref=e209]:
+            - tab "Lemongrass" [selected] [ref=e210] [cursor=pointer]
+            - tab "Scallion" [ref=e211] [cursor=pointer]
+            - tab "Green onion & chives" [ref=e212] [cursor=pointer]
+            - tab "Garlic" [ref=e213] [cursor=pointer]
+            - tab "Black pepper" [ref=e214] [cursor=pointer]
+            - tab "Bay leaf" [ref=e215] [cursor=pointer]
+            - tab "Chili (spicy line)" [ref=e216] [cursor=pointer]
+          - tabpanel [ref=e217]:
+            - generic [ref=e218]: Cebuano stuffing
+            - heading "Lemongrass Tanglad" [level=3] [ref=e219]:
+              - text: Lemongrass
+              - generic [ref=e220]: Tanglad
+            - paragraph [ref=e221]: The backbone of Cebuano lechon. Stalks are bruised and laid along the cavity so the steam carrying the citrus aroma cooks the meat from the inside out.
+            - paragraph [ref=e222]:
+              - strong [ref=e223]: Note.
+              - text: "Why it matters: it is the top note you smell before the first bite."
+            - button "Open the pop-out" [ref=e224] [cursor=pointer]:
+              - text: Open the pop-out
+              - generic [aria-hidden] [ref=e225]: →
+    - generic [ref=e229]:
+      - figure "SunStar Best of Cebu — Best Liempo" [ref=e230]:
+        - img "SunStar Best of Cebu award recognition for Balamban Liempo" [ref=e231]
+      - generic [ref=e233]:
+        - generic [ref=e234]: Social proof
+        - heading [level=2] [ref=e235]:
+          - text: Not a home run.A
+          - emphasis [ref=e236]: grand slam
+          - text: .
+        - paragraph [ref=e237]: For the sixth time, SunStar Best of Cebu has named Balamban Liempo the Best Liempo in Cebu. We are not just hitting home runs — we keep clearing the bases.
+        - list [ref=e238]:
+          - listitem [ref=e239]:
+            - strong [ref=e240]: 6×
+            - text: Best Liempo of Cebu
+          - listitem [ref=e241]:
+            - strong [ref=e242]: "2024"
+            - text: SunStar Best of Cebu
+          - listitem [ref=e243]:
+            - strong [ref=e244]: "#1"
+            - text: Herb-stuffed liempo pioneer
+        - blockquote [ref=e245]:
+          - paragraph [ref=e246]: “Come celebrate with the most delicious, juicy and crispy liempo in Cebu.”
+    - generic [ref=e248]:
+      - generic [ref=e249]:
+        - generic [ref=e250]:
+          - generic [ref=e251]: Asa dapit?
+          - heading "Find your nearest pit." [level=2] [ref=e252]: Find yournearest pit.
+        - paragraph [ref=e253]: From Cebu City to Cagayan de Oro, Iloilo to Davao. Filter by island or search a city.
+      - generic [ref=e254]:
+        - generic [ref=e255]:
+          - group "Filter branches by region" [ref=e256]:
+            - button "All (96)" [ref=e257] [cursor=pointer]:
+              - text: All
+              - generic [ref=e258]: (96)
+            - button "Visayas (68)" [ref=e259] [cursor=pointer]:
+              - text: Visayas
+              - generic [ref=e260]: (68)
+            - button "Luzon (5)" [ref=e261] [cursor=pointer]:
+              - text: Luzon
+              - generic [ref=e262]: (5)
+            - button "Mindanao (23)" [ref=e263] [cursor=pointer]:
+              - text: Mindanao
+              - generic [ref=e264]: (23)
+          - searchbox "Search branches" [ref=e269]
+        - status [ref=e270]: Showing 96 of 96 branches
+        - generic [ref=e271]:
+          - region "Interactive map of Balamban Liempo branches" [ref=e272]:
+            - generic:
+              - generic:
+                - button "P. Tuazon" [ref=e273] [cursor=pointer]
+                - button "Antipolo" [ref=e275] [cursor=pointer]
+                - button "Mandaluyong" [ref=e277] [cursor=pointer]
+                - button "Sta. Rosa, Laguna" [ref=e279] [cursor=pointer]
+                - button "Biñan, Laguna" [ref=e281] [cursor=pointer]
+                - button "Panagdait" [ref=e283] [cursor=pointer]
+                - button "Escario" [ref=e285] [cursor=pointer]
+                - button "Banawa" [ref=e287] [cursor=pointer]
+                - button "Guadalupe" [ref=e289] [cursor=pointer]
+                - button "Bulacao" [ref=e291] [cursor=pointer]
+                - button "Urgello" [ref=e293] [cursor=pointer]
+                - button "Katipunan" [ref=e295] [cursor=pointer]
+                - button "Talamban 2" [ref=e297] [cursor=pointer]
+                - button "Punta" [ref=e299] [cursor=pointer]
+                - button "Minglanilla" [ref=e301] [cursor=pointer]
+                - button "Pakigne" [ref=e303] [cursor=pointer]
+                - button "Cortes" [ref=e305] [cursor=pointer]
+                - button "Sugbo Merkado" [ref=e307] [cursor=pointer]
+                - button "BL Cordova" [ref=e309] [cursor=pointer]
+                - button "Gabi, Cordova" [ref=e311] [cursor=pointer]
+                - button "Tisa, Labangon" [ref=e313] [cursor=pointer]
+                - button "Atlantis" [ref=e315] [cursor=pointer]
+                - button "Bogo 2" [ref=e317] [cursor=pointer]
+                - button "Paknaan" [ref=e319] [cursor=pointer]
+                - button "Naga" [ref=e321] [cursor=pointer]
+                - button "Calawisan" [ref=e323] [cursor=pointer]
+                - button "Moalboal" [ref=e325] [cursor=pointer]
+                - button "Marigondon" [ref=e327] [cursor=pointer]
+                - button "Carmen" [ref=e329] [cursor=pointer]
+                - button "Danao 2" [ref=e331] [cursor=pointer]
+                - button "Talamban 1" [ref=e333] [cursor=pointer]
+                - button "Pardo" [ref=e335] [cursor=pointer]
+                - button "Lahug" [ref=e337] [cursor=pointer]
+                - button "Buanoy, Balamban" [ref=e339] [cursor=pointer]
+                - button "Bogo 1" [ref=e341] [cursor=pointer]
+                - button "Danao 1" [ref=e343] [cursor=pointer]
+                - button "Carcar" [ref=e345] [cursor=pointer]
+                - button "Banilad" [ref=e347] [cursor=pointer]
+                - button "Casuntingan" [ref=e349] [cursor=pointer]
+                - button "Dalaguete" [ref=e351] [cursor=pointer]
+                - button "Dumlog" [ref=e353] [cursor=pointer]
+                - button "Mohon" [ref=e355] [cursor=pointer]
+                - button "Pajak" [ref=e357] [cursor=pointer]
+                - button "Pusok" [ref=e359] [cursor=pointer]
+                - button "Sangi" [ref=e361] [cursor=pointer]
+                - button "Alta Tierra" [ref=e363] [cursor=pointer]
+                - button "Pavia" [ref=e365] [cursor=pointer]
+                - button "Baluarte (East)" [ref=e367] [cursor=pointer]
+                - button "Baluarte (Molo)" [ref=e369] [cursor=pointer]
+                - button "Lapuz" [ref=e371] [cursor=pointer]
+                - button "Villa" [ref=e373] [cursor=pointer]
+                - button "Lapaz" [ref=e375] [cursor=pointer]
+                - button "Singko" [ref=e377] [cursor=pointer]
+                - button "Tagbak" [ref=e379] [cursor=pointer]
+                - button "Libertad" [ref=e381] [cursor=pointer]
+                - button "Libertad Taculing" [ref=e383] [cursor=pointer]
+                - button "Burgos" [ref=e385] [cursor=pointer]
+                - button "Kabankalan" [ref=e387] [cursor=pointer]
+                - button "Fortune Town" [ref=e389] [cursor=pointer]
+                - button "Silay" [ref=e391] [cursor=pointer]
+                - button "Caibaan" [ref=e393] [cursor=pointer]
+                - button "San Jose" [ref=e395] [cursor=pointer]
+                - button "VNG" [ref=e397] [cursor=pointer]
+                - button "Nula Tula" [ref=e399] [cursor=pointer]
+                - button "Campetic" [ref=e401] [cursor=pointer]
+                - button "Apitong" [ref=e403] [cursor=pointer]
+                - button "Real" [ref=e405] [cursor=pointer]
+                - button "Sogod" [ref=e407] [cursor=pointer]
+                - button "Duma 1" [ref=e409] [cursor=pointer]
+                - button "Duma 2" [ref=e411] [cursor=pointer]
+                - button "Duma 3" [ref=e413] [cursor=pointer]
+                - button "Tagbilaran" [ref=e415] [cursor=pointer]
+                - button "Dauis" [ref=e417] [cursor=pointer]
+                - button "Nazareth" [ref=e419] [cursor=pointer]
+                - button "Cogon" [ref=e421] [cursor=pointer]
+                - button "Patag" [ref=e423] [cursor=pointer]
+                - button "Gusa" [ref=e425] [cursor=pointer]
+                - button "Canitoan" [ref=e427] [cursor=pointer]
+                - button "Calaanan" [ref=e429] [cursor=pointer]
+                - button "BL Agusan" [ref=e431] [cursor=pointer]
+                - button "Valencia" [ref=e433] [cursor=pointer]
+                - button "Malaybalay" [ref=e435] [cursor=pointer]
+                - button "Bacaca" [ref=e437] [cursor=pointer]
+                - button "Catalunan" [ref=e439] [cursor=pointer]
+                - button "Buhangin" [ref=e441] [cursor=pointer]
+                - button "Tagum 1" [ref=e443] [cursor=pointer]
+                - button "Tagum 2" [ref=e445] [cursor=pointer]
+                - button "Tagum 3" [ref=e447] [cursor=pointer]
+                - button "Gensan 1" [ref=e449] [cursor=pointer]
+                - button "Gensan 2" [ref=e451] [cursor=pointer]
+                - button "Digos" [ref=e453] [cursor=pointer]
+                - button "Kidapawan" [ref=e455] [cursor=pointer]
+                - button "Toril" [ref=e457] [cursor=pointer]
+                - button "Dipolog" [ref=e459] [cursor=pointer]
+                - button "Dipolog (Miputak)" [ref=e461] [cursor=pointer]
+                - button "Surigao City" [ref=e463] [cursor=pointer]
+            - generic:
+              - generic [ref=e465]:
+                - button "Zoom in" [ref=e466] [cursor=pointer]: +
+                - button "Zoom out" [ref=e467] [cursor=pointer]: −
+              - generic [ref=e468]:
+                - link "Leaflet" [ref=e469] [cursor=pointer]:
+                  - /url: https://leafletjs.com
+                - text: "| ©"
+                - link "OpenStreetMap" [ref=e474] [cursor=pointer]:
+                  - /url: https://www.openstreetmap.org/copyright
+                - text: contributors
+          - paragraph [ref=e475]: Every pin is a branch — click one for the address, or click a branch below to fly to it.
+        - generic [ref=e478]:
+          - heading "Visayas · 68" [level=3] [ref=e479]
+          - button "Panagdait F. Cabahug St., Kasambagan, Cebu City Dine-in" [ref=e480] [cursor=pointer]:
+            - generic [ref=e481]: Panagdait
+            - generic [ref=e482]: F. Cabahug St., Kasambagan, Cebu City
+            - generic [ref=e483]: Dine-in
+            - generic [aria-hidden] [ref=e484]: show on map →
+          - button "Escario Escario St., Cebu City" [ref=e485] [cursor=pointer]:
+            - generic [ref=e486]: Escario
+            - generic [ref=e487]: Escario St., Cebu City
+            - generic [aria-hidden] [ref=e488]: show on map →
+          - button "Banawa P. Duterte St., Banawa, Cebu City" [ref=e489] [cursor=pointer]:
+            - generic [ref=e490]: Banawa
+            - generic [ref=e491]: P. Duterte St., Banawa, Cebu City
+            - generic [aria-hidden] [ref=e492]: show on map →
+          - button "Guadalupe V. Rama, Cebu City" [ref=e493] [cursor=pointer]:
+            - generic [ref=e494]: Guadalupe
+            - generic [ref=e495]: V. Rama, Cebu City
+            - generic [aria-hidden] [ref=e496]: show on map →
+          - button "Bulacao Prince Warehouse, Bulacao, Cebu City" [ref=e497] [cursor=pointer]:
+            - generic [ref=e498]: Bulacao
+            - generic [ref=e499]: Prince Warehouse, Bulacao, Cebu City
+            - generic [aria-hidden] [ref=e500]: show on map →
+          - button "Urgello Urgello, Cebu City" [ref=e501] [cursor=pointer]:
+            - generic [ref=e502]: Urgello
+            - generic [ref=e503]: Urgello, Cebu City
+            - generic [aria-hidden] [ref=e504]: show on map →
+          - button "Katipunan Katipunan St., Brgy. Tisa, Cebu City" [ref=e505] [cursor=pointer]:
+            - generic [ref=e506]: Katipunan
+            - generic [ref=e507]: Katipunan St., Brgy. Tisa, Cebu City
+            - generic [aria-hidden] [ref=e508]: show on map →
+          - button "Talamban 2 Minza St. cor. Kauswagan Road, Cebu City" [ref=e509] [cursor=pointer]:
+            - generic [ref=e510]: Talamban 2
+            - generic [ref=e511]: Minza St. cor. Kauswagan Road, Cebu City
+            - generic [aria-hidden] [ref=e512]: show on map →
+          - button "Punta F. Llamas St., Punta Princesa, Cebu City" [ref=e513] [cursor=pointer]:
+            - generic [ref=e514]: Punta
+            - generic [ref=e515]: F. Llamas St., Punta Princesa, Cebu City
+            - generic [aria-hidden] [ref=e516]: show on map →
+          - button "Minglanilla Minglanilla Proper, Cebu" [ref=e517] [cursor=pointer]:
+            - generic [ref=e518]: Minglanilla
+            - generic [ref=e519]: Minglanilla Proper, Cebu
+            - generic [aria-hidden] [ref=e520]: show on map →
+          - button "Pakigne Pakigne, Minglanilla, Cebu" [ref=e521] [cursor=pointer]:
+            - generic [ref=e522]: Pakigne
+            - generic [ref=e523]: Pakigne, Minglanilla, Cebu
+            - generic [aria-hidden] [ref=e524]: show on map →
+          - button "Cortes Cabahug Street, Ibabao, Mandaue City" [ref=e525] [cursor=pointer]:
+            - generic [ref=e526]: Cortes
+            - generic [ref=e527]: Cabahug Street, Ibabao, Mandaue City
+            - generic [aria-hidden] [ref=e528]: show on map →
+          - button "Sugbo Merkado Sugbo Merkado, IT Park, Cebu City Dine-in & take-out" [ref=e529] [cursor=pointer]:
+            - generic [ref=e530]: Sugbo Merkado
+            - generic [ref=e531]: Sugbo Merkado, IT Park, Cebu City
+            - generic [ref=e532]: Dine-in & take-out
+            - generic [aria-hidden] [ref=e533]: show on map →
+          - button "BL Cordova Cordova Poblacion, beside Mimi’s Petshop" [ref=e534] [cursor=pointer]:
+            - generic [ref=e535]: BL Cordova
+            - generic [ref=e536]: Cordova Poblacion, beside Mimi’s Petshop
+            - generic [aria-hidden] [ref=e537]: show on map →
+          - button "Gabi, Cordova M.L. Quezon National Highway, Brgy. Gabi, Cordova" [ref=e538] [cursor=pointer]:
+            - generic [ref=e539]: Gabi, Cordova
+            - generic [ref=e540]: M.L. Quezon National Highway, Brgy. Gabi, Cordova
+            - generic [aria-hidden] [ref=e541]: show on map →
+          - button "Tisa, Labangon Tisa, Labangon, Cebu City" [ref=e542] [cursor=pointer]:
+            - generic [ref=e543]: Tisa, Labangon
+            - generic [ref=e544]: Tisa, Labangon, Cebu City
+            - generic [aria-hidden] [ref=e545]: show on map →
+          - button "Atlantis Atlantis Food Park, Liloan Dine-in & take-out" [ref=e546] [cursor=pointer]:
+            - generic [ref=e547]: Atlantis
+            - generic [ref=e548]: Atlantis Food Park, Liloan
+            - generic [ref=e549]: Dine-in & take-out
+            - generic [aria-hidden] [ref=e550]: show on map →
+          - button "Bogo 2 Colon St., Bogo City" [ref=e551] [cursor=pointer]:
+            - generic [ref=e552]: Bogo 2
+            - generic [ref=e553]: Colon St., Bogo City
+            - generic [aria-hidden] [ref=e554]: show on map →
+          - button "Paknaan Plaridel St., Paknaan, Mandaue City" [ref=e555] [cursor=pointer]:
+            - generic [ref=e556]: Paknaan
+            - generic [ref=e557]: Plaridel St., Paknaan, Mandaue City
+            - generic [aria-hidden] [ref=e558]: show on map →
+          - button "Naga Poblacion, Naga City" [ref=e559] [cursor=pointer]:
+            - generic [ref=e560]: Naga
+            - generic [ref=e561]: Poblacion, Naga City
+            - generic [aria-hidden] [ref=e562]: show on map →
+          - button "Calawisan Babag 1 cor. Calawisan, Cebu City" [ref=e563] [cursor=pointer]:
+            - generic [ref=e564]: Calawisan
+            - generic [ref=e565]: Babag 1 cor. Calawisan, Cebu City
+            - generic [aria-hidden] [ref=e566]: show on map →
+          - button "Moalboal Poblacion, Moalboal, Cebu" [ref=e567] [cursor=pointer]:
+            - generic [ref=e568]: Moalboal
+            - generic [ref=e569]: Poblacion, Moalboal, Cebu
+            - generic [aria-hidden] [ref=e570]: show on map →
+          - button "Marigondon Kadulang, Marigondon, Lapu-Lapu City" [ref=e571] [cursor=pointer]:
+            - generic [ref=e572]: Marigondon
+            - generic [ref=e573]: Kadulang, Marigondon, Lapu-Lapu City
+            - generic [aria-hidden] [ref=e574]: show on map →
+          - button "Carmen Washington St., Cogon West, Carmen, Cebu" [ref=e575] [cursor=pointer]:
+            - generic [ref=e576]: Carmen
+            - generic [ref=e577]: Washington St., Cogon West, Carmen, Cebu
+            - generic [aria-hidden] [ref=e578]: show on map →
+          - button "Danao 2 Sabang, Danao City" [ref=e579] [cursor=pointer]:
+            - generic [ref=e580]: Danao 2
+            - generic [ref=e581]: Sabang, Danao City
+            - generic [aria-hidden] [ref=e582]: show on map →
+          - button "Talamban 1 Piazza Elisea, Nasipit, Talamban, Cebu City" [ref=e583] [cursor=pointer]:
+            - generic [ref=e584]: Talamban 1
+            - generic [ref=e585]: Piazza Elisea, Nasipit, Talamban, Cebu City
+            - generic [aria-hidden] [ref=e586]: show on map →
+          - button "Pardo Pardo, Cebu City" [ref=e587] [cursor=pointer]:
+            - generic [ref=e588]: Pardo
+            - generic [ref=e589]: Pardo, Cebu City
+            - generic [aria-hidden] [ref=e590]: show on map →
+          - button "Lahug Lot 1 & 2 Block 2, Gorordo Ave., Lahug, Cebu City" [ref=e591] [cursor=pointer]:
+            - generic [ref=e592]: Lahug
+            - generic [ref=e593]: Lot 1 & 2 Block 2, Gorordo Ave., Lahug, Cebu City
+            - generic [aria-hidden] [ref=e594]: show on map →
+          - button "Buanoy, Balamban Buanoy, Balamban, Cebu" [ref=e595] [cursor=pointer]:
+            - generic [ref=e596]: Buanoy, Balamban
+            - generic [ref=e597]: Buanoy, Balamban, Cebu
+            - generic [aria-hidden] [ref=e598]: show on map →
+          - button "Bogo 1 Surdirovio St., Sto. Rosario, Bogo City" [ref=e599] [cursor=pointer]:
+            - generic [ref=e600]: Bogo 1
+            - generic [ref=e601]: Surdirovio St., Sto. Rosario, Bogo City
+            - generic [aria-hidden] [ref=e602]: show on map →
+          - button "Danao 1 F. Rallota St., Danao City" [ref=e603] [cursor=pointer]:
+            - generic [ref=e604]: Danao 1
+            - generic [ref=e605]: F. Rallota St., Danao City
+            - generic [aria-hidden] [ref=e606]: show on map →
+          - button "Carcar P. Nellas St., Carcar City" [ref=e607] [cursor=pointer]:
+            - generic [ref=e608]: Carcar
+            - generic [ref=e609]: P. Nellas St., Carcar City
+            - generic [aria-hidden] [ref=e610]: show on map →
+          - button "Banilad Banilad, Cebu City" [ref=e611] [cursor=pointer]:
+            - generic [ref=e612]: Banilad
+            - generic [ref=e613]: Banilad, Cebu City
+            - generic [aria-hidden] [ref=e614]: show on map →
+          - button "Casuntingan 828-L Quezon St., Casuntingan, Mandaue City" [ref=e615] [cursor=pointer]:
+            - generic [ref=e616]: Casuntingan
+            - generic [ref=e617]: 828-L Quezon St., Casuntingan, Mandaue City
+            - generic [aria-hidden] [ref=e618]: show on map →
+          - button "Dalaguete Poblacion, Dalaguete" [ref=e619] [cursor=pointer]:
+            - generic [ref=e620]: Dalaguete
+            - generic [ref=e621]: Poblacion, Dalaguete
+            - generic [aria-hidden] [ref=e622]: show on map →
+          - button "Dumlog Dumlog, Talisay City" [ref=e623] [cursor=pointer]:
+            - generic [ref=e624]: Dumlog
+            - generic [ref=e625]: Dumlog, Talisay City
+            - generic [aria-hidden] [ref=e626]: show on map →
+          - button "Mohon Upper Mohon, Talisay City" [ref=e627] [cursor=pointer]:
+            - generic [ref=e628]: Mohon
+            - generic [ref=e629]: Upper Mohon, Talisay City
+            - generic [aria-hidden] [ref=e630]: show on map →
+          - button "Pajak Pajak, Lapu-Lapu City" [ref=e631] [cursor=pointer]:
+            - generic [ref=e632]: Pajak
+            - generic [ref=e633]: Pajak, Lapu-Lapu City
+            - generic [aria-hidden] [ref=e634]: show on map →
+          - button "Pusok Pusok, Lapu-Lapu City" [ref=e635] [cursor=pointer]:
+            - generic [ref=e636]: Pusok
+            - generic [ref=e637]: Pusok, Lapu-Lapu City
+            - generic [aria-hidden] [ref=e638]: show on map →
+          - button "Sangi Sangi, Toledo City" [ref=e639] [cursor=pointer]:
+            - generic [ref=e640]: Sangi
+            - generic [ref=e641]: Sangi, Toledo City
+            - generic [aria-hidden] [ref=e642]: show on map →
+          - button "Alta Tierra Alta Tierra Village, McArthur Hiway, Taboc Suba, Jaro, Iloilo" [ref=e643] [cursor=pointer]:
+            - generic [ref=e644]: Alta Tierra
+            - generic [ref=e645]: Alta Tierra Village, McArthur Hiway, Taboc Suba, Jaro, Iloilo
+            - generic [aria-hidden] [ref=e646]: show on map →
+          - button "Pavia Zone 1, Aganan, Pavia, Iloilo" [ref=e647] [cursor=pointer]:
+            - generic [ref=e648]: Pavia
+            - generic [ref=e649]: Zone 1, Aganan, Pavia, Iloilo
+            - generic [aria-hidden] [ref=e650]: show on map →
+          - button "Baluarte (East) Lopez Jaena St., Barangay East, Iloilo City" [ref=e651] [cursor=pointer]:
+            - generic [ref=e652]: Baluarte (East)
+            - generic [ref=e653]: Lopez Jaena St., Barangay East, Iloilo City
+            - generic [aria-hidden] [ref=e654]: show on map →
+          - button "Baluarte (Molo) Molo, Iloilo City" [ref=e655] [cursor=pointer]:
+            - generic [ref=e656]: Baluarte (Molo)
+            - generic [ref=e657]: Molo, Iloilo City
+            - generic [aria-hidden] [ref=e658]: show on map →
+          - button "Lapuz Jalandoni, Lapuz, Iloilo City" [ref=e659] [cursor=pointer]:
+            - generic [ref=e660]: Lapuz
+            - generic [ref=e661]: Jalandoni, Lapuz, Iloilo City
+            - generic [aria-hidden] [ref=e662]: show on map →
+          - button "Villa Quezon St., Arevalo, Iloilo City" [ref=e663] [cursor=pointer]:
+            - generic [ref=e664]: Villa
+            - generic [ref=e665]: Quezon St., Arevalo, Iloilo City
+            - generic [aria-hidden] [ref=e666]: show on map →
+          - button "Lapaz La Granja Sur, Lapaz, Iloilo City" [ref=e667] [cursor=pointer]:
+            - generic [ref=e668]: Lapaz
+            - generic [ref=e669]: La Granja Sur, Lapaz, Iloilo City
+            - generic [aria-hidden] [ref=e670]: show on map →
+          - button "Singko Banga Singko, Brgy. Jibao-an, Pavia, Iloilo City" [ref=e671] [cursor=pointer]:
+            - generic [ref=e672]: Singko
+            - generic [ref=e673]: Banga Singko, Brgy. Jibao-an, Pavia, Iloilo City
+            - generic [aria-hidden] [ref=e674]: show on map →
+          - button "Tagbak North Central, Iloilo Transport Terminal, Brgy. Tagbak, Jaro, Iloilo City" [ref=e675] [cursor=pointer]:
+            - generic [ref=e676]: Tagbak
+            - generic [ref=e677]: North Central, Iloilo Transport Terminal, Brgy. Tagbak, Jaro, Iloilo City
+            - generic [aria-hidden] [ref=e678]: show on map →
+          - button "Libertad Unit 1, Uptown Arcade, Libertad Ext., Taculing, Bacolod City" [ref=e679] [cursor=pointer]:
+            - generic [ref=e680]: Libertad
+            - generic [ref=e681]: Unit 1, Uptown Arcade, Libertad Ext., Taculing, Bacolod City
+            - generic [aria-hidden] [ref=e682]: show on map →
+          - button "Libertad Taculing Hernaez St., Libertad Taculing Ext., Bacolod City" [ref=e683] [cursor=pointer]:
+            - generic [ref=e684]: Libertad Taculing
+            - generic [ref=e685]: Hernaez St., Libertad Taculing Ext., Bacolod City
+            - generic [aria-hidden] [ref=e686]: show on map →
+          - button "Burgos Near Lopez East Center, Villamonte, Bacolod City" [ref=e687] [cursor=pointer]:
+            - generic [ref=e688]: Burgos
+            - generic [ref=e689]: Near Lopez East Center, Villamonte, Bacolod City
+            - generic [aria-hidden] [ref=e690]: show on map →
+          - button "Kabankalan Guanzon St., Brgy. 5, Kabankalan City" [ref=e691] [cursor=pointer]:
+            - generic [ref=e692]: Kabankalan
+            - generic [ref=e693]: Guanzon St., Brgy. 5, Kabankalan City
+            - generic [aria-hidden] [ref=e694]: show on map →
+          - button "Fortune Town Celina Homes Subdivision, Brgy. Estefania, Bacolod City" [ref=e695] [cursor=pointer]:
+            - generic [ref=e696]: Fortune Town
+            - generic [ref=e697]: Celina Homes Subdivision, Brgy. Estefania, Bacolod City
+            - generic [aria-hidden] [ref=e698]: show on map →
+          - button "Silay Balamban Liempo Silay, Bacolod" [ref=e699] [cursor=pointer]:
+            - generic [ref=e700]: Silay
+            - generic [ref=e701]: Balamban Liempo Silay, Bacolod
+            - generic [aria-hidden] [ref=e702]: show on map →
+          - button "Caibaan Brgy. 95, Caibaan, Tacloban City, Leyte" [ref=e703] [cursor=pointer]:
+            - generic [ref=e704]: Caibaan
+            - generic [ref=e705]: Brgy. 95, Caibaan, Tacloban City, Leyte
+            - generic [aria-hidden] [ref=e706]: show on map →
+          - button "San Jose San Jose, Brgy. 84, Tacloban City" [ref=e707] [cursor=pointer]:
+            - generic [ref=e708]: San Jose
+            - generic [ref=e709]: San Jose, Brgy. 84, Tacloban City
+            - generic [aria-hidden] [ref=e710]: show on map →
+          - button "VNG Calanipawan, Brgy. 96, Tacloban City" [ref=e711] [cursor=pointer]:
+            - generic [ref=e712]: VNG
+            - generic [ref=e713]: Calanipawan, Brgy. 96, Tacloban City
+            - generic [aria-hidden] [ref=e714]: show on map →
+          - button "Nula Tula PHHC Subn, Brgy. 72, Tacloban City" [ref=e715] [cursor=pointer]:
+            - generic [ref=e716]: Nula Tula
+            - generic [ref=e717]: PHHC Subn, Brgy. 72, Tacloban City
+            - generic [aria-hidden] [ref=e718]: show on map →
+          - button "Campetic Brgy. Pawing, Palo, Leyte" [ref=e719] [cursor=pointer]:
+            - generic [ref=e720]: Campetic
+            - generic [ref=e721]: Brgy. Pawing, Palo, Leyte
+            - generic [aria-hidden] [ref=e722]: show on map →
+          - button "Apitong Brgy. 110 Utap, Tacloban City" [ref=e723] [cursor=pointer]:
+            - generic [ref=e724]: Apitong
+            - generic [ref=e725]: Brgy. 110 Utap, Tacloban City
+            - generic [aria-hidden] [ref=e726]: show on map →
+          - button "Real Brgy. 60 Aslum, Sagkahan, Tacloban City" [ref=e727] [cursor=pointer]:
+            - generic [ref=e728]: Real
+            - generic [ref=e729]: Brgy. 60 Aslum, Sagkahan, Tacloban City
+            - generic [aria-hidden] [ref=e730]: show on map →
+          - button "Sogod Sogod, Southern Leyte" [ref=e731] [cursor=pointer]:
+            - generic [ref=e732]: Sogod
+            - generic [ref=e733]: Sogod, Southern Leyte
+            - generic [aria-hidden] [ref=e734]: show on map →
+          - button "Duma 1 San Jose Extension, Daro, Dumaguete" [ref=e735] [cursor=pointer]:
+            - generic [ref=e736]: Duma 1
+            - generic [ref=e737]: San Jose Extension, Daro, Dumaguete
+            - generic [aria-hidden] [ref=e738]: show on map →
+          - button "Duma 2 36 North National Highway, West Bantayan, Dumaguete" [ref=e739] [cursor=pointer]:
+            - generic [ref=e740]: Duma 2
+            - generic [ref=e741]: 36 North National Highway, West Bantayan, Dumaguete
+            - generic [aria-hidden] [ref=e742]: show on map →
+          - button "Duma 3 Bagacay, Dumaguete" [ref=e743] [cursor=pointer]:
+            - generic [ref=e744]: Duma 3
+            - generic [ref=e745]: Bagacay, Dumaguete
+            - generic [aria-hidden] [ref=e746]: show on map →
+          - button "Tagbilaran Near ACE Medical Center, Tagbilaran, Bohol" [ref=e747] [cursor=pointer]:
+            - generic [ref=e748]: Tagbilaran
+            - generic [ref=e749]: Near ACE Medical Center, Tagbilaran, Bohol
+            - generic [aria-hidden] [ref=e750]: show on map →
+          - button "Dauis Dauis, Bohol" [ref=e751] [cursor=pointer]:
+            - generic [ref=e752]: Dauis
+            - generic [ref=e753]: Dauis, Bohol
+            - generic [aria-hidden] [ref=e754]: show on map →
+          - heading "Luzon · 5" [level=3] [ref=e755]
+          - button "P. Tuazon P. Tuazon Street, Project 4, Quezon City" [ref=e756] [cursor=pointer]:
+            - generic [ref=e757]: P. Tuazon
+            - generic [ref=e758]: P. Tuazon Street, Project 4, Quezon City
+            - generic [aria-hidden] [ref=e759]: show on map →
+          - button "Antipolo 60 Hon. B. Soliven Avenue, Antipolo" [ref=e760] [cursor=pointer]:
+            - generic [ref=e761]: Antipolo
+            - generic [ref=e762]: 60 Hon. B. Soliven Avenue, Antipolo
+            - generic [aria-hidden] [ref=e763]: show on map →
+          - button "Mandaluyong 1550 Sierra Madre, Mandaluyong, Metro Manila" [ref=e764] [cursor=pointer]:
+            - generic [ref=e765]: Mandaluyong
+            - generic [ref=e766]: 1550 Sierra Madre, Mandaluyong, Metro Manila
+            - generic [aria-hidden] [ref=e767]: show on map →
+          - button "Sta. Rosa, Laguna Brgy. Balibago, Sta. Rosa City — beside Uno1 Fuel Gasoline Station" [ref=e768] [cursor=pointer]:
+            - generic [ref=e769]: Sta. Rosa, Laguna
+            - generic [ref=e770]: Brgy. Balibago, Sta. Rosa City — beside Uno1 Fuel Gasoline Station
+            - generic [aria-hidden] [ref=e771]: show on map →
+          - button "Biñan, Laguna National Highway, Canlalay, Biñan City, Laguna" [ref=e772] [cursor=pointer]:
+            - generic [ref=e773]: Biñan, Laguna
+            - generic [ref=e774]: National Highway, Canlalay, Biñan City, Laguna
+            - generic [aria-hidden] [ref=e775]: show on map →
+          - heading "Mindanao · 23" [level=3] [ref=e776]
+          - button "Nazareth Nazareth, Cagayan de Oro" [ref=e777] [cursor=pointer]:
+            - generic [ref=e778]: Nazareth
+            - generic [ref=e779]: Nazareth, Cagayan de Oro
+            - generic [aria-hidden] [ref=e780]: show on map →
+          - button "Cogon Pres. Quirino–Hayee Sts., Brgy. 37, Cagayan de Oro" [ref=e781] [cursor=pointer]:
+            - generic [ref=e782]: Cogon
+            - generic [ref=e783]: Pres. Quirino–Hayee Sts., Brgy. 37, Cagayan de Oro
+            - generic [aria-hidden] [ref=e784]: show on map →
+          - button "Patag Brgy. Patag, Cagayan de Oro" [ref=e785] [cursor=pointer]:
+            - generic [ref=e786]: Patag
+            - generic [ref=e787]: Brgy. Patag, Cagayan de Oro
+            - generic [aria-hidden] [ref=e788]: show on map →
+          - button "Gusa Brgy. Gusa, Cagayan de Oro" [ref=e789] [cursor=pointer]:
+            - generic [ref=e790]: Gusa
+            - generic [ref=e791]: Brgy. Gusa, Cagayan de Oro
+            - generic [aria-hidden] [ref=e792]: show on map →
+          - button "Canitoan Zone 6, Calaanan, Canitoan, Cagayan de Oro" [ref=e793] [cursor=pointer]:
+            - generic [ref=e794]: Canitoan
+            - generic [ref=e795]: Zone 6, Calaanan, Canitoan, Cagayan de Oro
+            - generic [aria-hidden] [ref=e796]: show on map →
+          - button "Calaanan Canitoan, Cagayan de Oro City" [ref=e797] [cursor=pointer]:
+            - generic [ref=e798]: Calaanan
+            - generic [ref=e799]: Canitoan, Cagayan de Oro City
+            - generic [aria-hidden] [ref=e800]: show on map →
+          - button "BL Agusan Agusan, Cagayan de Oro" [ref=e801] [cursor=pointer]:
+            - generic [ref=e802]: BL Agusan
+            - generic [ref=e803]: Agusan, Cagayan de Oro
+            - generic [aria-hidden] [ref=e804]: show on map →
+          - button "Valencia Poblacion, Valencia City" [ref=e805] [cursor=pointer]:
+            - generic [ref=e806]: Valencia
+            - generic [ref=e807]: Poblacion, Valencia City
+            - generic [aria-hidden] [ref=e808]: show on map →
+          - button "Malaybalay Brgy. 2, Malaybalay City, Bukidnon" [ref=e809] [cursor=pointer]:
+            - generic [ref=e810]: Malaybalay
+            - generic [ref=e811]: Brgy. 2, Malaybalay City, Bukidnon
+            - generic [aria-hidden] [ref=e812]: show on map →
+          - button "Bacaca Lenares Bldg., Garcia Heights, Bajada, Brgy. 19-B, Davao City" [ref=e813] [cursor=pointer]:
+            - generic [ref=e814]: Bacaca
+            - generic [ref=e815]: Lenares Bldg., Garcia Heights, Bajada, Brgy. 19-B, Davao City
+            - generic [aria-hidden] [ref=e816]: show on map →
+          - button "Catalunan Catalunan Grande, Davao City" [ref=e817] [cursor=pointer]:
+            - generic [ref=e818]: Catalunan
+            - generic [ref=e819]: Catalunan Grande, Davao City
+            - generic [aria-hidden] [ref=e820]: show on map →
+          - button "Buhangin San Nicolas, Buhangin, Davao City" [ref=e821] [cursor=pointer]:
+            - generic [ref=e822]: Buhangin
+            - generic [ref=e823]: San Nicolas, Buhangin, Davao City
+            - generic [aria-hidden] [ref=e824]: show on map →
+          - button "Tagum 1 Visayan Village, Tagum City" [ref=e825] [cursor=pointer]:
+            - generic [ref=e826]: Tagum 1
+            - generic [ref=e827]: Visayan Village, Tagum City
+            - generic [aria-hidden] [ref=e828]: show on map →
+          - button "Tagum 2 Magugpo, Poblacion, Tagum City" [ref=e829] [cursor=pointer]:
+            - generic [ref=e830]: Tagum 2
+            - generic [ref=e831]: Magugpo, Poblacion, Tagum City
+            - generic [aria-hidden] [ref=e832]: show on map →
+          - button "Tagum 3 Pioneer Ave., Ferido Bldg., Tagum City" [ref=e833] [cursor=pointer]:
+            - generic [ref=e834]: Tagum 3
+            - generic [ref=e835]: Pioneer Ave., Ferido Bldg., Tagum City
+            - generic [aria-hidden] [ref=e836]: show on map →
+          - button "Gensan 1 Rivera St., Lagao, General Santos City" [ref=e837] [cursor=pointer]:
+            - generic [ref=e838]: Gensan 1
+            - generic [ref=e839]: Rivera St., Lagao, General Santos City
+            - generic [aria-hidden] [ref=e840]: show on map →
+          - button "Gensan 2 Adarante St., General Santos City" [ref=e841] [cursor=pointer]:
+            - generic [ref=e842]: Gensan 2
+            - generic [ref=e843]: Adarante St., General Santos City
+            - generic [aria-hidden] [ref=e844]: show on map →
+          - button "Digos Digos City, Davao del Sur" [ref=e845] [cursor=pointer]:
+            - generic [ref=e846]: Digos
+            - generic [ref=e847]: Digos City, Davao del Sur
+            - generic [aria-hidden] [ref=e848]: show on map →
+          - button "Kidapawan Quezon Boulevard, Kidapawan" [ref=e849] [cursor=pointer]:
+            - generic [ref=e850]: Kidapawan
+            - generic [ref=e851]: Quezon Boulevard, Kidapawan
+            - generic [aria-hidden] [ref=e852]: show on map →
+          - button "Toril Crossing Bayabas, Toril, Davao City" [ref=e853] [cursor=pointer]:
+            - generic [ref=e854]: Toril
+            - generic [ref=e855]: Crossing Bayabas, Toril, Davao City
+            - generic [aria-hidden] [ref=e856]: show on map →
+          - button "Dipolog Osmeña Street, beside Minute Burger, Dipolog" [ref=e857] [cursor=pointer]:
+            - generic [ref=e858]: Dipolog
+            - generic [ref=e859]: Osmeña Street, beside Minute Burger, Dipolog
+            - generic [aria-hidden] [ref=e860]: show on map →
+          - button "Dipolog (Miputak) Miputak, Dipolog" [ref=e861] [cursor=pointer]:
+            - generic [ref=e862]: Dipolog (Miputak)
+            - generic [ref=e863]: Miputak, Dipolog
+            - generic [aria-hidden] [ref=e864]: show on map →
+          - button "Surigao City Surigao City, Surigao del Norte" [ref=e865] [cursor=pointer]:
+            - generic [ref=e866]: Surigao City
+            - generic [ref=e867]: Surigao City, Surigao del Norte
+            - generic [aria-hidden] [ref=e868]: show on map →
+    - generic [ref=e870]:
+      - generic [ref=e871]:
+        - generic [ref=e872]: Dine in
+        - heading "In your favorite food parks." [level=2] [ref=e873]
+      - generic [ref=e874]:
+        - article [ref=e875]:
+          - img "Balamban Liempo stall at Sugbo Merkado, IT Park Cebu City" [ref=e876]
+          - generic [ref=e877]:
+            - generic [ref=e878]: Dine-in & take-out
+            - heading "Sugbo Merkado" [level=3] [ref=e879]
+            - paragraph [ref=e880]: IT Park, Cebu City
+        - article [ref=e881]:
+          - img "Balamban Liempo at Atlantis Food Park, Liloan" [ref=e882]
+          - generic [ref=e883]:
+            - generic [ref=e884]: Dine-in & take-out
+            - heading "Atlantis Food Park" [level=3] [ref=e885]
+            - paragraph [ref=e886]: Liloan, Cebu
+        - article [ref=e887]:
+          - img "Now open in Surigao City branch" [ref=e888]
+          - generic [ref=e889]:
+            - generic [ref=e890]: Now open
+            - heading "Surigao City" [level=3] [ref=e891]
+            - paragraph [ref=e892]: Surigao del Norte
+        - article [ref=e893]:
+          - img "Now open in Nazareth, Cagayan de Oro" [ref=e894]
+          - generic [ref=e895]:
+            - generic [ref=e896]: Now open
+            - heading "Nazareth, CDO" [level=3] [ref=e897]
+            - paragraph [ref=e898]: Cagayan de Oro
+    - generic [ref=e901]:
+      - generic [ref=e902]:
+        - generic [ref=e903]: Business
+        - heading "Put a charcoal pit in your city." [level=2] [ref=e904]: Put a charcoal pitin your city.
+        - paragraph [ref=e905]: A proven Cebuano brand with ninety-plus outlets, an award record, and a product people queue for. Franchise packets include the application form, ROI guide and full operations manual.
+        - generic [ref=e906]:
+          - link "Request franchise details" [ref=e907] [cursor=pointer]:
+            - /url: https://www.balambanliempo.com/Franchise.html
+          - link "Talk to us" [ref=e908] [cursor=pointer]:
+            - /url: https://www.balambanliempo.com/ContactUs.html
+      - list [ref=e909]:
+        - listitem [ref=e910]:
+          - generic [ref=e911]: "01"
+          - generic [ref=e912]:
+            - heading "Download the packet" [level=3] [ref=e913]
+            - paragraph [ref=e914]: Application form and ROI guide, ready to fill in, print or save.
+            - generic [ref=e915]:
+              - link "Franchise application form PDF" [ref=e916] [cursor=pointer]:
+                - /url: franchise/balamban-franchise-application-form.pdf
+                - text: Franchise application form
+                - generic [ref=e917]: PDF
+              - link "Investment & ROI guide PDF" [ref=e918] [cursor=pointer]:
+                - /url: franchise/balamban-franchise-roi-guide.pdf
+                - text: Investment & ROI guide
+                - generic [ref=e919]: PDF
+              - link "Official franchise page" [ref=e920] [cursor=pointer]:
+                - /url: https://www.balambanliempo.com/Franchise.html
+                - text: Official franchise page
+                - generic [aria-hidden] [ref=e921]: →
+        - listitem [ref=e922]:
+          - generic [ref=e923]: "02"
+          - generic [ref=e924]:
+            - heading "Site review" [level=3] [ref=e925]
+            - paragraph [ref=e926]: We assess foot traffic, kitchen footprint and supplier reach in your area.
+        - listitem [ref=e927]:
+          - generic [ref=e928]: "03"
+          - generic [ref=e929]:
+            - heading "Train & open" [level=3] [ref=e930]
+            - paragraph [ref=e931]: Herb prep, charcoal roasting and service training before your first sale.
+    - generic [ref=e934]:
+      - generic [ref=e935]:
+        - generic [ref=e936]: Contact
+        - heading "Salo-salo starts here." [level=2] [ref=e937]: Salo-salostarts here.
+        - paragraph [ref=e938]: Orders, catering, wholesale or press — reach the Cebu office directly.
+      - generic [ref=e939]:
+        - link "Phone 0916 514 6144 (+63) 93 961 70729" [ref=e940] [cursor=pointer]:
+          - /url: tel:+639165146144
+          - generic [ref=e941]: Phone
+          - strong [ref=e942]: 0916 514 6144
+          - generic [ref=e943]: (+63) 93 961 70729
+        - link "E-mail balamban.liemponline@gmail.com Orders & franchise" [ref=e944] [cursor=pointer]:
+          - /url: mailto:balamban.liemponline@gmail.com
+          - generic [ref=e945]: E-mail
+          - strong [ref=e946]: balamban.liemponline@gmail.com
+          - generic [ref=e947]: Orders & franchise
+        - generic [ref=e948]:
+          - generic [ref=e949]: Head office
+          - strong [ref=e950]: 1 E-Zone, F. Cabahug St.
+          - generic [ref=e951]: Panagdait, Brgy. Kasambagan, Cebu City
+        - link "Follow Official Facebook page Openings, promos, menu drops" [ref=e952] [cursor=pointer]:
+          - /url: https://www.facebook.com/OfficialBalambanLiempoPage
+          - generic [ref=e953]: Follow
+          - strong [ref=e954]: Official Facebook page
+          - generic [ref=e955]: Openings, promos, menu drops
+  - contentinfo [ref=e956]:
+    - generic [ref=e957]:
+      - generic [ref=e958]:
+        - generic [ref=e959]:
+          - img "Balamban Liempo" [ref=e960]
+          - paragraph [ref=e961]: Tastier than lechon. Herb-stuffed, charcoal-roasted, born in Cebu.
+        - navigation "Footer" [ref=e962]:
+          - generic [ref=e963]:
+            - heading "Explore" [level=4] [ref=e964]
+            - link "Menu" [ref=e965] [cursor=pointer]:
+              - /url: "#products"
+            - link "The Herb Secret" [ref=e966] [cursor=pointer]:
+              - /url: "#herbs"
+            - link "Awards" [ref=e967] [cursor=pointer]:
+              - /url: "#awards"
+            - link "Locations" [ref=e968] [cursor=pointer]:
+              - /url: "#locations"
+          - generic [ref=e969]:
+            - heading "Company" [level=4] [ref=e970]
+            - link "Taste of History" [ref=e971] [cursor=pointer]:
+              - /url: https://www.balambanliempo.com/TasteOfHistory.html
+            - link "Company Mission" [ref=e972] [cursor=pointer]:
+              - /url: https://www.balambanliempo.com/CompanyMission.html
+            - link "Franchise" [ref=e973] [cursor=pointer]:
+              - /url: https://www.balambanliempo.com/Franchise.html
+            - link "Contact Us" [ref=e974] [cursor=pointer]:
+              - /url: https://www.balambanliempo.com/ContactUs.html
+          - generic [ref=e975]:
+            - heading "Order" [level=4] [ref=e976]
+            - link "Deliveries" [ref=e977] [cursor=pointer]:
+              - /url: https://www.balambanliempo.com/delivery.html
+            - link "Branch directory" [ref=e978] [cursor=pointer]:
+              - /url: https://www.balambanliempo.com/balambanliempolocations.html
+            - link "0916 514 6144" [ref=e979] [cursor=pointer]:
+              - /url: tel:+639165146144
+      - generic [ref=e980]:
+        - paragraph [ref=e981]: © 2026 Balamban Liempo. All rights reserved.
+        - generic [ref=e982]:
+          - link "Privacy" [ref=e983] [cursor=pointer]:
+            - /url: https://www.balambanliempo.com/ContactUs.html
+          - link "Terms" [ref=e984] [cursor=pointer]:
+            - /url: https://www.balambanliempo.com/ContactUs.html
+          - link "Back to top" [ref=e985] [cursor=pointer]:
+            - /url: "#home"
+            - text: Back to top ↑

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balamban Liempo — Tastier Than Lechon! | Cebu's Best Roasted Pork Belly</title>
+<meta name="description" content="Balamban Liempo is the pioneer of herb-stuffed lechon liempo and Balambanok roasted chicken. Six-time SunStar Best of Cebu winner. Golden crackling skin, native green herb stuffing, branches nationwide.">
+<meta name="theme-color" content="#3A2312">
+<link rel="icon" href="https://www.balambanliempo.com/assets/images/bllogo-318x142.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Balamban Liempo — Tastier Than Lechon!">
+<meta property="og:description" content="Cebu's best liempo. Herb-stuffed, charcoal-roasted, six-time SunStar Best of Cebu.">
+<meta property="og:image" content="https://www.balambanliempo.com/assets/images/balambanliempo2-2000x1331.jpg">
+<meta property="og:url" content="https://www.balambanliempo.com/">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1;1,9..144,400..900,0..100,0..1&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="vendor/leaflet/leaflet.css" rel="stylesheet">
+<link href="css/styles.css" rel="stylesheet">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="container-xxl d-flex flex-wrap align-items-center justify-content-between gap-2 py-2">
+    <p class="mb-0 small">Charcoal-roasted daily in Cebu &middot; <strong>Nationwide branches</strong></p>
+    <div class="d-flex align-items-center gap-3 small">
+      <a href="tel:+639165146144" class="topbar-link">0916 514 6144</a>
+      <span class="topbar-sep" aria-hidden="true"></span>
+      <a href="mailto:balamban.liemponline@gmail.com" class="topbar-link">balamban.liemponline@gmail.com</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NAV ============ -->
+<nav class="navbar navbar-expand-lg sticky-top bl-nav" id="blNav" aria-label="Main">
+  <div class="container-xxl">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#home">
+      <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="Balamban Liempo" width="132" height="59" class="brand-mark">
+    </a>
+    <button class="navbar-toggler border-0 p-2" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="bl-burger" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="#products">Menu</a></li>
+        <li class="nav-item"><a class="nav-link" href="#herbs">The Herb Secret</a></li>
+        <li class="nav-item"><a class="nav-link" href="#awards">Awards</a></li>
+        <li class="nav-item"><a class="nav-link" href="#locations">Locations</a></li>
+        <li class="nav-item"><a class="nav-link" href="#franchise">Franchise</a></li>
+        <li class="nav-item ms-lg-2">
+          <a class="btn btn-blamber btn-sm px-3" href="https://www.balambanliempo.com/delivery.html">Order Online</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="home">
+  <div class="hero-media" aria-hidden="true">
+    <img src="https://www.balambanliempo.com/assets/images/balambanliempo2-2000x1331.jpg"
+         alt="" fetchpriority="high" decoding="async">
+    <div class="hero-veil"></div>
+    <div class="hero-heat"></div>
+    <canvas class="ember-canvas" id="emberCanvas"></canvas>
+  </div>
+
+  <svg class="banderitas" viewBox="0 0 1200 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 12 Q 300 62 600 22 T 1200 30" fill="none" stroke="rgba(245,235,224,.35)" stroke-width="2"/>
+    <g class="flags"></g>
+  </svg>
+
+  <div class="container-xxl position-relative">
+    <div class="hero-grid">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">Est. Cebu &middot; The pioneer of herb-stuffed liempo</span>
+        <h1 class="display-hero">
+          <span class="hero-cebuano">Mangaon ta!</span>
+          <span class="hero-line">Taste the king of liempo.</span>
+        </h1>
+        <p class="hero-lede">
+          Crackling golden skin, tender succulent meat, and a cavity packed with
+          native Cebuano herbs. <em>Tastier than lechon</em> — and we have the
+          trophies to prove it.
+        </p>
+
+        <div class="hero-cta">
+          <a class="btn btn-blamber btn-lg" href="https://www.balambanliempo.com/delivery.html">
+            Order Online / Delivery
+          </a>
+          <a class="btn btn-ghost btn-lg" href="#locations">
+            Find a Store Near You
+          </a>
+        </div>
+
+        <div class="hero-sizzle">
+          <button class="sizzle-btn" id="sizzleToggle" type="button" aria-pressed="false">
+            <svg class="sizzle-icon" viewBox="0 0 24 24" width="16" height="16" fill="none"
+                 stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <path d="M4 9.5h3.2L12 5.6v12.8L7.2 14.5H4z"/>
+              <path class="sizzle-wave sizzle-wave-1" d="M15.8 9.4a3.6 3.6 0 0 1 0 5.2"/>
+              <path class="sizzle-wave sizzle-wave-2" d="M18.3 7a7.2 7.2 0 0 1 0 10"/>
+            </svg>
+            <span id="sizzleLabel">Hear the sizzle</span>
+          </button>
+          <span class="sizzle-note">live from the charcoal pit</span>
+        </div>
+
+        <ul class="hero-facts">
+          <li><strong>6&times;</strong><span>SunStar Best of Cebu</span></li>
+          <li><strong>600g</strong><span>uncooked per liempo</span></li>
+          <li><strong>90+</strong><span>branches nationwide</span></li>
+        </ul>
+      </div>
+
+      <div class="hero-badge reveal" data-delay="120">
+        <div class="stamp">
+          <span class="stamp-top">SunStar Best of Cebu</span>
+          <span class="stamp-mid">Best<br>Liempo</span>
+          <span class="stamp-bot">Grand Slam &middot; 6&times;</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll" aria-hidden="true"><span></span>scroll</div>
+</header>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Tastier than lechon</span><i>&#9670;</i>
+    <span>Herb-stuffed charcoal roast</span><i>&#9670;</i>
+    <span>Golden crackling skin</span><i>&#9670;</i>
+    <span>Best liempo in Cebu</span><i>&#9670;</i>
+    <span>Mangaon ta</span><i>&#9670;</i>
+    <span>Tastier than lechon</span><i>&#9670;</i>
+    <span>Herb-stuffed charcoal roast</span><i>&#9670;</i>
+    <span>Golden crackling skin</span><i>&#9670;</i>
+    <span>Best liempo in Cebu</span><i>&#9670;</i>
+    <span>Mangaon ta</span><i>&#9670;</i>
+  </div>
+</div>
+
+<!-- ============ PRODUCTS ============ -->
+<section class="section section-cream" id="products">
+  <div class="container-xxl">
+    <div class="section-head reveal">
+      <span class="eyebrow">Ang Menu</span>
+      <h2 class="display-2">Two roasts.<br>Four ways to feast.</h2>
+      <p class="section-lede">
+        Everything is stuffed by hand with the same native green herbs used in
+        authentic Cebu lechon, then roasted over live charcoal until the skin
+        snaps.
+      </p>
+    </div>
+
+    <div class="product-list">
+
+      <article class="product-row reveal">
+        <figure class="product-figure">
+          <img src="https://www.balambanliempo.com/assets/images/balambanliempo2-2000x1331.jpg"
+               alt="Whole Balamban Liempo with crackling golden skin and green herb stuffing" loading="lazy" decoding="async">
+          <figcaption class="product-tag">Signature</figcaption>
+        </figure>
+        <div class="product-body">
+          <span class="product-index">01</span>
+          <h3>Balamban Liempo</h3>
+          <p class="product-desc">
+            Crackling, golden brown skin over very tender, succulent meat, with
+            flavorful and aromatic herbs and other secret green ingredients
+            tucked through the belly.
+          </p>
+          <ul class="product-meta">
+            <li><span>Heat</span> Original</li>
+            <li><span>Net</span> 500g cooked</li>
+            <li><span>Best for</span> Handaan &amp; salo-salo</li>
+          </ul>
+          <a class="text-link" href="https://www.balambanliempo.com/BalambanLiempo.html">Read more <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="product-row product-row-alt reveal">
+        <figure class="product-figure">
+          <img src="https://www.balambanliempo.com/assets/images/sean4a-676x450.jpg"
+               alt="Spicy Balamban Liempo sliced on a board with chili" loading="lazy" decoding="async">
+          <figcaption class="product-tag product-tag-hot">Spicy</figcaption>
+        </figure>
+        <div class="product-body">
+          <span class="product-index">02</span>
+          <h3>BL Spicy</h3>
+          <p class="product-desc">
+            A twist on the signature Balamban Liempo and Balambanok — our answer
+            to the steady stream of customers asking for heat at the table.
+            Same herb backbone, sharper finish.
+          </p>
+          <ul class="product-meta">
+            <li><span>Heat</span> Spicy</li>
+            <li><span>Net</span> 500g cooked</li>
+            <li><span>Best for</span> Suka &amp; sili pairing</li>
+          </ul>
+          <a class="text-link" href="https://www.balambanliempo.com/BLSpicy.html">Read more <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="product-row reveal">
+        <figure class="product-figure">
+          <img src="https://www.balambanliempo.com/assets/images/rys5703-676x450.jpeg"
+               alt="Balambanok roasted chicken stuffed with herbs" loading="lazy" decoding="async">
+          <figcaption class="product-tag product-tag-alt">Roast Chicken</figcaption>
+        </figure>
+        <div class="product-body">
+          <span class="product-index">03</span>
+          <h3>Balambanok</h3>
+          <p class="product-desc">
+            A special concoction of herbs tucked inside producing a careful
+            balance of flavors, complemented by luscious, lip-smacking goodness
+            down to the last insatiable bite.
+          </p>
+          <ul class="product-meta">
+            <li><span>Heat</span> Original</li>
+            <li><span>Cut</span> Whole roasted chicken</li>
+            <li><span>Best for</span> Pamilya dinner</li>
+          </ul>
+          <a class="text-link" href="https://www.balambanliempo.com/balambanok.html">Read more <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+      <article class="product-row product-row-alt reveal">
+        <figure class="product-figure">
+          <img src="https://www.balambanliempo.com/assets/images/1-676x450.jpg"
+               alt="Liempo served over banana leaf with puso hanging rice" loading="lazy" decoding="async">
+          <figcaption class="product-tag product-tag-hot">Spicy</figcaption>
+        </figure>
+        <div class="product-body">
+          <span class="product-index">04</span>
+          <h3>Balambanok Spicy</h3>
+          <p class="product-desc">
+            The Balambanok roast with chilis worked into the stuffing. Serve it
+            the Cebuano way: laid over banana leaf beside puso and a saucer of
+            native vinegar.
+          </p>
+          <ul class="product-meta">
+            <li><span>Heat</span> Spicy</li>
+            <li><span>Cut</span> Whole roasted chicken</li>
+            <li><span>Best for</span> Pulutan &amp; parties</li>
+          </ul>
+          <a class="text-link" href="https://www.balambanliempo.com/BLSpicy.html">Read more <span aria-hidden="true">&rarr;</span></a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY US ============ -->
+<section class="section section-why">
+  <div class="container-xxl">
+    <div class="why-grid">
+      <div class="why-intro reveal">
+        <span class="eyebrow eyebrow-light">Nganong kami?</span>
+        <h2 class="display-2 light">Herbs. Size. Price.</h2>
+        <p class="section-lede light">
+          Three reasons people keep talking about it long after the plate is
+          cleared.
+        </p>
+        <a class="btn btn-blamber mt-3" href="https://www.balambanliempo.com/whatsnew.html">See what's new</a>
+      </div>
+
+      <ol class="why-list">
+        <li class="reveal" data-delay="0">
+          <span class="why-num">01</span>
+          <div>
+            <h3>Herbs</h3>
+            <p>Stacked with the unique and special herbs used in authentic Cebu
+               lechon. A distinct flavor people talk about long after they have
+               tasted the recipe.</p>
+          </div>
+        </li>
+        <li class="reveal" data-delay="90">
+          <span class="why-num">02</span>
+          <div>
+            <h3>Size</h3>
+            <p>600g uncooked, which cooks down to a full 1/2 kilo served. Most
+               take-out liempos put out 250&ndash;300g. Ours is not a snack.</p>
+          </div>
+        </li>
+        <li class="reveal" data-delay="180">
+          <span class="why-num">03</span>
+          <div>
+            <h3>Price</h3>
+            <p>Average lechon runs &#8369;375/kilo in Cebu and about &#8369;600 in
+               Metro Manila. Measured by the kilo, Balamban Liempo comes in
+               better priced — gram per gram, other liempos cost more.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HERB SECRET (interactive) ============ -->
+<section class="section section-cream" id="herbs">
+  <div class="container-xxl">
+    <div class="section-head section-head-split reveal">
+      <div>
+        <span class="eyebrow">Ang Sekreto</span>
+        <h2 class="display-2">What's stuffed<br>inside matters.</h2>
+      </div>
+      <p class="section-lede mb-0">
+        Tap an ingredient to select it, then open the pop-out for the full
+        story. This is the green cavity that makes a Balamban liempo taste
+        nothing like ordinary lechon.
+      </p>
+    </div>
+
+    <div class="herb-layout">
+      <div class="herb-stage reveal">
+        <div class="herb-plate">
+          <img src="https://www.balambanliempo.com/assets/images/3-676x450.jpg"
+               alt="Close-up of chopped liempo with green herbs spilling from the stuffing"
+               loading="lazy" decoding="async">
+        </div>
+        <div class="herb-hint" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 11V6a1.5 1.5 0 0 1 3 0v5"/><path d="M12 11V4.5a1.5 1.5 0 0 1 3 0V11"/><path d="M15 11V6.5a1.5 1.5 0 0 1 3 0V13a7 7 0 0 1-7 7h-1a7 7 0 0 1-7-7v-2a1.5 1.5 0 0 1 3 0"/></svg>
+          select a herb
+        </div>
+      </div>
+
+      <div class="herb-panel">
+        <div class="herb-chips" role="tablist" aria-label="Stuffing ingredients"></div>
+
+        <div class="herb-detail" id="herbDetail" role="tabpanel" aria-live="polite">
+          <span class="herb-detail-kicker">Cebuano stuffing</span>
+          <h3 class="herb-detail-title">Pick an ingredient</h3>
+          <p class="herb-detail-text">Each one is pushed by hand through the belly before the roast
+             goes on the charcoal pit.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <dialog class="herb-popout" id="herbPopout" aria-labelledby="herbPopoutTitle">
+    <div class="herb-popout-inner">
+      <figure class="herb-popout-figure">
+        <img src="https://www.balambanliempo.com/assets/images/3-676x450.jpg"
+             alt="Green Cebuano herbs spilling from a freshly chopped liempo" loading="lazy" decoding="async">
+        <figcaption>Hand-stuffed, then straight to the pit</figcaption>
+      </figure>
+
+      <div class="herb-popout-body">
+        <span class="herb-detail-kicker" id="herbPopoutKicker">Cebuano stuffing</span>
+        <h3 class="herb-popout-title" id="herbPopoutTitle">
+          <span class="herb-popout-name"></span>
+          <span class="herb-popout-cebu"></span>
+        </h3>
+        <p class="herb-popout-text" id="herbPopoutText"></p>
+        <p class="herb-detail-note" id="herbPopoutNote"></p>
+        <dl class="herb-popout-facts">
+          <div><dt>Also called</dt><dd id="herbPopoutCebu2"></dd></div>
+          <div><dt>Goes in</dt><dd>the belly cavity, before roasting</dd></div>
+          <div><dt>Roasted over</dt><dd>live charcoal, 3&ndash;4 hours</dd></div>
+        </dl>
+      </div>
+
+      <button class="herb-popout-close" id="herbPopoutClose" type="button" aria-label="Close pop-out">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+    </div>
+  </dialog>
+</section>
+
+<!-- ============ AWARDS ============ -->
+<section class="section section-awards" id="awards">
+  <div class="awards-texture" aria-hidden="true"></div>
+  <div class="container-xxl position-relative">
+    <div class="awards-grid">
+      <figure class="awards-photo reveal">
+        <img src="https://www.balambanliempo.com/assets/images/441727324-780397564222821-9192718860551373729-n-732x732.jpg"
+             alt="SunStar Best of Cebu award recognition for Balamban Liempo" loading="lazy" decoding="async">
+        <figcaption>SunStar Best of Cebu &mdash; Best Liempo</figcaption>
+      </figure>
+
+      <div class="awards-copy reveal" data-delay="100">
+        <span class="eyebrow eyebrow-light">Social proof</span>
+        <h2 class="display-2 light">
+          Not a home run.<br>A <em>grand slam</em>.
+        </h2>
+        <p class="section-lede light">
+          For the sixth time, SunStar Best of Cebu has named Balamban Liempo
+          the Best Liempo in Cebu. We are not just hitting home runs — we keep
+          clearing the bases.
+        </p>
+
+        <ul class="award-badges">
+          <li><strong>6&times;</strong> Best Liempo of Cebu</li>
+          <li><strong>2024</strong> SunStar Best of Cebu</li>
+          <li><strong>#1</strong> Herb-stuffed liempo pioneer</li>
+        </ul>
+
+        <blockquote class="award-quote">
+          <p>&ldquo;Come celebrate with the most delicious, juicy and crispy liempo in Cebu.&rdquo;</p>
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOCATIONS ============ -->
+<section class="section section-cream" id="locations">
+  <div class="container-xxl">
+    <div class="section-head section-head-split reveal">
+      <div>
+        <span class="eyebrow">Asa dapit?</span>
+        <h2 class="display-2">Find your<br>nearest pit.</h2>
+      </div>
+      <p class="section-lede mb-0">
+        From Cebu City to Cagayan de Oro, Iloilo to Davao. Filter by island or
+        search a city.
+      </p>
+    </div>
+
+    <div class="locator reveal">
+      <div class="locator-controls">
+        <div class="locator-filters" role="group" aria-label="Filter branches by region">
+          <button class="chip is-active" data-region="all" type="button">All <span class="chip-count" data-count-for="all"></span></button>
+          <button class="chip" data-region="visayas" type="button">Visayas <span class="chip-count" data-count-for="visayas"></span></button>
+          <button class="chip" data-region="luzon" type="button">Luzon <span class="chip-count" data-count-for="luzon"></span></button>
+          <button class="chip" data-region="mindanao" type="button">Mindanao <span class="chip-count" data-count-for="mindanao"></span></button>
+        </div>
+        <div class="locator-search">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" id="branchSearch" placeholder="Search city or branch…" aria-label="Search branches" autocomplete="off">
+        </div>
+      </div>
+
+      <p class="locator-count" id="branchCount" role="status">Showing all branches</p>
+
+      <div class="locator-map-wrap" id="branchMapWrap">
+        <div class="locator-map" id="branchMap" role="region"
+             aria-label="Interactive map of Balamban Liempo branches"></div>
+        <p class="map-hint">
+          <span class="map-hint-dot" aria-hidden="true"></span>
+          Every pin is a branch &mdash; click one for the address, or click a
+          branch below to fly to it.
+        </p>
+      </div>
+
+      <div class="locator-body">
+        <div class="branch-groups" id="branchGroups"></div>
+
+        <aside class="locator-maps" id="coverageMaps" aria-label="Branch coverage maps">
+          <p class="maps-head">Branch coverage</p>
+          <figure class="map-card">
+            <img src="https://www.balambanliempo.com/assets/images/mapvisayas-676x450.jpg" alt="Map of Balamban Liempo branches across the Visayas" loading="lazy" decoding="async">
+            <figcaption>Visayas <span>68</span></figcaption>
+          </figure>
+          <figure class="map-card">
+            <img src="https://www.balambanliempo.com/assets/images/mapmindanao-676x450.jpg" alt="Map of Balamban Liempo branches across Mindanao" loading="lazy" decoding="async">
+            <figcaption>Mindanao <span>23</span></figcaption>
+          </figure>
+          <figure class="map-card">
+            <img src="https://www.balambanliempo.com/assets/images/mapluzon-676x450.jpg" alt="Map of Balamban Liempo branches across Luzon" loading="lazy" decoding="async">
+            <figcaption>Luzon <span>5</span></figcaption>
+          </figure>
+        </aside>
+      </div>
+
+      <div class="empty-state" id="branchEmpty" hidden>
+        <strong>No branch matches that search.</strong>
+        <p>Try a city name like <em>Cebu</em>, <em>Iloilo</em> or <em>Davao</em>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOD PARKS ============ -->
+<section class="section section-parks">
+  <div class="container-xxl">
+    <div class="section-head reveal">
+      <span class="eyebrow">Dine in</span>
+      <h2 class="display-2">In your favorite food parks.</h2>
+    </div>
+
+    <div class="parks-grid">
+      <article class="park-card reveal">
+        <img src="https://www.balambanliempo.com/assets/images/283267073-7454408317934726-4276841456887565407-n-960x721.jpg"
+             alt="Balamban Liempo stall at Sugbo Merkado, IT Park Cebu City" loading="lazy" decoding="async">
+        <div class="park-body">
+          <span class="park-flag">Dine-in &amp; take-out</span>
+          <h3>Sugbo Merkado</h3>
+          <p>IT Park, Cebu City</p>
+        </div>
+      </article>
+
+      <article class="park-card reveal" data-delay="110">
+        <img src="https://www.balambanliempo.com/assets/images/281755143-7443988732310018-4283784170820445856-n-586x781.jpg"
+             alt="Balamban Liempo at Atlantis Food Park, Liloan" loading="lazy" decoding="async">
+        <div class="park-body">
+          <span class="park-flag">Dine-in &amp; take-out</span>
+          <h3>Atlantis Food Park</h3>
+          <p>Liloan, Cebu</p>
+        </div>
+      </article>
+
+      <article class="park-card park-card-open reveal" data-delay="220">
+        <img src="https://www.balambanliempo.com/assets/images/513876565-722269780404794-8403549196866777266-n-732x976.jpg"
+             alt="Now open in Surigao City branch" loading="lazy" decoding="async">
+        <div class="park-body">
+          <span class="park-flag park-flag-open">Now open</span>
+          <h3>Surigao City</h3>
+          <p>Surigao del Norte</p>
+        </div>
+      </article>
+
+      <article class="park-card park-card-open reveal" data-delay="330">
+        <img src="https://www.balambanliempo.com/assets/images/499932424-24832751912981570-1582682626986502094-n-732x976.jpg"
+             alt="Now open in Nazareth, Cagayan de Oro" loading="lazy" decoding="async">
+        <div class="park-body">
+          <span class="park-flag park-flag-open">Now open</span>
+          <h3>Nazareth, CDO</h3>
+          <p>Cagayan de Oro</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FRANCHISE ============ -->
+<section class="section section-franchise" id="franchise">
+  <div class="container-xxl">
+    <div class="franchise-grid">
+      <div class="franchise-copy reveal">
+        <span class="eyebrow eyebrow-light">Business</span>
+        <h2 class="display-2 light">Put a charcoal pit<br>in your city.</h2>
+        <p class="section-lede light">
+          A proven Cebuano brand with ninety-plus outlets, an award record, and
+          a product people queue for. Franchise packets include the application
+          form, ROI guide and full operations manual.
+        </p>
+
+        <div class="franchise-actions">
+          <a class="btn btn-blamber btn-lg" href="https://www.balambanliempo.com/Franchise.html">Request franchise details</a>
+          <a class="btn btn-ghost btn-lg" href="https://www.balambanliempo.com/ContactUs.html">Talk to us</a>
+        </div>
+      </div>
+
+      <ul class="franchise-steps">
+        <li class="reveal" data-delay="0">
+          <span class="step-num">01</span>
+          <div>
+            <h3>Download the packet</h3>
+            <p>Application form and ROI guide, ready to fill in, print or save.</p>
+            <div class="franchise-downloads">
+              <a class="text-link text-link-light" href="franchise/balamban-franchise-application-form.pdf" download>
+                Franchise application form <span class="file-kind">PDF</span>
+              </a>
+              <a class="text-link text-link-light" href="franchise/balamban-franchise-roi-guide.pdf" download>
+                Investment &amp; ROI guide <span class="file-kind">PDF</span>
+              </a>
+              <a class="text-link text-link-light" href="https://www.balambanliempo.com/Franchise.html">
+                Official franchise page <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </div>
+        </li>
+        <li class="reveal" data-delay="90">
+          <span class="step-num">02</span>
+          <div>
+            <h3>Site review</h3>
+            <p>We assess foot traffic, kitchen footprint and supplier reach in your area.</p>
+          </div>
+        </li>
+        <li class="reveal" data-delay="180">
+          <span class="step-num">03</span>
+          <div>
+            <h3>Train &amp; open</h3>
+            <p>Herb prep, charcoal roasting and service training before your first sale.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section section-cream" id="contact">
+  <div class="container-xxl">
+    <div class="contact-grid">
+      <div class="reveal">
+        <span class="eyebrow">Contact</span>
+        <h2 class="display-2">Salo-salo<br>starts here.</h2>
+        <p class="section-lede">
+          Orders, catering, wholesale or press — reach the Cebu office directly.
+        </p>
+      </div>
+
+      <div class="contact-cards">
+        <a class="contact-card reveal" href="tel:+639165146144">
+          <span class="contact-label">Phone</span>
+          <strong>0916 514 6144</strong>
+          <span class="contact-sub">(+63) 93 961 70729</span>
+        </a>
+        <a class="contact-card reveal" data-delay="80" href="mailto:balamban.liemponline@gmail.com">
+          <span class="contact-label">E-mail</span>
+          <strong>balamban.liemponline<wbr>@gmail.com</strong>
+          <span class="contact-sub">Orders &amp; franchise</span>
+        </a>
+        <div class="contact-card reveal" data-delay="160">
+          <span class="contact-label">Head office</span>
+          <strong>1 E-Zone, F. Cabahug St.</strong>
+          <span class="contact-sub">Panagdait, Brgy. Kasambagan, Cebu City</span>
+        </div>
+        <a class="contact-card reveal" data-delay="240" href="https://www.facebook.com/OfficialBalambanLiempoPage" rel="noopener" target="_blank">
+          <span class="contact-label">Follow</span>
+          <strong>Official Facebook page</strong>
+          <span class="contact-sub">Openings, promos, menu drops</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bl-footer">
+  <div class="container-xxl">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="Balamban Liempo" width="150" height="67" loading="lazy">
+        <p>Tastier than lechon. Herb-stuffed, charcoal-roasted, born in Cebu.</p>
+      </div>
+
+      <nav class="footer-nav" aria-label="Footer">
+        <div>
+          <h4>Explore</h4>
+          <a href="#products">Menu</a>
+          <a href="#herbs">The Herb Secret</a>
+          <a href="#awards">Awards</a>
+          <a href="#locations">Locations</a>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <a href="https://www.balambanliempo.com/TasteOfHistory.html">Taste of History</a>
+          <a href="https://www.balambanliempo.com/CompanyMission.html">Company Mission</a>
+          <a href="https://www.balambanliempo.com/Franchise.html">Franchise</a>
+          <a href="https://www.balambanliempo.com/ContactUs.html">Contact Us</a>
+        </div>
+        <div>
+          <h4>Order</h4>
+          <a href="https://www.balambanliempo.com/delivery.html">Deliveries</a>
+          <a href="https://www.balambanliempo.com/balambanliempolocations.html">Branch directory</a>
+          <a href="tel:+639165146144">0916 514 6144</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; <span id="year">2026</span> Balamban Liempo. All rights reserved.</p>
+      <div class="footer-legal">
+        <a href="https://www.balambanliempo.com/ContactUs.html">Privacy</a>
+        <a href="https://www.balambanliempo.com/ContactUs.html">Terms</a>
+        <a href="#home" class="back-top">Back to top <span aria-hidden="true">&uarr;</span></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/leaflet/leaflet.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

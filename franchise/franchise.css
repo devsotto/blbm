@@ -1,0 +1,322 @@
+/* ==========================================================================
+   Balamban Liempo — franchise downloads (application form + ROI guide)
+   On-brand, print-first: renders on screen and exports cleanly to A4 PDF.
+   ========================================================================== */
+
+:root {
+  --charcoal:      #3A2312;
+  --charcoal-deep: #2A180C;
+  --charcoal-soft: #4C3119;
+  --amber:         #D48C28;
+  --amber-bright:  #E9A63F;
+  --amber-deep:    #B87418;
+  --herb:          #3E6B34;
+  --herb-bright:   #5A8C4B;
+  --banana:        #8C9E5B;
+  --cream:         #F5EBE0;
+  --cream-deep:    #EDE0D2;
+  --cream-warm:    #FBF5EE;
+  --f-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --f-body: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--cream-deep);
+  color: var(--charcoal);
+  font-family: var(--f-body);
+  font-size: 10.5pt;
+  line-height: 1.5;
+}
+
+.sheet {
+  width: min(210mm, 100%);
+  margin: 24px auto;
+  padding: 16mm 14mm;
+  background: #fff;
+  box-shadow: 0 28px 60px -30px rgba(58, 35, 18, .5);
+}
+
+/* --- masthead --- */
+.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 3px solid var(--charcoal);
+}
+.brand { display: flex; align-items: center; gap: 11px; }
+.brand img { width: 74px; height: auto; display: block; }
+.brand-text { display: grid; gap: 1px; }
+.brand-name {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 15pt;
+  letter-spacing: -.01em;
+  line-height: 1;
+}
+.brand-tag {
+  font-size: 7pt;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--amber-deep);
+  font-weight: 700;
+}
+.doc-meta {
+  text-align: right;
+  font-size: 7.5pt;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(58, 35, 18, .62);
+  display: grid;
+  gap: 3px;
+}
+.doc-meta strong { color: var(--charcoal); font-size: 8.5pt; }
+
+h1 {
+  font-family: var(--f-display);
+  font-size: 27pt;
+  line-height: 1.03;
+  letter-spacing: -.02em;
+  margin: 26px 0 6px;
+}
+h1 em { font-style: italic; color: var(--amber-deep); }
+
+.lede {
+  margin: 0 0 22px;
+  max-width: 62ch;
+  color: rgba(58, 35, 18, .78);
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--herb);
+  margin-top: 26px;
+}
+
+h2 {
+  font-family: var(--f-display);
+  font-size: 13.5pt;
+  margin: 4px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1.5px solid var(--cream-deep);
+}
+
+h3 {
+  font-size: 9pt;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--herb);
+  margin: 18px 0 8px;
+}
+
+/* --- disclaimer --- */
+.disclaimer {
+  border-left: 4px solid var(--amber);
+  background: rgba(212, 140, 40, .1);
+  padding: 11px 14px;
+  font-size: 8.5pt;
+  line-height: 1.5;
+  margin: 18px 0 0;
+  border-radius: 0 4px 4px 0;
+}
+.disclaimer strong {
+  display: block;
+  font-size: 7.5pt;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--amber-deep);
+  margin-bottom: 3px;
+}
+
+/* --- form fields --- */
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 20px;
+}
+.field-grid .full { grid-column: 1 / -1; }
+.field { display: grid; gap: 5px; }
+.field label,
+.field-label {
+  font-size: 7.5pt;
+  font-weight: 700;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: rgba(58, 35, 18, .68);
+}
+.field .line {
+  min-height: 26px;
+  border-bottom: 1.2px solid rgba(58, 35, 18, .38);
+}
+.field .hint { font-size: 7.5pt; color: rgba(58, 35, 18, .5); }
+
+.checks { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 4px; }
+.check { display: inline-flex; align-items: center; gap: 7px; font-size: 9.5pt; }
+.check i {
+  width: 13px; height: 13px;
+  border: 1.2px solid rgba(58, 35, 18, .55);
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.answer {
+  min-height: 46px;
+  border: 1.2px solid rgba(58, 35, 18, .3);
+  border-radius: 4px;
+  background: var(--cream-warm);
+}
+
+.signature-row {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 26px;
+  margin-top: 34px;
+}
+.signature .line { border-bottom: 1.2px solid var(--charcoal); min-height: 40px; }
+.signature span {
+  display: block;
+  margin-top: 6px;
+  font-size: 7.5pt;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(58, 35, 18, .6);
+}
+
+/* --- tables --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+  font-size: 9.5pt;
+}
+th, td {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--cream-deep);
+}
+th {
+  font-size: 7.5pt;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: rgba(58, 35, 18, .6);
+  border-bottom: 1.5px solid var(--charcoal);
+}
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+tbody tr:nth-child(even) { background: rgba(251, 245, 238, .8); }
+tfoot td {
+  font-weight: 700;
+  background: var(--charcoal);
+  color: var(--cream);
+  border-bottom: none;
+}
+.tag {
+  display: inline-block;
+  font-size: 6.8pt;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 20px;
+  background: rgba(62, 107, 52, .14);
+  color: var(--herb);
+}
+
+/* --- inclusions --- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+}
+.card {
+  border: 1px solid var(--cream-deep);
+  border-radius: 6px;
+  padding: 12px 13px;
+  background: var(--cream-warm);
+}
+.card b {
+  display: block;
+  font-family: var(--f-display);
+  font-size: 10.5pt;
+  margin-bottom: 4px;
+}
+.card p { margin: 0; font-size: 8.5pt; color: rgba(58, 35, 18, .74); }
+
+.steps { counter-reset: step; display: grid; gap: 11px; margin-top: 8px; padding: 0; list-style: none; }
+.steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.steps li::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 14pt;
+  color: var(--amber-deep);
+  line-height: 1.1;
+}
+.steps b { display: block; font-size: 10pt; }
+.steps span { font-size: 8.8pt; color: rgba(58, 35, 18, .74); }
+
+.note {
+  font-size: 8.3pt;
+  color: rgba(58, 35, 18, .66);
+  border-top: 1px dashed rgba(58, 35, 18, .3);
+  padding-top: 10px;
+  margin-top: 16px;
+}
+
+.footer {
+  margin-top: 30px;
+  padding-top: 13px;
+  border-top: 3px solid var(--charcoal);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-size: 8pt;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(58, 35, 18, .66);
+}
+.footer strong { color: var(--charcoal); }
+
+.backlink {
+  display: inline-block;
+  margin: 0 auto 4px;
+  font-size: 8pt;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--herb);
+  text-decoration: none;
+  font-weight: 700;
+}
+.backlink:hover { color: var(--amber-deep); }
+
+@media (max-width: 720px) {
+  .sheet { margin: 0; padding: 26px 20px; box-shadow: none; }
+  .field-grid, .cards, .signature-row { grid-template-columns: 1fr; }
+}
+
+@media print {
+  @page { size: A4; margin: 14mm 13mm; }
+  body { background: #fff; font-size: 9.7pt; }
+  .sheet { width: auto; margin: 0; padding: 0; box-shadow: none; }
+  .backlink, .screen-only { display: none !important; }
+  h1 { font-size: 24pt; margin-top: 18px; }
+  .card, .answer, .disclaimer { break-inside: avoid; }
+  tr { break-inside: avoid; }
+}
