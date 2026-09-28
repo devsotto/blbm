@@ -186,13 +186,45 @@
       window.addEventListener('scroll', onScroll, { passive: true });
     }
 
-    // close the mobile drawer after picking a link
+    // close the mobile drawer after picking a link.
+    // the "About Us" toggle only expands its own submenu, so it must not shut
+    // the drawer out from under it.
     if (collapseEl) {
-      collapseEl.querySelectorAll('a[href^="#"]').forEach((a) => {
-        a.addEventListener('click', () => {
+      let pendingHash = null;
+
+      collapseEl.querySelectorAll('a[href^="#"]:not(.dropdown-toggle)').forEach((a) => {
+        a.addEventListener('click', (e) => {
           const instance = bootstrap.Collapse.getInstance(collapseEl);
-          if (instance && collapseEl.classList.contains('show')) instance.hide();
+          if (!instance || !collapseEl.classList.contains('show')) return;
+
+          // the drawer sits in normal flow: collapsing it reflows the page, so
+          // letting the browser scroll straight away lands off-target. Wait for
+          // the layout to settle, then navigate.
+          e.preventDefault();
+          pendingHash = a.getAttribute('href');
+          instance.hide();
         });
+      });
+
+      collapseEl.addEventListener('hidden.bs.collapse', () => {
+        const open = collapseEl.querySelector('.dropdown-toggle[aria-expanded="true"]');
+        if (open) bootstrap.Dropdown.getOrCreateInstance(open).hide();
+
+        if (!pendingHash) return;
+        const hash = pendingHash;
+        pendingHash = null;
+
+        let target = null;
+        if (hash.length > 1) {
+          try { target = document.querySelector(hash); } catch (e) { target = null; }
+        }
+        if (!target) return;
+
+        if (location.hash === hash) {
+          target.scrollIntoView({ block: 'start', behavior: 'instant' });
+        } else {
+          location.hash = hash;
+        }
       });
     }
 

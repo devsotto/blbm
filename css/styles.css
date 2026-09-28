@@ -313,6 +313,79 @@ h3 {
 .nav-social .social-link { width: 30px; height: 30px; background: transparent; }
 .nav-social .social-link:hover { background: var(--amber); }
 
+/* --- About Us dropdown (nav budget: 5 top-level items) --- */
+.bl-nav .dropdown-toggle::after {
+  vertical-align: .18em;
+  margin-left: .45rem;
+  border-top-color: rgba(58, 35, 18, .55);
+  transition: transform .22s var(--ease);
+}
+.bl-nav .dropdown-toggle:hover::after,
+.bl-nav .dropdown-toggle[aria-expanded="true"]::after {
+  border-top-color: var(--charcoal);
+  transform: rotate(180deg);
+}
+.bl-nav .dropdown-toggle.is-current::after { border-top-color: var(--charcoal); }
+
+.bl-subnav {
+  min-width: 15.5rem;
+  margin: .4rem 0 0;
+  padding: .65rem .5rem .55rem;
+  border: 1px solid rgba(58, 35, 18, .13);
+  border-radius: 10px;
+  background: rgba(251, 245, 238, .97);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow: var(--lift-md);
+  overflow: hidden;
+}
+.bl-subnav::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 5px;
+  background:
+    repeating-linear-gradient(45deg, var(--banana) 0 6px, transparent 6px 12px),
+    repeating-linear-gradient(-45deg, var(--amber) 0 6px, transparent 6px 12px);
+  opacity: .7;
+}
+.bl-subnav .dropdown-item {
+  font-size: .93rem;
+  font-weight: 500;
+  color: rgba(58, 35, 18, .8);
+  padding: .55rem .8rem;
+  border-radius: 6px;
+  transition: background-color .18s var(--ease), color .18s var(--ease);
+}
+.bl-subnav .dropdown-item:hover,
+.bl-subnav .dropdown-item:focus-visible {
+  background: rgba(212, 140, 40, .17);
+  color: var(--charcoal-deep);
+}
+.bl-subnav .dropdown-item.active {
+  background: rgba(212, 140, 40, .22);
+  color: var(--charcoal-deep);
+  font-weight: 600;
+}
+
+@media (max-width: 991.98px) {
+  .bl-nav .bl-subnav {
+    position: static;
+    float: none;
+    width: auto;
+    min-width: 0;
+    margin: .1rem 0 .5rem;
+    padding: .35rem;
+    border: 0;
+    background: rgba(58, 35, 18, .06);
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .bl-nav .bl-subnav::before { display: none; }
+  .bl-nav .bl-subnav .dropdown-item { padding: .5rem .8rem; }
+}
+
 .social-row-dark .social-link {
   color: rgba(245, 235, 224, .78);
   background: rgba(245, 235, 224, .07);
@@ -724,6 +797,73 @@ h3 {
 /* ==========================================================================
    Why — dark
    ========================================================================== */
+
+/* --- Mission callout (#mission) --- */
+.section-mission {
+  padding: clamp(.5rem, 2vw, 1.5rem) 0 clamp(3.5rem, 7vw, 6rem);
+}
+
+.mission-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: clamp(1.5rem, 4vw, 3.25rem);
+  align-items: start;
+  padding: clamp(2.25rem, 5vw, 3.5rem) clamp(1.5rem, 4vw, 3rem);
+  background: var(--cream-warm);
+  border: 1px solid rgba(58, 35, 18, .14);
+  border-radius: 10px;
+  box-shadow: var(--lift-md);
+  overflow: hidden;
+}
+.mission-card::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 7px;
+  background:
+    repeating-linear-gradient(45deg, var(--banana) 0 7px, transparent 7px 14px),
+    repeating-linear-gradient(-45deg, var(--amber) 0 7px, transparent 7px 14px);
+  opacity: .8;
+}
+.mission-card::after {
+  content: "";
+  position: absolute;
+  inset: 9px;
+  border: 1px solid rgba(212, 140, 40, .3);
+  border-radius: 5px;
+  pointer-events: none;
+}
+.mission-card > * { position: relative; z-index: 1; }
+
+.mission-head .display-2 { margin-top: .75rem; }
+
+.mission-body p {
+  margin: 0;
+  font-size: clamp(1rem, 1.35vw, 1.1rem);
+  line-height: 1.78;
+  color: rgba(58, 35, 18, .82);
+}
+.mission-body p + p {
+  margin-top: 1.1rem;
+  padding-top: 1.1rem;
+  border-top: 1px dashed rgba(58, 35, 18, .22);
+}
+
+.mission-foot {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  margin-top: clamp(.25rem, 1.5vw, .75rem);
+  padding-top: clamp(1.1rem, 2.5vw, 1.6rem);
+  border-top: 1px solid rgba(58, 35, 18, .12);
+}
+
+@media (max-width: 860px) {
+  .mission-card { grid-template-columns: 1fr; }
+}
 
 .section-why {
   background:
