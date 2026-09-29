@@ -49,8 +49,13 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 6.5rem;
   -webkit-text-size-adjust: 100%;
+}
+
+main,
+.hero,
+.section {
+  scroll-margin-top: 6.5rem;
 }
 
 body {
@@ -313,19 +318,46 @@ h3 {
 .nav-social .social-link { width: 30px; height: 30px; background: transparent; }
 .nav-social .social-link:hover { background: var(--amber); }
 
-/* --- About Us dropdown (nav budget: 5 top-level items) --- */
-.bl-nav .dropdown-toggle::after {
-  vertical-align: .18em;
+/* --- About Us dropdown (nav budget: 5 top-level items) ---
+   .nav-link::after above is the shared hover underline, and Bootstrap hangs its
+   caret off ::after too — so strip the triangle from ::after and carry it on an
+   element of its own. Both affordances then survive: underline on hover, caret
+   that darkens while the sub-menu is open. */
+.bl-nav .dropdown-toggle::after { border: 0; }
+
+.bl-nav .nav-caret {
+  display: inline-block;
   margin-left: .45rem;
-  border-top-color: rgba(58, 35, 18, .55);
-  transition: transform .22s var(--ease);
+  vertical-align: .18em;
+  border-top: .3em solid rgba(58, 35, 18, .55);
+  border-left: .3em solid transparent;
+  border-right: .3em solid transparent;
+  transition: border-top-color .18s var(--ease);
 }
-.bl-nav .dropdown-toggle:hover::after,
-.bl-nav .dropdown-toggle[aria-expanded="true"]::after {
+.bl-nav .dropdown-toggle:hover .nav-caret,
+.bl-nav .dropdown-toggle[aria-expanded="true"] .nav-caret,
+.bl-nav .dropdown-toggle.is-current .nav-caret {
   border-top-color: var(--charcoal);
-  transform: rotate(180deg);
 }
-.bl-nav .dropdown-toggle.is-current::after { border-top-color: var(--charcoal); }
+
+/* Bootstrap paints a blue halo on every focused .nav-link; the site's ring is amber */
+.bl-nav .nav-link:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+
+/* plain fade — no rotation, no slide, no swing */
+.bl-nav .dropdown-menu.bl-subnav.show {
+  animation: blSubnavFade .16s var(--ease) both;
+}
+@keyframes blSubnavFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bl-nav .dropdown-menu.bl-subnav.show { animation: none; }
+}
 
 .bl-subnav {
   min-width: 15.5rem;
@@ -1522,7 +1554,61 @@ body.map-ready.map-tiles-down #coverageMaps { display: grid; }
 .franchise-grid { display: grid; gap: clamp(2.5rem, 6vw, 4.5rem); align-items: start; }
 @media (min-width: 992px) { .franchise-grid { grid-template-columns: 1fr 1fr; } }
 
-.franchise-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
+/* the steps column runs longer than the pitch, so the copy column stretches
+   and parks its CTA row on the same baseline as the closing inquiry card */
+.franchise-copy { align-self: stretch; display: flex; flex-direction: column; }
+.franchise-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: auto; padding-top: 2rem; }
+
+/* --- founder's letter --- */
+.franchise-letter {
+  margin: 1.9rem 0 0;
+  padding: clamp(1.15rem, 2.4vw, 1.5rem) clamp(1.15rem, 2.6vw, 1.6rem) clamp(1rem, 2vw, 1.2rem);
+  background: rgba(245, 235, 224, .05);
+  border: 1px solid rgba(245, 235, 224, .13);
+  border-left: 3px solid var(--amber);
+  border-radius: 6px;
+}
+.franchise-letter blockquote { margin: 0; }
+.franchise-letter blockquote p {
+  margin: 0;
+  font-family: var(--f-display);
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
+  font-style: italic;
+  line-height: 1.62;
+  color: rgba(245, 235, 224, .88);
+}
+.franchise-letter figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: .2rem .6rem;
+  margin-top: 1rem;
+  padding-top: .85rem;
+  border-top: 1px dashed rgba(212, 140, 40, .38);
+  font-size: .74rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(245, 235, 224, .6);
+}
+.franchise-letter figcaption strong {
+  font-family: var(--f-display);
+  font-size: .98rem;
+  font-weight: 700;
+  letter-spacing: .01em;
+  text-transform: none;
+  color: var(--amber-bright);
+}
+
+/* --- how to franchise --- */
+.franchise-how { display: grid; gap: clamp(1.4rem, 3vw, 2rem); align-content: start; }
+.franchise-how-head .eyebrow { margin-bottom: .6rem; }
+.franchise-how-head h3 {
+  color: var(--cream);
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  margin-bottom: .5rem;
+}
+.franchise-how-head p { margin: 0; font-size: .96rem; line-height: 1.6; color: rgba(245, 235, 224, .72); }
 
 .franchise-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
 .franchise-steps li {
@@ -1549,18 +1635,63 @@ body.map-ready.map-tiles-down #coverageMaps { display: grid; }
 }
 .franchise-steps h3 { color: var(--cream); font-size: 1.2rem; margin-bottom: .35rem; }
 .franchise-steps p { margin: 0; font-size: .94rem; color: rgba(245, 235, 224, .72); }
-
-.franchise-downloads { display: grid; gap: .55rem; justify-items: start; margin-top: .85rem; }
-.franchise-downloads .text-link { font-size: .9rem; }
-.file-kind {
-  display: inline-block;
-  font-size: .6rem; font-weight: 700;
-  letter-spacing: .14em;
-  padding: .16rem .42rem;
-  border: 1px solid rgba(233, 166, 63, .5);
-  border-radius: 3px;
+.franchise-steps p strong { color: var(--amber-bright); font-weight: 700; }
+.franchise-steps p a {
   color: var(--amber-bright);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  overflow-wrap: anywhere;
+  transition: color .2s var(--ease);
 }
+.franchise-steps p a:hover { color: var(--cream); }
+
+/* --- inquiry contact block --- */
+.franchise-inquiries {
+  display: grid;
+  justify-items: start;
+  gap: .3rem;
+  padding: clamp(1.1rem, 2.4vw, 1.35rem) clamp(1.15rem, 2.6vw, 1.5rem);
+  background: rgba(212, 140, 40, .12);
+  border: 1px solid rgba(233, 166, 63, .38);
+  border-radius: 6px;
+}
+.franchise-inquiries-label {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  color: rgba(245, 235, 224, .62);
+}
+.franchise-inquiries-name {
+  font-family: var(--f-display);
+  font-size: clamp(1.3rem, 2vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: -.015em;
+  color: var(--cream);
+}
+.franchise-inquiries-numbers {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .35rem .75rem;
+  margin-top: .35rem;
+  font-family: var(--f-display);
+  font-size: clamp(1.05rem, 1.5vw, 1.18rem);
+  font-variant-numeric: tabular-nums;
+}
+.franchise-inquiries-numbers a {
+  color: var(--amber-bright);
+  text-decoration: none;
+  transition: color .2s var(--ease);
+}
+.franchise-inquiries-numbers a:hover,
+.franchise-inquiries-numbers a:focus-visible {
+  color: var(--cream);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.franchise-inquiries-numbers span { color: rgba(245, 235, 224, .35); }
 
 .franchise-perks {
   list-style: none;

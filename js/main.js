@@ -252,6 +252,132 @@
   }
 
   /* ----------------------------------------------------------------------
+     3b. "About Us" sub-menu — hover on desktop, tap on mobile
+     ---------------------------------------------------------------------- */
+  function initAboutDropdown() {
+    const item = document.querySelector('.bl-nav .dropdown');
+    if (!item || typeof bootstrap === 'undefined' || !bootstrap.Dropdown) return;
+
+    const toggle = item.querySelector('.dropdown-toggle');
+    const menu = item.querySelector('.dropdown-menu');
+    if (!toggle || !menu) return;
+
+    const dd = bootstrap.Dropdown.getOrCreateInstance(toggle, { autoClose: false });
+    const canHover = window.matchMedia('(min-width: 992px) and (hover: hover) and (pointer: fine)');
+    const isOpen = () => menu.classList.contains('show');
+
+    const nativeFocus = toggle.focus.bind(toggle);
+    toggle.focus = (options) => nativeFocus(Object.assign({ preventScroll: true }, options));
+
+    // show() focuses the toggle, which re-enters focusin — guard so we do not
+    // stand up a second Popper instance every time the menu opens.
+    let opening = false;
+    let quiet = false;      // we are undoing show()'s focus — skip the focusout close
+    let swallowUntil = 0;   // a pointer open still owes the toggle its focus back
+    let refocusing = false; // Escape handed focus back — don't read it as an open
+    const show = () => {
+      if (isOpen() || opening) return;
+      opening = true;
+      try { dd.show(); } finally { opening = false; }
+    };
+
+    // show() hands focus to the toggle once the menu has finished opening, so a
+    // pointer open has to catch it on the way in: no halo under the cursor.
+    // Keyboard opens never arm the swallow — Tab has to walk into the sub-menu.
+    const releaseFocus = () => {
+      if (document.activeElement !== toggle) return;
+      quiet = true;
+      try { toggle.blur(); } finally { quiet = false; }
+    };
+    const openForPointer = () => {
+      if (isOpen()) return;   // already up: leave focus where it is
+      swallowUntil = Date.now() + 1000;
+      show();
+      if (document.activeElement === toggle) {
+        swallowUntil = 0;
+        releaseFocus();
+      }
+    };
+    const openForFocus = () => {
+      if (refocusing) return;
+      // Touch focuses the link before the click lands — on those devices the
+      // tap owns the open, or the two handlers cancel each other out.
+      if (!canHover.matches) return;
+      if (swallowUntil && Date.now() < swallowUntil) {
+        swallowUntil = 0;
+        releaseFocus();
+        return;
+      }
+      show();
+    };
+    const close = () => { if (!isOpen()) return; dd.hide(); };
+
+    item.addEventListener('mouseenter', () => { if (canHover.matches) openForPointer(); });
+    item.addEventListener('mouseleave', close);
+
+    item.addEventListener('focusin', openForFocus);
+    item.addEventListener('focusout', (e) => {
+      if (quiet) return;
+      if (!item.contains(e.relatedTarget)) close();
+    });
+
+    // Desktop: hover owns the sub-menu, so a click under the pointer keeps it
+    // open instead of toggling it shut. Mobile: a plain tap toggles it and the
+    // parent link must never jump away.
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      const fromPointer = e.detail > 0;
+      if (isOpen()) {
+        if (fromPointer && canHover.matches) return;
+        close();
+        return;
+      }
+      if (fromPointer) openForPointer();
+      else { swallowUntil = 0; show(); }   // keyboard activation keeps focus
+    });
+
+    // click away, pick a sub-entry, or press Escape — all close it
+    document.addEventListener('click', (e) => {
+      if (!item.contains(e.target)) close();
+    });
+    menu.addEventListener('click', (e) => {
+      if (e.target.closest('a')) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') close();
+    });
+
+    // Bootstrap's dropdown keydown data-api is delegated on document in the
+    // capture phase, hunting for a [data-bs-toggle="dropdown"] ancestor that
+    // this toggle deliberately dropped — fed nothing it throws. Swallow those
+    // keys on window capture, which runs before document capture, and own them.
+    window.addEventListener('keydown', (e) => {
+      if (!menu.contains(e.target)) return;
+      if (e.key !== 'Escape' && e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (e.key === 'Escape') {
+        close();
+        // focusin on the toggle would reopen — hold it off for the refocus.
+        refocusing = true;
+        try { toggle.focus(); } finally { refocusing = false; }
+        return;
+      }
+
+      const items = Array.from(menu.querySelectorAll('a[href]'));
+      const i = items.indexOf(document.activeElement);
+      const at = e.key === 'ArrowDown'
+        ? (i < 0 ? 0 : (i + 1) % items.length)
+        : (i < 0 ? items.length - 1 : (i - 1 + items.length) % items.length);
+      if (items[at]) items[at].focus();
+    }, true);
+
+    canHover.addEventListener('change', close);
+  }
+
+  /* ----------------------------------------------------------------------
      4. Herb stuffing pop-outs
      ---------------------------------------------------------------------- */
   const HERBS = [
@@ -971,6 +1097,7 @@
     initEmbers();
     initReveal();
     initNav();
+    initAboutDropdown();
     initHerbs();
     initLocator();
     initContactForm();

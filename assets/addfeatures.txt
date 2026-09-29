@@ -1,0 +1,9 @@
+- remove the "How it works"/sp-section section from http://localhost:3000/delivery
+
+- in the http://localhost:3000/delivery add the information of ordering using apps from https://www.balambanliempo.com/orderfoodapps.html with (new) layout UI/UX following branding and styling of the current (new) website
+
+About Us w/ drop-down, page scroll-up when hovered, seems like bug to me. remove that behaviour
+
+Clean up all associated CSS and JavaScript
+
+Note: Do not use, invoke, or initialize Playwright or any browser tools for this task(s)
