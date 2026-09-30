@@ -591,24 +591,6 @@ h3 {
   letter-spacing: -.02em;
 }
 
-.hero-scroll {
-  position: absolute; bottom: 1.5rem; left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  display: grid; justify-items: center; gap: .5rem;
-  font-size: .64rem; letter-spacing: .24em; text-transform: uppercase;
-  color: rgba(245, 235, 224, .5);
-}
-.hero-scroll span {
-  width: 1px; height: 34px;
-  background: linear-gradient(rgba(233, 166, 63, 0), var(--amber-bright));
-  animation: scrollPulse 2s var(--ease) infinite;
-}
-@keyframes scrollPulse {
-  0%, 100% { opacity: .3; transform: scaleY(.55); }
-  50% { opacity: 1; transform: scaleY(1); }
-}
-
 /* --- live charcoal: heat glow and flying embers --- */
 .hero-heat {
   position: absolute; inset: auto 0 0 0;
@@ -1355,6 +1337,14 @@ h3 {
   margin-top: .25rem;
 }
 .leaflet-container a { color: var(--amber-deep); }
+/* map popup call link — amber-deep only reaches 3.5:1 on the popup's white,
+   so the tel link takes the brand link colour instead (7.6:1) */
+.leaflet-container a.bl-popup-tel {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--brand-primary, #9A2C2C);
+}
+.leaflet-container a.bl-popup-tel:hover { color: var(--brand-hover, #78350F); }
 
 /* static coverage maps stand in when the live map is unavailable */
 body.map-ready #coverageMaps { display: none; }
@@ -1382,6 +1372,9 @@ body.map-ready.map-tiles-down #coverageMaps { display: grid; }
 }
 .branch-region:not(:first-child) { margin-top: 1.4rem; }
 
+/* one branch = the map card + its call link; kept together in the columns */
+.branch-item { break-inside: avoid; margin-bottom: .7rem; }
+
 .branch-card {
   break-inside: avoid;
   display: block;
@@ -1395,7 +1388,7 @@ body.map-ready.map-tiles-down #coverageMaps { display: grid; }
   border: 1px solid rgba(58, 35, 18, .1);
   border-radius: 5px;
   padding: .85rem 2.3rem .85rem .95rem;
-  margin-bottom: .7rem;
+  margin-bottom: 0;
   text-decoration: none;
   transition: transform .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease);
 }
@@ -1437,6 +1430,25 @@ body.map-ready.map-tiles-down #coverageMaps { display: grid; }
   padding: .2rem .5rem;
   border-radius: 3px;
 }
+
+/* call link — sits directly under the address line, never inside the
+   .branch-card <button> (interactive content may not nest in a button) */
+.branch-tel {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  margin: .45rem 0 0 .95rem;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--brand-primary, #9A2C2C);
+  text-decoration: none;
+  transition: color .2s var(--ease);
+}
+.branch-tel:hover, .branch-tel:focus-visible {
+  color: var(--brand-hover, #78350F);
+  text-decoration: underline;
+}
+.branch-tel svg { flex: 0 0 auto; opacity: .85; }
 
 .locator-maps { display: grid; gap: .8rem; position: sticky; top: 6.5rem; }
 .maps-head {

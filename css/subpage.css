@@ -214,7 +214,8 @@ section[id] { scroll-margin-top: 5.25rem; }
   border: 1px solid currentColor;
   border-radius: 50rem;
 }
-.badge-soft-amber { color: var(--amber-deep); background: rgba(212, 140, 40, .14); border-color: rgba(212, 140, 40, .42); }
+/* warm oak ink keeps this variant at 8.4:1 — the old amber-deep sat at 3.5:1 */
+.badge-soft-amber { color: #78350F; background: rgba(212, 140, 40, .14); border-color: rgba(212, 140, 40, .42); }
 .badge-soft-herb  { color: var(--herb);      background: rgba(62, 107, 52, .12);  border-color: rgba(62, 107, 52, .3); }
 .badge-soft-dark  { color: var(--charcoal);  background: rgba(58, 35, 18, .08);   border-color: rgba(58, 35, 18, .26); }
 .badge-soft-light { color: var(--cream);     background: rgba(245, 235, 224, .14); border-color: rgba(245, 235, 224, .45); }
@@ -454,9 +455,76 @@ section[id] { scroll-margin-top: 5.25rem; }
 .news-card .card-body { display: flex; flex-direction: column; flex: 1 1 auto; }
 .news-card .card-title { font-size: 1.24rem; }
 .news-card .card-text { font-size: .94rem; margin-bottom: 0; }
-.news-card .card-footer { margin-top: auto; }
 .news-card-img { height: 200px; object-fit: cover; width: 100%; }
 .news-card .bl-cover { height: 200px; aspect-ratio: auto; }
+
+/* ---------- news card is the whole story trigger ----------
+   No "Read the story" button any more: the card itself is the target, so it
+   needs pointer affordance, a visible focus ring and a press state on top of
+   the .card-hover lift. */
+.news-card { cursor: pointer; }
+.news-card:active { transform: translateY(-2px); box-shadow: var(--lift-md); }
+.news-card:focus-visible {
+  /* the global :focus-visible rule drops every control to a 3px radius —
+     keep the card's own rounded corners while it is focused */
+  border-radius: var(--bs-card-border-radius, .75rem);
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+  box-shadow: var(--lift-md);
+}
+
+/* the badge is absolutely positioned over the cover photo — it needs an
+   opaque plate, otherwise the tinted background disappears against the image */
+.news-card .badge-soft {
+  z-index: 2;
+  background: rgba(251, 245, 238, .95);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 2px 10px rgba(42, 24, 12, .3);
+}
+
+.news-card-date {
+  display: block;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+  margin-bottom: .45rem;
+}
+
+/* ---------- shared story modal (dynamic content slots) ---------- */
+.news-modal-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: .3rem;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-right: 1rem;
+}
+.news-modal-head .modal-title { font-size: clamp(1.15rem, 2.4vw, 1.4rem); }
+.news-modal-date {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+}
+.news-modal-media { flex: 0 0 auto; overflow: hidden; }
+.news-modal-media .card-img-top,
+.news-modal-media .news-card-img,
+.news-modal-media .bl-cover {
+  width: 100%;
+  height: clamp(170px, 30vw, 250px);
+  aspect-ratio: auto;
+  object-fit: cover;
+  border: 0;
+  border-radius: 0;
+}
+.news-modal-badge[hidden],
+.news-modal-date[hidden],
+.news-modal-media[hidden] { display: none !important; }
 
 /* ---------- Bootstrap pills wearing brand colours (feed filter) ---------- */
 .nav-pills .nav-link {

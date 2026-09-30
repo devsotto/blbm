@@ -1,0 +1,204 @@
+/* ==========================================================================
+   Balamban Liempo — brand link & button system
+   --------------------------------------------------------------------------
+   This file is linked LAST on every page (after Bootstrap and after the
+   page stylesheet), so it is the single source of truth for:
+
+     1. the brand colour palette (warm crimson-terracotta / honey amber /
+        dark neutral),
+     2. one consistent link + hover/focus treatment site-wide,
+     3. one consistent button scale (.btn-sm / .btn-md / .btn-lg).
+
+   Design philosophy:
+     Taste      — appetite-appealing terracotta for appetite-driving
+                  actions, honey amber reserved for accents, soft depth
+                  on hover.
+     Awesome    — clean hierarchy, AA-safe contrast on light AND dark
+                  surfaces, responsive micro-transitions (0.2–0.25s).
+   ========================================================================== */
+
+/* BRAND COLOR PALETTE & BUTTON SYSTEM */
+:root {
+  /* ---------- warm accent system ------------------------------------------
+     Replaces the old #8B0000 / #A30000 crimson pair. Every text/fill pair
+     below is checked against WCAG 2.1 AA (4.5:1 body, 3:1 large text & UI):
+
+       --brand-primary        #9A2C2C  white 7.6:1 · cream 6.4:1  ✓ AA both
+       --brand-hover          #78350F  white 9.1:1 · cream 7.7:1  ✓ AA / AAA
+       --brand-accent         #D97706  white 3.2:1 → surfaces, borders,
+                                                      glow & large text only
+       --brand-accent-bright  #F59E0B  on #2A180C 7.9:1 → dark-surface focus
+     ---------------------------------------------------------------------- */
+  --brand-primary:        #9A2C2C; /* deep crimson-terracotta — text & fills */
+  --brand-primary-soft:   #B13A3A; /* lifted terracotta — tints on light     */
+  --brand-hover:          #78350F; /* rich warm oak — link hover / active    */
+  --brand-accent:         #D97706; /* warm amber — surfaces, borders, glow   */
+  --brand-accent-bright:  #F59E0B; /* golden honey — accents on dark         */
+  --btn-hover-bg:         var(--brand-hover);
+
+  --bl-secondary-gold: #D4AF37; /* Warm Gold / Accent (legacy token) */
+  --bl-dark-charcoal: #1A1A1A;  /* Primary Text */
+  --bl-light-bg: #FFF9F5;       /* Warm Neutral Background */
+}
+
+/* Unified Link Styling */
+a, .product-title-link {
+  color: var(--brand-primary);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover, a:focus, .product-title-link:hover {
+  color: var(--brand-hover);
+  text-decoration: underline;
+}
+
+/* Site-Wide Button Consistency */
+.btn-primary {
+  background-color: var(--brand-primary) !important;
+  border-color: var(--brand-primary) !important;
+  color: #FFFFFF !important;
+  font-weight: 600;
+  transition: all 0.25s ease-in-out;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--btn-hover-bg) !important;
+  border-color: var(--btn-hover-bg) !important;
+  box-shadow: 0 4px 14px rgba(120, 53, 15, 0.38);
+}
+
+.btn-outline-primary {
+  color: var(--brand-primary) !important;
+  border-color: var(--brand-primary) !important;
+  font-weight: 600;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--brand-primary) !important;
+  color: #FFFFFF !important;
+}
+
+/* Enforce Bootstrap Standard Sizing Classes Everywhere */
+.btn-lg {
+  padding: 0.75rem 1.75rem;
+  font-size: 1.125rem;
+  border-radius: 0.5rem;
+}
+
+.btn-sm {
+  padding: 0.375rem 0.85rem;
+  font-size: 0.875rem;
+  border-radius: 0.375rem;
+}
+
+/* Bootstrap does not ship a medium step — this site's default button size,
+   so every control that is neither .btn-sm nor .btn-lg lands on one scale. */
+.btn-md {
+  padding: 0.55rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   HARMONISATION PASS
+   Keeps the two blocks above from leaking onto components that already carry
+   their own skin, and onto dark surfaces where terracotta would fall below AA.
+   ========================================================================== */
+
+/* --- 1. Buttons ----------------------------------------------------------
+   `a:hover` above outranks Bootstrap's `.btn:hover`, so anchor-buttons need
+   their own rule or their labels would repaint terracotta (and underline). */
+a.btn:hover,
+a.btn:focus,
+a.btn:focus-visible {
+  color: var(--bs-btn-hover-color, var(--bs-btn-color, currentColor));
+  text-decoration: none;
+}
+a.btn-blamber:hover, a.btn-blamber:focus, a.btn-blamber:focus-visible {
+  color: #2A180C; /* amber CTA keeps its dark label */
+}
+a.btn-ghost:hover, a.btn-ghost:focus, a.btn-ghost:focus-visible {
+  color: #F5EBE0; /* ghost CTA lives on dark heroes */
+}
+.bl-top { padding: 0; border-radius: 50%; } /* circular back-to-top control */
+
+/* --- 2. Non-text links --------------------------------------------------- */
+a.footer-logo {
+  display: inline-block;
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+a.footer-logo:hover, a.footer-logo:focus, a.footer-logo:focus-visible {
+  color: inherit;
+  text-decoration: none;
+  opacity: 0.88;
+}
+a.footer-logo:focus-visible {
+  /* the footer is a dark surface — honey amber clears 7.9:1 there where
+     terracotta would only reach 2.3:1 (WCAG 1.4.11 wants 3:1) */
+  outline: 2px solid var(--brand-accent-bright);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+a.navbar-brand:hover, a.navbar-brand:focus, a.navbar-brand:focus-visible {
+  color: inherit;
+  text-decoration: none;
+}
+a.contact-card:hover, a.contact-card:focus, a.contact-card:focus-visible {
+  color: inherit;
+  text-decoration: none;
+}
+.social-link:hover, .social-link:focus, .social-link:focus-visible {
+  text-decoration: none; /* icon chip — no text to underline */
+}
+a.dropdown-item:hover, a.dropdown-item:focus, a.dropdown-item:focus-visible {
+  color: var(--bs-dropdown-link-hover-color, inherit);
+  text-decoration: none;
+}
+
+/* --- 3. Text links -------------------------------------------------------
+   They carry their own underline (border-bottom), so the global hover rule
+   must not double it up — but they DO take the brand colour: terracotta
+   reads at 6.4:1 on the warm background where the old amber sat at 2.9:1. */
+.text-link {
+  color: var(--brand-primary);
+  border-bottom-color: rgba(154, 44, 44, .35);
+}
+.text-link:hover, .text-link:focus, .text-link:focus-visible {
+  color: var(--brand-hover);
+  border-bottom-color: var(--brand-hover);
+  text-decoration: none;
+}
+/* the light variant lives on dark surfaces — keep the gold skin */
+.text-link-light {
+  color: #E9A63F;
+  border-bottom-color: rgba(233, 166, 63, .4);
+  text-decoration: none;
+}
+.text-link-light:hover, .text-link-light:focus, .text-link-light:focus-visible {
+  color: #F5EBE0;
+  border-bottom-color: #F5EBE0;
+  text-decoration: none;
+}
+.nav-link:hover, .nav-link:focus, .nav-link:focus-visible { text-decoration: none; }
+
+/* --- 4. Links on the site's dark bands ------------------------------------
+   Terracotta measures 2.2:1 on the charcoal bands, so any link that has no
+   skin of its own falls back to honey amber — 7.9:1 on #2A180C for text,
+   and comfortably clear of the 3:1 UI threshold. :where() contributes no
+   specificity, so every component that already colours its own links
+   (.topbar-link, .footer-nav a, .franchise-steps p a, .bl-facts a,
+   .text-link-light, .btn-ghost …) still outranks this fallback. */
+:where(.hero, .topbar, .section-why, .section-awards, .section-franchise,
+       .bl-hero, .bl-note, .bl-footer, .bl-carousel .carousel-caption) a {
+  color: var(--brand-accent-bright);
+}
+:where(.hero, .topbar, .section-why, .section-awards, .section-franchise,
+       .bl-hero, .bl-note, .bl-footer, .bl-carousel .carousel-caption) a:hover,
+:where(.hero, .topbar, .section-why, .section-awards, .section-franchise,
+       .bl-hero, .bl-note, .bl-footer, .bl-carousel .carousel-caption) a:focus {
+  color: var(--cream, #F5EBE0);
+}

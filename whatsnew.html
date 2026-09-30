@@ -14,6 +14,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <link href="css/subpage.css" rel="stylesheet">
 <link href="css/backtotop.css" rel="stylesheet">
+<link href="css/brand-system.css" rel="stylesheet">
 </head>
 <body>
 
@@ -45,8 +46,8 @@
             up to, in one place &mdash; filtered however you like to read it.
           </p>
           <div class="d-flex flex-wrap gap-2 mt-4">
-            <a class="btn btn-brand d-inline-flex align-items-center justify-content-center" href="#feed">Browse updates</a>
-            <a class="btn btn-outline-light d-inline-flex align-items-center justify-content-center" href="https://www.facebook.com/OfficialBalambanLiempoPage"
+            <a class="btn btn-brand btn-lg d-inline-flex align-items-center justify-content-center" href="#feed">Browse updates</a>
+            <a class="btn btn-outline-light btn-lg d-inline-flex align-items-center justify-content-center" href="https://www.facebook.com/OfficialBalambanLiempoPage"
                target="_blank" rel="noopener">Follow on Facebook</a>
           </div>
         </div>
@@ -134,214 +135,201 @@
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="newsGrid">
 
         <div data-cat="awards">
-          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
+                   tabindex="0" role="button" aria-haspopup="dialog"
+                   data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <div class="bl-cover card-img-top"><span>Six times<br><em>Best Liempo.</em></span></div>
             <div class="card-body">
-              <span class="badge badge-soft badge-soft-amber d-inline-block mb-2">Award</span>
+              <span class="badge badge-soft badge-soft-amber position-absolute top-0 start-0 m-3 z-2">Award</span>
+              <time class="news-card-date" datetime="2026-06">June 2026</time>
               <h3 class="card-title">Best Liempo of Cebu &mdash; again</h3>
               <p class="card-text text-secondary">SunStar Best of Cebu named Balamban Liempo the Best Liempo in Cebu
                  for the sixth time. The herb-stuffed original keeps the crown.</p>
             </div>
-            <div class="card-footer">
-              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
-                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
-            </div>
           </article>
         </div>
 
         <div data-cat="awards">
-          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
+                   tabindex="0" role="button" aria-haspopup="dialog"
+                   data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <div class="bl-cover card-img-top"><span>Grand Slam,<br><em>plus one.</em></span></div>
             <div class="card-body">
-              <span class="badge badge-soft badge-soft-amber d-inline-block mb-2">Award</span>
+              <span class="badge badge-soft badge-soft-amber position-absolute top-0 start-0 m-3 z-2">Award</span>
+              <time class="news-card-date" datetime="2025-06">June 2025</time>
               <h3 class="card-title">Clearing the bases</h3>
               <p class="card-text text-secondary">For the fifth time, SunStar Best of Cebu crowned us the kings of
                  liempo. Come celebrate with the juiciest, crispiest liempo in Cebu.</p>
             </div>
-            <div class="card-footer">
-              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
-                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
-            </div>
           </article>
         </div>
 
         <div data-cat="awards">
-          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
+                   tabindex="0" role="button" aria-haspopup="dialog"
+                   data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <div class="bl-cover card-img-top"><span>Four years<br><em>running.</em></span></div>
             <div class="card-body">
-              <span class="badge badge-soft badge-soft-amber d-inline-block mb-2">Award</span>
+              <span class="badge badge-soft badge-soft-amber position-absolute top-0 start-0 m-3 z-2">Award</span>
+              <time class="news-card-date" datetime="2024-06">June 2024</time>
               <h3 class="card-title">Best of Cebu, four years strong</h3>
               <p class="card-text text-secondary">Recognised as The Best Liempo in Cebu for the fourth time. Shout-out
                  to our loyal customers &mdash; thank you for the love and support.</p>
             </div>
-            <div class="card-footer">
-              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
-                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
-            </div>
           </article>
         </div>
 
         <div data-cat="open">
-          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
+                   tabindex="0" role="button" aria-haspopup="dialog"
+                   data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <img class="card-img-top news-card-img" src="https://www.balambanliempo.com/assets/images/513876565-722269780404794-8403549196866777266-n-732x976.jpg"
                  alt="Now open in Surigao City" loading="lazy" decoding="async">
             <div class="card-body">
-              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">Now open</span>
+              <span class="badge badge-soft badge-soft-herb position-absolute top-0 start-0 m-3 z-2">Now open</span>
+              <time class="news-card-date" datetime="2026-08">August 2026</time>
               <h3 class="card-title">Surigao City</h3>
               <p class="card-text text-secondary">Our pit is lit in Surigao del Norte &mdash; the northernmost tip of
                  Mindanao now has herb-stuffed liempo.</p>
             </div>
-            <div class="card-footer">
-              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
-                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
-            </div>
           </article>
         </div>
 
         <div data-cat="open">
-          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
+                   tabindex="0" role="button" aria-haspopup="dialog"
+                   data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <img class="card-img-top news-card-img" src="https://www.balambanliempo.com/assets/images/499932424-24832751912981570-1582682626986502094-n-732x976.jpg"
                  alt="Now open in Nazareth, Cagayan de Oro" loading="lazy" decoding="async">
             <div class="card-body">
-              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">Now open</span>
+              <span class="badge badge-soft badge-soft-herb position-absolute top-0 start-0 m-3 z-2">Now open</span>
+              <time class="news-card-date" datetime="2026-07">July 2026</time>
               <h3 class="card-title">Nazareth, Cagayan de Oro</h3>
               <p class="card-text text-secondary">Nazareth joins the roster &mdash; CDO now has another branch serving
                  roast-to-order liempo.</p>
             </div>
-            <div class="card-footer">
-              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
-                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
-            </div>
           </article>
         </div>
 
         <div data-cat="open">
-          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
+                   tabindex="0" role="button" aria-haspopup="dialog"
+                   data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <div class="bl-cover card-img-top"><span>Now open:<br><em>Dipolog.</em></span></div>
             <div class="card-body">
-              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">Now open</span>
+              <span class="badge badge-soft badge-soft-herb position-absolute top-0 start-0 m-3 z-2">Now open</span>
+              <time class="news-card-date" datetime="2026-05">May 2026</time>
               <h3 class="card-title">Miputak, Dipolog</h3>
               <p class="card-text text-secondary">Miputak gets its own roasting station &mdash; the latest stop on the
                  Zamboanga Peninsula.</p>
             </div>
-            <div class="card-footer">
-              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
-                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
-            </div>
           </article>
         </div>
 
         <div data-cat="open">
-          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
+                   tabindex="0" role="button" aria-haspopup="dialog"
+                   data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <div class="bl-cover card-img-top"><span>Reopening:<br><em>Ayala Center.</em></span></div>
             <div class="card-body">
-              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">Reopening</span>
+              <span class="badge badge-soft badge-soft-herb position-absolute top-0 start-0 m-3 z-2">Reopening</span>
+              <time class="news-card-date" datetime="2026-03">March 2026</time>
               <h3 class="card-title">Ayala Center Cebu</h3>
               <p class="card-text text-secondary">Back where you left us &mdash; Level 3, Food Choices at the Ayala
                  Foodcourt.</p>
             </div>
-            <div class="card-footer">
-              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
-                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
-            </div>
           </article>
         </div>
 
         <div data-cat="open">
-          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
+                   tabindex="0" role="button" aria-haspopup="dialog"
+                   data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <img class="card-img-top news-card-img" src="https://www.balambanliempo.com/assets/images/283267073-7454408317934726-4276841456887565407-n-960x721.jpg"
                  alt="Balamban Liempo stall at Sugbo Merkado, IT Park Cebu City" loading="lazy" decoding="async">
             <div class="card-body">
-              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">Food park</span>
+              <span class="badge badge-soft badge-soft-herb position-absolute top-0 start-0 m-3 z-2">Food park</span>
+              <time class="news-card-date" datetime="2026-02">February 2026</time>
               <h3 class="card-title">Sugbo Merkado, IT Park</h3>
               <p class="card-text text-secondary">Dine in or take out at Cebu City&rsquo;s food park &mdash; one of our
                  busiest counters in IT Park.</p>
             </div>
-            <div class="card-footer">
-              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
-                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
-            </div>
           </article>
         </div>
 
         <div data-cat="open">
-          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
+                   tabindex="0" role="button" aria-haspopup="dialog"
+                   data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <img class="card-img-top news-card-img" src="https://www.balambanliempo.com/assets/images/281755143-7443988732310018-4283784170820445856-n-586x781.jpg"
                  alt="Balamban Liempo at Atlantis Food Park, Liloan" loading="lazy" decoding="async">
             <div class="card-body">
-              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">Food park</span>
+              <span class="badge badge-soft badge-soft-herb position-absolute top-0 start-0 m-3 z-2">Food park</span>
+              <time class="news-card-date" datetime="2026-01">January 2026</time>
               <h3 class="card-title">Atlantis Food Park, Liloan</h3>
               <p class="card-text text-secondary">North of the city, Liloan gets its own stall for dine-in and
                  take-out.</p>
             </div>
-            <div class="card-footer">
-              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
-                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
-            </div>
           </article>
         </div>
 
         <div data-cat="menu">
-          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
+                   tabindex="0" role="button" aria-haspopup="dialog"
+                   data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <div class="bl-cover card-img-top"><span>Chicken<br><em>with rice.</em></span></div>
             <div class="card-body">
-              <span class="badge badge-soft badge-soft-dark d-inline-block mb-2">New on the menu</span>
+              <span class="badge badge-soft badge-soft-dark position-absolute top-0 start-0 m-3 z-2">New on the menu</span>
+              <time class="news-card-date" datetime="2025-11">November 2025</time>
               <h3 class="card-title">All new chicken with rice</h3>
               <p class="card-text text-secondary">Roasted chicken with herb-infused skin, slow-cooked to golden,
                  served over fragrant java rice. Ring 0916 514 6144 to order.</p>
             </div>
-            <div class="card-footer">
-              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
-                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
-            </div>
           </article>
         </div>
 
         <div data-cat="menu">
-          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
+                   tabindex="0" role="button" aria-haspopup="dialog"
+                   data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <div class="bl-cover card-img-top"><span>BL<br><em>Bowls.</em></span></div>
             <div class="card-body">
-              <span class="badge badge-soft badge-soft-dark d-inline-block mb-2">Menu</span>
+              <span class="badge badge-soft badge-soft-dark position-absolute top-0 start-0 m-3 z-2">Menu</span>
+              <time class="news-card-date" datetime="2025-09">September 2025</time>
               <h3 class="card-title">BL Bowls</h3>
               <p class="card-text text-secondary">Savoury, rich garlic rice under a sauce of your choice. Available
                  at our food park branches.</p>
             </div>
-            <div class="card-footer">
-              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
-                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
-            </div>
           </article>
         </div>
 
         <div data-cat="offer">
-          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
+                   tabindex="0" role="button" aria-haspopup="dialog"
+                   data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <div class="bl-cover card-img-top"><span>15 years<br><em>of deliciousness.</em></span></div>
             <div class="card-body">
-              <span class="badge badge-soft badge-soft-banana d-inline-block mb-2">Anniversary</span>
+              <span class="badge badge-soft badge-soft-banana position-absolute top-0 start-0 m-3 z-2">Anniversary</span>
+              <time class="news-card-date" datetime="2026-09">September 2026</time>
               <h3 class="card-title">Celebrating 15 years</h3>
               <p class="card-text text-secondary">We are grilling with gratitude. Join us for the deals and the
                  dishes that made us your liempo haven for over a decade.</p>
             </div>
-            <div class="card-footer">
-              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
-                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
-            </div>
           </article>
         </div>
 
         <div data-cat="offer">
-          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
+                   tabindex="0" role="button" aria-haspopup="dialog"
+                   data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <div class="bl-cover card-img-top"><span>Roasting station<br><em>on-site.</em></span></div>
             <div class="card-body">
-              <span class="badge badge-soft badge-soft-banana d-inline-block mb-2">Catering</span>
+              <span class="badge badge-soft badge-soft-banana position-absolute top-0 start-0 m-3 z-2">Catering</span>
+              <time class="news-card-date" datetime="2026">Year-round</time>
               <h3 class="card-title">We grill at your venue</h3>
               <p class="card-text text-secondary">Freshly cooked on location for occasions and events &mdash; good for
                  150&ndash;200 guests. Add puso, drinks and pancit. Book through
                  <a href="tel:+639165146144">0916 514 6144</a>.</p>
-            </div>
-            <div class="card-footer">
-              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
-                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
             </div>
           </article>
         </div>
@@ -362,8 +350,8 @@
           </div>
           <div class="col-lg-5">
             <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
-              <a class="btn btn-brand d-inline-flex align-items-center justify-content-center" href="index.html#products">See the menu</a>
-              <a class="btn btn-dark d-inline-flex align-items-center justify-content-center" href="delivery.html">Order online</a>
+              <a class="btn btn-brand btn-lg d-inline-flex align-items-center justify-content-center" href="index.html#products">See the menu</a>
+              <a class="btn btn-dark btn-lg d-inline-flex align-items-center justify-content-center" href="delivery.html">Order online</a>
             </div>
           </div>
         </div>
@@ -373,18 +361,23 @@
 
 </main>
 
-<!-- shared story modal -->
-<div class="modal fade" id="newsDetail" tabindex="-1" aria-labelledby="newsDetailTitle" aria-hidden="true">
+<!-- shared story modal — slots are filled from the clicked news card by js/subpage.js -->
+<div class="modal fade" id="newsDetailModal" tabindex="-1" aria-labelledby="newsDetailModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="newsDetailTitle"></h5>
+        <div class="news-modal-head">
+          <span class="news-modal-badge" id="newsDetailModalBadge" hidden></span>
+          <h5 class="modal-title" id="newsDetailModalTitle"></h5>
+          <time class="news-modal-date" id="newsDetailModalDate" hidden></time>
+        </div>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" id="newsDetailBody"></div>
+      <div class="news-modal-media" id="newsDetailModalMedia" hidden></div>
+      <div class="modal-body" id="newsDetailModalBody"></div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark d-inline-flex align-items-center justify-content-center" data-bs-dismiss="modal">Close</button>
-        <a class="btn btn-brand d-inline-flex align-items-center justify-content-center" href="https://www.facebook.com/OfficialBalambanLiempoPage"
+        <button type="button" class="btn btn-md btn-outline-dark d-inline-flex align-items-center justify-content-center" data-bs-dismiss="modal">Close</button>
+        <a class="btn btn-md btn-brand d-inline-flex align-items-center justify-content-center" href="https://www.facebook.com/OfficialBalambanLiempoPage"
            target="_blank" rel="noopener">See it on Facebook</a>
       </div>
     </div>
@@ -396,7 +389,9 @@
     <div class="row g-4 align-items-start">
       <div class="col-lg-4">
         <div class="d-flex align-items-center gap-3">
-          <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="Balamban Liempo" width="116" height="52" loading="lazy" class="bl-foot-logo">
+          <a class="footer-logo" href="index.html#home" aria-label="Balamban Liempo — back to home">
+            <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="Balamban Liempo" width="116" height="52" loading="lazy" class="bl-foot-logo">
+          </a>
           <span>
             <strong class="d-block">Balamban Liempo</strong>
             <small>Tastier than lechon &mdash; herb-stuffed, charcoal-roasted, born in Cebu.</small>
@@ -424,7 +419,7 @@
 </footer>
 
 <button id="backToTop" type="button"
-        class="bl-top btn btn-dark position-fixed bottom-0 end-0 m-4 rounded-circle d-flex align-items-center justify-content-center"
+        class="bl-top btn btn-md btn-dark position-fixed bottom-0 end-0 m-4 rounded-circle d-flex align-items-center justify-content-center"
         aria-label="Back to top">
   <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 2 3 8h3.2v6h3.6V8H13L8 2z"/></svg>
 </button>

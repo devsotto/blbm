@@ -15,6 +15,7 @@
 <link href="css/subpage.css" rel="stylesheet">
 <link href="css/backtotop.css" rel="stylesheet">
 <link href="css/product.css" rel="stylesheet">
+<link href="css/brand-system.css" rel="stylesheet">
 </head>
 <body>
 
@@ -78,8 +79,8 @@
         <p class="product-callout mb-0"><i class="bi bi-award" aria-hidden="true"></i> Recognised as SunStar Best of Cebu&rsquo;s Best Liempo.</p>
 
         <div class="d-flex flex-wrap align-items-center gap-3 mt-4">
-          <a href="#order" class="btn btn-brand btn-lg px-4 shadow-sm d-inline-flex align-items-center justify-content-center">Order Now</a>
-          <a href="index.html#product-list" class="btn btn-outline-dark btn-lg px-4 d-inline-flex align-items-center justify-content-center">Back to Menu</a>
+          <a href="#order" class="btn btn-brand btn-lg shadow-sm d-inline-flex align-items-center justify-content-center">Order Now</a>
+          <a href="index.html#product-list" class="btn btn-outline-dark btn-lg d-inline-flex align-items-center justify-content-center">Back to Menu</a>
         </div>
       </div>
     </div>
@@ -162,8 +163,8 @@
       </div>
       <div class="col-lg-5">
         <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
-          <a class="btn btn-brand d-inline-flex align-items-center justify-content-center" href="delivery.html">Order online</a>
-          <a class="btn btn-outline-light d-inline-flex align-items-center justify-content-center" href="index.html#locations">Find a branch</a>
+          <a class="btn btn-brand btn-lg d-inline-flex align-items-center justify-content-center" href="delivery.html">Order online</a>
+          <a class="btn btn-outline-light btn-lg d-inline-flex align-items-center justify-content-center" href="index.html#locations">Find a branch</a>
         </div>
       </div>
     </div>
@@ -176,7 +177,9 @@
     <div class="row g-4 align-items-start">
       <div class="col-lg-4">
         <div class="d-flex align-items-center gap-3">
-          <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="Balamban Liempo" width="116" height="52" loading="lazy" class="bl-foot-logo">
+          <a class="footer-logo" href="index.html#home" aria-label="Balamban Liempo — back to home">
+            <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="Balamban Liempo" width="116" height="52" loading="lazy" class="bl-foot-logo">
+          </a>
           <span>
             <strong class="d-block">Balamban Liempo</strong>
             <small>Tastier than lechon &mdash; herb-stuffed, charcoal-roasted, born in Cebu.</small>
@@ -215,15 +218,15 @@
         <img id="lightboxImg" src="" alt="">
       </div>
       <div class="modal-footer border-0 justify-content-between">
-        <button type="button" class="btn btn-outline-light d-inline-flex align-items-center justify-content-center gap-2" id="lightboxPrev"><i class="bi bi-arrow-left" aria-hidden="true"></i> Previous</button>
-        <button type="button" class="btn btn-outline-light d-inline-flex align-items-center justify-content-center gap-2" id="lightboxNext">Next <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+        <button type="button" class="btn btn-md btn-outline-light d-inline-flex align-items-center justify-content-center gap-2" id="lightboxPrev"><i class="bi bi-arrow-left" aria-hidden="true"></i> Previous</button>
+        <button type="button" class="btn btn-md btn-outline-light d-inline-flex align-items-center justify-content-center gap-2" id="lightboxNext">Next <i class="bi bi-arrow-right" aria-hidden="true"></i></button>
       </div>
     </div>
   </div>
 </div>
 
 <button id="backToTop" type="button"
-        class="bl-top btn btn-dark position-fixed bottom-0 end-0 m-4 rounded-circle d-flex align-items-center justify-content-center"
+        class="bl-top btn btn-md btn-dark position-fixed bottom-0 end-0 m-4 rounded-circle d-flex align-items-center justify-content-center"
         aria-label="Back to top">
   <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 2 3 8h3.2v6h3.6V8H13L8 2z"/></svg>
 </button>

@@ -615,6 +615,11 @@
     ['Surigao City', 'Surigao City, Surigao del Norte', 'mindanao']
   ];
 
+  /* Standardised placeholder contact appended to every branch listing.
+     One number, one format, one tel: link — swap for the live per-branch
+     numbers when they land. */
+  const BRANCH_TEL = { display: '(032) 555-0199', dial: '+63325550199' };
+
 
   // Approximate branch coordinates (city/barangay centroid) used by the map.
   const COORDS = {
@@ -762,9 +767,13 @@
       name.textContent = entry[0];
       const addr = document.createElement('span');
       addr.textContent = entry[1];
+      const tel = document.createElement('a');
+      tel.className = 'bl-popup-tel';
+      tel.href = 'tel:' + BRANCH_TEL.dial;
+      tel.textContent = BRANCH_TEL.display;
       const meta = document.createElement('em');
       meta.textContent = REGION_LABEL[entry[2]] + (entry[3] ? ' · ' + entry[3] : '');
-      box.append(name, addr, meta);
+      box.append(name, addr, tel, meta);
       return box;
     }
 
@@ -871,6 +880,9 @@
 
         list.forEach((entry) => {
           const [name, addr, , flag] = entry;
+          const item = document.createElement('div');
+          item.className = 'branch-item';
+
           const card = document.createElement('button');
           card.type = 'button';
           card.className = 'branch-card';
@@ -884,7 +896,22 @@
           card.querySelector('.branch-name').textContent = name;
           card.querySelector('.branch-addr').textContent = addr;
           if (flag) card.querySelector('.branch-flag').textContent = flag;
-          wrap.appendChild(card);
+
+          /* the call link is a sibling of the card, never a child — a <button>
+             may not contain interactive content, and the click on it must not
+             fly the map */
+          const tel = document.createElement('a');
+          tel.className = 'branch-tel';
+          tel.href = 'tel:' + BRANCH_TEL.dial;
+          tel.setAttribute('aria-label', 'Call ' + name + ' branch, ' + BRANCH_TEL.display);
+          tel.innerHTML =
+            '<svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" ' +
+            'aria-hidden="true" focusable="false"><path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.165-.45 1.77a12.7 12.7 0 0 0 4.414 4.414c.605.211 1.286.033 1.77-.45l1.033-1.035a.678.678 0 0 0-.063-1.015l-2.07-1.43a.678.678 0 0 0-.654-.108l-1.917.64a.678.678 0 0 1-.634-.145L3.4 3.214a.678.678 0 0 0-.94-.94L1.366 3.49a.678.678 0 0 1-.145-.634l.64-1.917a.678.678 0 0 0-.108-.654l-1.43-2.07z"/></svg>' +
+            '<span class="branch-tel-num"></span>';
+          tel.querySelector('.branch-tel-num').textContent = BRANCH_TEL.display;
+
+          item.append(card, tel);
+          wrap.appendChild(item);
         });
       });
 
