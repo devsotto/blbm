@@ -468,6 +468,7 @@ h3 {
 .hero-veil {
   position: absolute; inset: 0;
   background:
+    linear-gradient(180deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .55) 55%, rgba(0, 0, 0, .8) 100%),
     linear-gradient(100deg, rgba(42, 24, 12, .94) 0%, rgba(42, 24, 12, .82) 38%, rgba(42, 24, 12, .34) 70%, rgba(42, 24, 12, .55) 100%),
     radial-gradient(120% 80% at 15% 40%, transparent 30%, rgba(42, 24, 12, .6) 100%);
 }
@@ -493,6 +494,17 @@ h3 {
 
 .hero-copy { max-width: 35rem; }
 .hero .eyebrow { color: var(--amber-bright); max-width: 34ch; }
+
+/* contrast overhaul: hero text over the background photo stays readable */
+.hero .display-hero,
+.hero .hero-line {
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, .7);
+}
+.hero .hero-lede,
+.hero .eyebrow { text-shadow: 0 2px 4px rgba(0, 0, 0, .7); }
+.hero .hero-facts strong,
+.hero .hero-facts span { text-shadow: 0 2px 4px rgba(0, 0, 0, .7); }
 
 .hero-cebuano {
   display: block;
@@ -1158,11 +1170,12 @@ h3 {
 .awards-photo img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
 .awards-photo figcaption {
   position: absolute; left: 0; right: 0; bottom: 0;
-  background: linear-gradient(transparent, rgba(42, 24, 12, .93));
+  background: linear-gradient(180deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .8) 100%);
   padding: 3rem 1.25rem 1.1rem;
   font-size: .8rem; font-weight: 600;
   letter-spacing: .1em; text-transform: uppercase;
   color: var(--amber-bright);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, .7);
 }
 
 .award-badges {
@@ -1962,7 +1975,6 @@ a.contact-card:hover {
   transition: color .2s var(--ease);
 }
 .footer-legal a:hover { color: var(--amber-bright); }
-.back-top { font-weight: 600; }
 
 /* ==========================================================================
    Reveal on scroll

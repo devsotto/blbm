@@ -9,235 +9,363 @@
 <link rel="icon" href="https://www.balambanliempo.com/assets/images/bllogo-318x142.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1;1,9..144,400..900,0..100,0..1&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <link href="css/subpage.css" rel="stylesheet">
+<link href="css/backtotop.css" rel="stylesheet">
 </head>
 <body>
 
-<header class="sp-bar">
-  <div class="sp-bar-in">
-    <a class="sp-brand" href="index.html">
-      <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="" width="104" height="46">
-      <span class="sp-brand-name">Balamban Liempo<span>What&rsquo;s new</span></span>
+<nav class="navbar navbar-expand-lg sticky-top bl-navbar" aria-label="Primary">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" href="index.html">
+      <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="Balamban Liempo" width="104" height="46" class="bl-brand-logo">
+      <span class="bl-brand-text d-none d-sm-block">Balamban Liempo<span>What&rsquo;s new</span></span>
     </a>
-    <a class="backlink" href="index.html">&larr; Back to main website</a>
+    <a class="btn btn-sm btn-outline-dark d-inline-flex align-items-center gap-2 justify-content-center" href="index.html">
+      <i class="bi bi-arrow-left" aria-hidden="true"></i>
+      <span class="d-none d-sm-inline">Back to main website</span>
+      <span class="d-sm-none">Back</span>
+    </a>
   </div>
-</header>
+</nav>
 
 <main id="main">
 
   <!-- ============ HERO ============ -->
-  <section class="sp-hero">
-    <div class="sp-wrap sp-hero-grid">
-      <div>
-        <span class="eyebrow">News &amp; updates</span>
-        <h1 class="display-hero">What&rsquo;s <em>new.</em></h1>
-        <p class="lede">
-          New pits, new awards, new things on the grill. Everything we have been
-          up to, in one place — filtered however you like to read it.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-amber" href="#feed">Browse updates</a>
-          <a class="btn btn-ghost" href="https://www.facebook.com/OfficialBalambanLiempoPage"
-             target="_blank" rel="noopener">Follow on Facebook</a>
+  <section class="bl-hero text-light">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-6">
+          <span class="eyebrow">News &amp; updates</span>
+          <h1 class="display-hero">What&rsquo;s <em>new.</em></h1>
+          <p class="lede">
+            New pits, new awards, new things on the grill. Everything we have been
+            up to, in one place &mdash; filtered however you like to read it.
+          </p>
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <a class="btn btn-brand d-inline-flex align-items-center justify-content-center" href="#feed">Browse updates</a>
+            <a class="btn btn-outline-light d-inline-flex align-items-center justify-content-center" href="https://www.facebook.com/OfficialBalambanLiempoPage"
+               target="_blank" rel="noopener">Follow on Facebook</a>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <figure class="bl-hero-media">
+            <img src="https://www.balambanliempo.com/assets/images/441727324-780397564222821-9192718860551373729-n-732x732.jpg"
+                 alt="SunStar Best of Cebu award recognition for Balamban Liempo" width="732" height="732" decoding="async">
+            <figcaption>SunStar Best of Cebu &mdash; Best Liempo</figcaption>
+          </figure>
         </div>
       </div>
-
-      <figure class="sp-hero-media">
-        <img src="https://www.balambanliempo.com/assets/images/441727324-780397564222821-9192718860551373729-n-732x732.jpg"
-             alt="SunStar Best of Cebu award recognition for Balamban Liempo" width="732" height="732" decoding="async">
-        <figcaption>SunStar Best of Cebu &mdash; Best Liempo</figcaption>
-      </figure>
     </div>
   </section>
 
   <!-- ============ FEED ============ -->
-  <section class="sp-section" id="feed">
-    <div class="sp-wrap">
-      <div class="sp-head">
-        <span class="eyebrow">The feed</span>
-        <h2>Openings, awards <em>&amp; offers.</em></h2>
-        <p class="sp-intro">
-          Posts are shared here as we go. For day-to-day promos and live
-          announcements, our Facebook page moves fastest.
-        </p>
+  <section class="py-5" id="feed">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-lg-8">
+          <span class="eyebrow">The feed</span>
+          <h2>Openings, awards <em>&amp; offers.</em></h2>
+          <p class="bl-intro">
+            Posts are shared here as we go. For day-to-day promos and live
+            announcements, our Facebook page moves fastest.
+          </p>
+        </div>
       </div>
 
-      <input class="sp-filter" type="radio" name="newsfilter" id="f-all" checked>
-      <input class="sp-filter" type="radio" name="newsfilter" id="f-awards">
-      <input class="sp-filter" type="radio" name="newsfilter" id="f-open">
-      <input class="sp-filter" type="radio" name="newsfilter" id="f-menu">
-      <input class="sp-filter" type="radio" name="newsfilter" id="f-offer">
-
-      <div class="sp-chips" role="group" aria-label="Filter updates by category">
-        <label for="f-all">All</label>
-        <label for="f-awards">Awards</label>
-        <label for="f-open">Openings</label>
-        <label for="f-menu">Menu</label>
-        <label for="f-offer">Offers</label>
-      </div>
-
-      <div class="sp-grid">
-
-        <article class="sp-card news-card" data-cat="awards">
-          <div class="news-cover"><span>Six times<br><em>Best Liempo.</em></span></div>
-          <div class="news-body">
-            <div class="news-meta"><span class="news-cat" data-cat="awards">Award</span></div>
-            <h3>Best Liempo of Cebu &mdash; again</h3>
-            <p>SunStar Best of Cebu named Balamban Liempo the Best Liempo in Cebu
-               for the sixth time. The herb-stuffed original keeps the crown.</p>
+      <!-- featured announcements -->
+      <div id="featuredNews" class="carousel slide bl-carousel mb-5" data-bs-ride="true">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#featuredNews" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#featuredNews" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#featuredNews" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner rounded-4">
+          <div class="carousel-item active">
+            <img src="https://www.balambanliempo.com/assets/images/441727324-780397564222821-9192718860551373729-n-732x732.jpg"
+                 alt="SunStar Best of Cebu award recognition for Balamban Liempo">
+            <div class="carousel-caption">
+              <span class="badge badge-soft badge-soft-light d-inline-block mb-2">Award</span>
+              <h3>Six times Best Liempo.</h3>
+              <p>SunStar Best of Cebu named Balamban Liempo the Best Liempo in Cebu for the sixth time running.</p>
+            </div>
           </div>
-        </article>
-
-        <article class="sp-card news-card" data-cat="awards">
-          <div class="news-cover"><span>Grand Slam,<br><em>plus one.</em></span></div>
-          <div class="news-body">
-            <div class="news-meta"><span class="news-cat" data-cat="awards">Award</span></div>
-            <h3>Clearing the bases</h3>
-            <p>For the fifth time, SunStar Best of Cebu crowned us the kings of
-               liempo. Come celebrate with the juiciest, crispiest liempo in Cebu.</p>
-          </div>
-        </article>
-
-        <article class="sp-card news-card" data-cat="awards">
-          <div class="news-cover"><span>Four years<br><em>running.</em></span></div>
-          <div class="news-body">
-            <div class="news-meta"><span class="news-cat" data-cat="awards">Award</span></div>
-            <h3>Best of Cebu, four years strong</h3>
-            <p>Recognised as The Best Liempo in Cebu for the fourth time. Shout-out
-               to our loyal customers &mdash; thank you for the love and support.</p>
-          </div>
-        </article>
-
-        <article class="sp-card news-card" data-cat="open">
-          <div class="news-media">
+          <div class="carousel-item">
             <img src="https://www.balambanliempo.com/assets/images/513876565-722269780404794-8403549196866777266-n-732x976.jpg"
-                 alt="Now open in Surigao City" loading="lazy" decoding="async">
+                 alt="Now open in Surigao City">
+            <div class="carousel-caption">
+              <span class="badge badge-soft badge-soft-light d-inline-block mb-2">Now open</span>
+              <h3>Surigao City.</h3>
+              <p>Our pit is lit in Surigao del Norte &mdash; the northernmost tip of Mindanao now has herb-stuffed liempo.</p>
+            </div>
           </div>
-          <div class="news-body">
-            <div class="news-meta"><span class="news-cat" data-cat="open">Now open</span></div>
-            <h3>Surigao City</h3>
-            <p>Our pit is lit in Surigao del Norte &mdash; the northernmost tip of
-               Mindanao now has herb-stuffed liempo.</p>
-          </div>
-        </article>
-
-        <article class="sp-card news-card" data-cat="open">
-          <div class="news-media">
-            <img src="https://www.balambanliempo.com/assets/images/499932424-24832751912981570-1582682626986502094-n-732x976.jpg"
-                 alt="Now open in Nazareth, Cagayan de Oro" loading="lazy" decoding="async">
-          </div>
-          <div class="news-body">
-            <div class="news-meta"><span class="news-cat" data-cat="open">Now open</span></div>
-            <h3>Nazareth, Cagayan de Oro</h3>
-            <p>Nazareth joins the roster &mdash; CDO now has another branch serving
-               roast-to-order liempo.</p>
-          </div>
-        </article>
-
-        <article class="sp-card news-card" data-cat="open">
-          <div class="news-cover"><span>Now open:<br><em>Dipolog.</em></span></div>
-          <div class="news-body">
-            <div class="news-meta"><span class="news-cat" data-cat="open">Now open</span></div>
-            <h3>Miputak, Dipolog</h3>
-            <p>Miputak gets its own roasting station &mdash; the latest stop on the
-               Zamboanga Peninsula.</p>
-          </div>
-        </article>
-
-        <article class="sp-card news-card" data-cat="open">
-          <div class="news-cover"><span>Reopening:<br><em>Ayala Center.</em></span></div>
-          <div class="news-body">
-            <div class="news-meta"><span class="news-cat" data-cat="open">Reopening</span></div>
-            <h3>Ayala Center Cebu</h3>
-            <p>Back where you left us &mdash; Level 3, Food Choices at the Ayala
-               Foodcourt.</p>
-          </div>
-        </article>
-
-        <article class="sp-card news-card" data-cat="open">
-          <div class="news-media">
+          <div class="carousel-item">
             <img src="https://www.balambanliempo.com/assets/images/283267073-7454408317934726-4276841456887565407-n-960x721.jpg"
+                 alt="Balamban Liempo stall at Sugbo Merkado, IT Park Cebu City">
+            <div class="carousel-caption">
+              <span class="badge badge-soft badge-soft-light d-inline-block mb-2">Food park</span>
+              <h3>Sugbo Merkado, IT Park.</h3>
+              <p>Dine in or take out at Cebu City&rsquo;s food park &mdash; one of our busiest counters in IT Park.</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#featuredNews" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#featuredNews" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+      <!-- category filter -->
+      <ul class="nav nav-pills flex-wrap gap-2 mb-4" aria-label="Filter updates by category">
+        <li class="nav-item"><button class="nav-link active" type="button" data-filter="all">All</button></li>
+        <li class="nav-item"><button class="nav-link" type="button" data-filter="awards">Awards</button></li>
+        <li class="nav-item"><button class="nav-link" type="button" data-filter="open">Openings</button></li>
+        <li class="nav-item"><button class="nav-link" type="button" data-filter="menu">Menu</button></li>
+        <li class="nav-item"><button class="nav-link" type="button" data-filter="offer">Offers</button></li>
+      </ul>
+
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="newsGrid">
+
+        <div data-cat="awards">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+            <div class="bl-cover card-img-top"><span>Six times<br><em>Best Liempo.</em></span></div>
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-amber d-inline-block mb-2">Award</span>
+              <h3 class="card-title">Best Liempo of Cebu &mdash; again</h3>
+              <p class="card-text text-secondary">SunStar Best of Cebu named Balamban Liempo the Best Liempo in Cebu
+                 for the sixth time. The herb-stuffed original keeps the crown.</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
+                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
+            </div>
+          </article>
+        </div>
+
+        <div data-cat="awards">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+            <div class="bl-cover card-img-top"><span>Grand Slam,<br><em>plus one.</em></span></div>
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-amber d-inline-block mb-2">Award</span>
+              <h3 class="card-title">Clearing the bases</h3>
+              <p class="card-text text-secondary">For the fifth time, SunStar Best of Cebu crowned us the kings of
+                 liempo. Come celebrate with the juiciest, crispiest liempo in Cebu.</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
+                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
+            </div>
+          </article>
+        </div>
+
+        <div data-cat="awards">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+            <div class="bl-cover card-img-top"><span>Four years<br><em>running.</em></span></div>
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-amber d-inline-block mb-2">Award</span>
+              <h3 class="card-title">Best of Cebu, four years strong</h3>
+              <p class="card-text text-secondary">Recognised as The Best Liempo in Cebu for the fourth time. Shout-out
+                 to our loyal customers &mdash; thank you for the love and support.</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
+                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
+            </div>
+          </article>
+        </div>
+
+        <div data-cat="open">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+            <img class="card-img-top news-card-img" src="https://www.balambanliempo.com/assets/images/513876565-722269780404794-8403549196866777266-n-732x976.jpg"
+                 alt="Now open in Surigao City" loading="lazy" decoding="async">
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">Now open</span>
+              <h3 class="card-title">Surigao City</h3>
+              <p class="card-text text-secondary">Our pit is lit in Surigao del Norte &mdash; the northernmost tip of
+                 Mindanao now has herb-stuffed liempo.</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
+                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
+            </div>
+          </article>
+        </div>
+
+        <div data-cat="open">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+            <img class="card-img-top news-card-img" src="https://www.balambanliempo.com/assets/images/499932424-24832751912981570-1582682626986502094-n-732x976.jpg"
+                 alt="Now open in Nazareth, Cagayan de Oro" loading="lazy" decoding="async">
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">Now open</span>
+              <h3 class="card-title">Nazareth, Cagayan de Oro</h3>
+              <p class="card-text text-secondary">Nazareth joins the roster &mdash; CDO now has another branch serving
+                 roast-to-order liempo.</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
+                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
+            </div>
+          </article>
+        </div>
+
+        <div data-cat="open">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+            <div class="bl-cover card-img-top"><span>Now open:<br><em>Dipolog.</em></span></div>
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">Now open</span>
+              <h3 class="card-title">Miputak, Dipolog</h3>
+              <p class="card-text text-secondary">Miputak gets its own roasting station &mdash; the latest stop on the
+                 Zamboanga Peninsula.</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
+                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
+            </div>
+          </article>
+        </div>
+
+        <div data-cat="open">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+            <div class="bl-cover card-img-top"><span>Reopening:<br><em>Ayala Center.</em></span></div>
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">Reopening</span>
+              <h3 class="card-title">Ayala Center Cebu</h3>
+              <p class="card-text text-secondary">Back where you left us &mdash; Level 3, Food Choices at the Ayala
+                 Foodcourt.</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
+                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
+            </div>
+          </article>
+        </div>
+
+        <div data-cat="open">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+            <img class="card-img-top news-card-img" src="https://www.balambanliempo.com/assets/images/283267073-7454408317934726-4276841456887565407-n-960x721.jpg"
                  alt="Balamban Liempo stall at Sugbo Merkado, IT Park Cebu City" loading="lazy" decoding="async">
-          </div>
-          <div class="news-body">
-            <div class="news-meta"><span class="news-cat" data-cat="open">Food park</span></div>
-            <h3>Sugbo Merkado, IT Park</h3>
-            <p>Dine in or take out at Cebu City&rsquo;s food park &mdash; one of our
-               busiest counters in IT Park.</p>
-          </div>
-        </article>
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">Food park</span>
+              <h3 class="card-title">Sugbo Merkado, IT Park</h3>
+              <p class="card-text text-secondary">Dine in or take out at Cebu City&rsquo;s food park &mdash; one of our
+                 busiest counters in IT Park.</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
+                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
+            </div>
+          </article>
+        </div>
 
-        <article class="sp-card news-card" data-cat="open">
-          <div class="news-media">
-            <img src="https://www.balambanliempo.com/assets/images/281755143-7443988732310018-4283784170820445856-n-586x781.jpg"
+        <div data-cat="open">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+            <img class="card-img-top news-card-img" src="https://www.balambanliempo.com/assets/images/281755143-7443988732310018-4283784170820445856-n-586x781.jpg"
                  alt="Balamban Liempo at Atlantis Food Park, Liloan" loading="lazy" decoding="async">
-          </div>
-          <div class="news-body">
-            <div class="news-meta"><span class="news-cat" data-cat="open">Food park</span></div>
-            <h3>Atlantis Food Park, Liloan</h3>
-            <p>North of the city, Liloan gets its own stall for dine-in and
-               take-out.</p>
-          </div>
-        </article>
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">Food park</span>
+              <h3 class="card-title">Atlantis Food Park, Liloan</h3>
+              <p class="card-text text-secondary">North of the city, Liloan gets its own stall for dine-in and
+                 take-out.</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
+                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
+            </div>
+          </article>
+        </div>
 
-        <article class="sp-card news-card" data-cat="menu">
-          <div class="news-cover"><span>Chicken<br><em>with rice.</em></span></div>
-          <div class="news-body">
-            <div class="news-meta"><span class="news-cat" data-cat="menu">New on the menu</span></div>
-            <h3>All new chicken with rice</h3>
-            <p>Roasted chicken with herb-infused skin, slow-cooked to golden,
-               served over fragrant java rice. Ring 0916 514 6144 to order.</p>
-          </div>
-        </article>
+        <div data-cat="menu">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+            <div class="bl-cover card-img-top"><span>Chicken<br><em>with rice.</em></span></div>
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-dark d-inline-block mb-2">New on the menu</span>
+              <h3 class="card-title">All new chicken with rice</h3>
+              <p class="card-text text-secondary">Roasted chicken with herb-infused skin, slow-cooked to golden,
+                 served over fragrant java rice. Ring 0916 514 6144 to order.</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
+                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
+            </div>
+          </article>
+        </div>
 
-        <article class="sp-card news-card" data-cat="menu">
-          <div class="news-cover"><span>BL<br><em>Bowls.</em></span></div>
-          <div class="news-body">
-            <div class="news-meta"><span class="news-cat" data-cat="menu">Menu</span></div>
-            <h3>BL Bowls</h3>
-            <p>Savoury, rich garlic rice under a sauce of your choice. Available
-               at our food park branches.</p>
-          </div>
-        </article>
+        <div data-cat="menu">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+            <div class="bl-cover card-img-top"><span>BL<br><em>Bowls.</em></span></div>
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-dark d-inline-block mb-2">Menu</span>
+              <h3 class="card-title">BL Bowls</h3>
+              <p class="card-text text-secondary">Savoury, rich garlic rice under a sauce of your choice. Available
+                 at our food park branches.</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
+                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
+            </div>
+          </article>
+        </div>
 
-        <article class="sp-card news-card" data-cat="offer">
-          <div class="news-cover"><span>15 years<br><em>of deliciousness.</em></span></div>
-          <div class="news-body">
-            <div class="news-meta"><span class="news-cat" data-cat="offer">Anniversary</span></div>
-            <h3>Celebrating 15 years</h3>
-            <p>We are grilling with gratitude. Join us for the deals and the
-               dishes that made us your liempo haven for over a decade.</p>
-          </div>
-        </article>
+        <div data-cat="offer">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+            <div class="bl-cover card-img-top"><span>15 years<br><em>of deliciousness.</em></span></div>
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-banana d-inline-block mb-2">Anniversary</span>
+              <h3 class="card-title">Celebrating 15 years</h3>
+              <p class="card-text text-secondary">We are grilling with gratitude. Join us for the deals and the
+                 dishes that made us your liempo haven for over a decade.</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
+                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
+            </div>
+          </article>
+        </div>
 
-        <article class="sp-card news-card" data-cat="offer">
-          <div class="news-cover"><span>Roasting station<br><em>on-site.</em></span></div>
-          <div class="news-body">
-            <div class="news-meta"><span class="news-cat" data-cat="offer">Catering</span></div>
-            <h3>We grill at your venue</h3>
-            <p>Freshly cooked on location for occasions and events &mdash; good for
-               150&ndash;200 guests. Add puso, drinks and pancit. Book through
-               <a href="tel:+639165146144">0916 514 6144</a>.</p>
-          </div>
-        </article>
+        <div data-cat="offer">
+          <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column">
+            <div class="bl-cover card-img-top"><span>Roasting station<br><em>on-site.</em></span></div>
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-banana d-inline-block mb-2">Catering</span>
+              <h3 class="card-title">We grill at your venue</h3>
+              <p class="card-text text-secondary">Freshly cooked on location for occasions and events &mdash; good for
+                 150&ndash;200 guests. Add puso, drinks and pancit. Book through
+                 <a href="tel:+639165146144">0916 514 6144</a>.</p>
+            </div>
+            <div class="card-footer">
+              <button class="btn btn-sm btn-outline-dark w-100 d-inline-flex align-items-center justify-content-center" type="button" data-news
+                      data-bs-toggle="modal" data-bs-target="#newsDetail">Read the story</button>
+            </div>
+          </article>
+        </div>
 
       </div>
     </div>
   </section>
 
   <!-- ============ CTA ============ -->
-  <section class="sp-section sp-section-alt">
-    <div class="sp-wrap">
-      <div class="sp-cta">
-        <div>
-          <span class="eyebrow">Hungry already?</span>
-          <h2>See the menu <em>or order.</em></h2>
-          <p>The full line-up, the branch closest to you, and every way to get it delivered.</p>
-        </div>
-        <div class="sp-cta-actions">
-          <a class="btn btn-amber" href="index.html#products">See the menu</a>
-          <a class="btn btn-dark" href="delivery.html">Order online</a>
+  <section class="py-5 bg-body-tertiary border-top border-bottom">
+    <div class="container">
+      <div class="card p-4 p-md-5">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <span class="eyebrow">Hungry already?</span>
+            <h2>See the menu <em>or order.</em></h2>
+            <p class="mb-0 text-secondary">The full line-up, the branch closest to you, and every way to get it delivered.</p>
+          </div>
+          <div class="col-lg-5">
+            <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+              <a class="btn btn-brand d-inline-flex align-items-center justify-content-center" href="index.html#products">See the menu</a>
+              <a class="btn btn-dark d-inline-flex align-items-center justify-content-center" href="delivery.html">Order online</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -245,32 +373,64 @@
 
 </main>
 
-<footer class="sp-foot">
-  <div class="sp-wrap">
-    <div class="sp-foot-top">
-      <div class="sp-foot-brand">
-        <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="Balamban Liempo" width="116" height="52" loading="lazy">
-        <span>
-          <strong>Balamban Liempo</strong>
-          <span>Tastier than lechon &mdash; herb-stuffed, charcoal-roasted, born in Cebu.</span>
-        </span>
+<!-- shared story modal -->
+<div class="modal fade" id="newsDetail" tabindex="-1" aria-labelledby="newsDetailTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newsDetailTitle"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <nav class="sp-foot-links" aria-label="Footer">
-        <a href="index.html">Home</a>
-        <a href="index.html#products">Menu</a>
-        <a href="index.html#locations">Locations</a>
-        <a href="delivery.html">Delivery</a>
-        <a href="index.html#history">Our story</a>
-        <a href="index.html#contact">Contact</a>
-        <a href="tel:+639165146144">0916 514 6144</a>
-      </nav>
+      <div class="modal-body" id="newsDetailBody"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark d-inline-flex align-items-center justify-content-center" data-bs-dismiss="modal">Close</button>
+        <a class="btn btn-brand d-inline-flex align-items-center justify-content-center" href="https://www.facebook.com/OfficialBalambanLiempoPage"
+           target="_blank" rel="noopener">See it on Facebook</a>
+      </div>
     </div>
-    <div class="sp-foot-bottom">
-      <p>&copy; 2026 Balamban Liempo. All rights reserved.</p>
-      <p><a href="index.html">&uarr; Back to top</a></p>
+  </div>
+</div>
+
+<footer class="bg-dark text-light bl-footer py-5">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-4">
+        <div class="d-flex align-items-center gap-3">
+          <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="Balamban Liempo" width="116" height="52" loading="lazy" class="bl-foot-logo">
+          <span>
+            <strong class="d-block">Balamban Liempo</strong>
+            <small>Tastier than lechon &mdash; herb-stuffed, charcoal-roasted, born in Cebu.</small>
+          </span>
+        </div>
+      </div>
+      <div class="col-lg-8">
+        <nav aria-label="Footer">
+          <ul class="nav flex-row flex-wrap gap-2 gap-lg-4 justify-content-lg-end">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#products">Menu</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#locations">Locations</a></li>
+            <li class="nav-item"><a class="nav-link" href="delivery.html">Delivery</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#history">Our story</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="tel:+639165146144">0916 514 6144</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="d-flex flex-wrap justify-content-between gap-2 border-top border-light border-opacity-25 mt-4 pt-4 small text-light text-opacity-50">
+      <p class="mb-0">&copy; 2026 Balamban Liempo. All rights reserved.</p>
     </div>
   </div>
 </footer>
 
+<button id="backToTop" type="button"
+        class="bl-top btn btn-dark position-fixed bottom-0 end-0 m-4 rounded-circle d-flex align-items-center justify-content-center"
+        aria-label="Back to top">
+  <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 2 3 8h3.2v6h3.6V8H13L8 2z"/></svg>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/backtotop.js"></script>
+<script src="js/subpage.js"></script>
 </body>
 </html>

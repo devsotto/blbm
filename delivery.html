@@ -9,317 +9,387 @@
 <link rel="icon" href="https://www.balambanliempo.com/assets/images/bllogo-318x142.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1;1,9..144,400..900,0..100,0..1&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 <link href="css/subpage.css" rel="stylesheet">
+<link href="css/backtotop.css" rel="stylesheet">
 </head>
-<body>
+<body class="has-actionbar">
 
-<header class="sp-bar">
-  <div class="sp-bar-in">
-    <a class="sp-brand" href="index.html">
-      <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="" width="104" height="46">
-      <span class="sp-brand-name">Balamban Liempo<span>Delivery</span></span>
+<nav class="navbar navbar-expand-lg sticky-top bl-navbar" aria-label="Primary">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2 text-decoration-none" href="index.html">
+      <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="Balamban Liempo" width="104" height="46" class="bl-brand-logo">
+      <span class="bl-brand-text d-none d-sm-block">Balamban Liempo<span>Delivery</span></span>
     </a>
-    <a class="backlink" href="index.html">&larr; Back to main website</a>
+    <a class="btn btn-sm btn-outline-dark d-inline-flex align-items-center gap-2 justify-content-center" href="index.html">
+      <i class="bi bi-arrow-left" aria-hidden="true"></i>
+      <span class="d-none d-sm-inline">Back to main website</span>
+      <span class="d-sm-none">Back</span>
+    </a>
   </div>
-</header>
+</nav>
 
 <main id="main">
 
   <!-- ============ HERO ============ -->
-  <section class="sp-hero">
-    <div class="sp-wrap sp-hero-grid">
-      <div>
-        <span class="eyebrow">Order online</span>
-        <h1 class="display-hero">Straight from<br><em>the pit.</em></h1>
-        <p class="lede">
-          Herb-stuffed, charcoal-roasted liempo — delivered hot. Pick whichever
-          way is easiest for you: a delivery app, a message, or a phone call.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-amber" href="#channels">Ways to order</a>
-          <a class="btn btn-ghost" href="index.html#locations">Find a branch</a>
+  <section class="bl-hero text-light">
+    <div class="container">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-6">
+          <span class="eyebrow">Order online</span>
+          <h1 class="display-hero">Straight from<br><em>the pit.</em></h1>
+          <p class="lede">
+            Herb-stuffed, charcoal-roasted liempo &mdash; delivered hot. Pick whichever
+            way is easiest for you: a delivery app, a message, or a phone call.
+          </p>
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <a class="btn btn-brand d-inline-flex align-items-center justify-content-center" href="#channels">Ways to order</a>
+            <a class="btn btn-outline-light d-inline-flex align-items-center justify-content-center" href="index.html#locations">Find a branch</a>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <figure class="bl-hero-media">
+            <img src="https://www.balambanliempo.com/assets/images/balambanliempo2-2000x1331.jpg"
+                 alt="Whole Balamban Liempo roasted to a crackling golden brown" width="1331" height="885" decoding="async">
+            <figcaption>600g uncooked &rarr; a full 500g served</figcaption>
+          </figure>
         </div>
       </div>
-
-      <figure class="sp-hero-media">
-        <img src="https://www.balambanliempo.com/assets/images/balambanliempo2-2000x1331.jpg"
-             alt="Whole Balamban Liempo roasted to a crackling golden brown" width="1331" height="885" decoding="async">
-        <figcaption>600g uncooked &rarr; a full 500g served</figcaption>
-      </figure>
     </div>
   </section>
 
   <!-- ============ HOW IT WORKS ============ -->
-  <section class="sp-section">
-    <div class="sp-wrap">
-      <div class="sp-head">
-        <span class="eyebrow">How it works</span>
-        <h2>Three steps, <em>no queue.</em></h2>
-        <p class="sp-intro">
-          Ordering is branch-based, so the closest pit to you does the roasting
-          and hands it over ready to eat.
-        </p>
+  <section class="py-5" id="how">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-lg-8">
+          <span class="eyebrow">How it works</span>
+          <h2>Three steps, <em>no queue.</em></h2>
+          <p class="bl-intro">
+            Ordering is branch-based, so the closest pit to you does the roasting
+            and hands it over ready to eat.
+          </p>
+        </div>
       </div>
 
-      <ol class="sp-steps">
-        <li>
-          <h3>Pick a channel</h3>
-          <p>Use a delivery app, message the official Facebook page, or call
-             your branch directly — whichever is fastest where you are.</p>
-        </li>
-        <li>
-          <h3>Set your address</h3>
-          <p>Your order is routed to the branch that covers your area. If you
-             are unsure which one that is, message us and we will point you.</p>
-        </li>
-        <li>
-          <h3>Roasted to order</h3>
-          <p>The belly is stuffed with herbs and roasted over charcoal when you
-             order — not held under a lamp — so it arrives crackling.</p>
-        </li>
-      </ol>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+          <div class="card h-100 card-hover">
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-amber d-inline-block mb-3">Step 01</span>
+              <h3 class="card-title">Pick a channel</h3>
+              <p class="card-text mb-0">
+                Use a delivery app, message the official Facebook page, or call
+                your branch directly &mdash; whichever is fastest where you are.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 card-hover">
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-amber d-inline-block mb-3">Step 02</span>
+              <h3 class="card-title">Set your address</h3>
+              <p class="card-text mb-0">
+                Your order is routed to the branch that covers your area. If you
+                are unsure which one that is, message us and we will point you.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card h-100 card-hover">
+            <div class="card-body">
+              <span class="badge badge-soft badge-soft-amber d-inline-block mb-3">Step 03</span>
+              <h3 class="card-title">Roasted to order</h3>
+              <p class="card-text mb-0">
+                The belly is stuffed with herbs and roasted over charcoal when you
+                order &mdash; not held under a lamp &mdash; so it arrives crackling.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- ============ DELIVERY APPS ============ -->
-  <section class="sp-section sp-section-alt" id="apps">
-    <div class="sp-wrap">
-      <div class="sp-head">
-        <span class="eyebrow">Delivery partners</span>
-        <h2>Four apps, <em>one pit.</em></h2>
-        <p class="sp-intro">
-          Use the app already on your phone. GrabFood and foodpanda bring the
-          order to your door; Lalamove and Angkas buy it for you at the branch
-          and ride it over.
-        </p>
+  <!-- ============ DELIVERY PARTNER APPS ============ -->
+  <section class="py-5 bg-body-tertiary border-top border-bottom" id="apps">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-lg-8">
+          <span class="eyebrow">Delivery partners</span>
+          <h2>Four apps, <em>one pit.</em></h2>
+          <p class="bl-intro">
+            Use the app already on your phone. GrabFood and foodpanda bring the
+            order to your door; Lalamove and Angkas buy it for you at the branch
+            and ride it over.
+          </p>
+        </div>
       </div>
 
-      <div class="sp-apps">
+      <div class="row g-4">
 
-        <article class="sp-card sp-app-card">
-          <div class="sp-app-logo">
-            <img src="https://www.balambanliempo.com/assets/images/unnamed-510x510.png"
-                 alt="GrabFood" width="510" height="510" loading="lazy" decoding="async">
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card h-100 card-hover app-card d-flex flex-column">
+            <div class="card-body">
+              <div class="bl-logo-plate">
+                <img src="https://www.balambanliempo.com/assets/images/unnamed-510x510.png"
+                     alt="GrabFood" width="510" height="510" loading="lazy" decoding="async">
+              </div>
+              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">In-app search</span>
+              <h3 class="card-title">GrabFood</h3>
+            </div>
+            <ol class="list-group list-group-numbered list-group-flush flex-shrink-0">
+              <li class="list-group-item">Set your delivery address in the Grab app.</li>
+              <li class="list-group-item">Search <strong>Balamban Liempo</strong> and pick the branch covering your address.</li>
+              <li class="list-group-item">Add your plates &mdash; liempo, chicharon, puso, drinks.</li>
+              <li class="list-group-item">Check the fee and ETA, then pay by card, wallet or cash.</li>
+            </ol>
+            <div class="card-footer mt-auto">
+              <a class="btn btn-brand w-100 d-inline-flex align-items-center justify-content-center gap-2" href="https://food.grab.com/ph/en/" target="_blank" rel="noopener">Order on GrabFood <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
+            </div>
           </div>
-          <span class="sp-flag">In-app search</span>
-          <h3>GrabFood</h3>
-          <ol class="sp-app-steps">
-            <li>Set your delivery address in the Grab app.</li>
-            <li>Search <strong>Balamban Liempo</strong> and pick the branch covering your address.</li>
-            <li>Add your plates &mdash; liempo, chicharon, puso, drinks.</li>
-            <li>Check the fee and ETA, then pay by card, wallet or cash.</li>
-          </ol>
-          <div class="sp-app-foot">
-            <a class="btn btn-amber" href="https://food.grab.com/ph/en/" target="_blank" rel="noopener">Order on GrabFood</a>
-          </div>
-        </article>
+        </div>
 
-        <article class="sp-card sp-app-card">
-          <div class="sp-app-logo is-wide">
-            <img src="https://www.balambanliempo.com/assets/images/1920px-foodpanda-logo.svg-510x96.png"
-                 alt="foodpanda" width="510" height="96" loading="lazy" decoding="async">
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card h-100 card-hover app-card d-flex flex-column">
+            <div class="card-body">
+              <div class="bl-logo-plate is-wide">
+                <img src="https://www.balambanliempo.com/assets/images/1920px-foodpanda-logo.svg-510x96.png"
+                     alt="foodpanda" width="510" height="96" loading="lazy" decoding="async">
+              </div>
+              <span class="badge badge-soft badge-soft-herb d-inline-block mb-2">In-app search</span>
+              <h3 class="card-title">foodpanda</h3>
+            </div>
+            <ol class="list-group list-group-numbered list-group-flush flex-shrink-0">
+              <li class="list-group-item">Confirm your delivery address at the top of the app.</li>
+              <li class="list-group-item">Search <strong>Balamban Liempo</strong> and open the branch that serves your area.</li>
+              <li class="list-group-item">Fill the cart &mdash; liempo, chicharon and sides for the table.</li>
+              <li class="list-group-item">Review the cut-off and fee, then checkout cashless or on delivery.</li>
+            </ol>
+            <div class="card-footer mt-auto">
+              <a class="btn btn-brand w-100 d-inline-flex align-items-center justify-content-center gap-2" href="https://www.foodpanda.ph/" target="_blank" rel="noopener">Order on foodpanda <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
+            </div>
           </div>
-          <span class="sp-flag">In-app search</span>
-          <h3>foodpanda</h3>
-          <ol class="sp-app-steps">
-            <li>Confirm your delivery address at the top of the app.</li>
-            <li>Search <strong>Balamban Liempo</strong> and open the branch that serves your area.</li>
-            <li>Fill the cart &mdash; liempo, chicharon and sides for the table.</li>
-            <li>Review the cut-off and fee, then checkout cashless or on delivery.</li>
-          </ol>
-          <div class="sp-app-foot">
-            <a class="btn btn-amber" href="https://www.foodpanda.ph/" target="_blank" rel="noopener">Order on foodpanda</a>
-          </div>
-        </article>
+        </div>
 
-        <article class="sp-card sp-app-card">
-          <div class="sp-app-logo is-wide">
-            <img src="https://www.balambanliempo.com/assets/images/lla-578x171.png"
-                 alt="Lalamove" width="578" height="171" loading="lazy" decoding="async">
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card h-100 card-hover app-card d-flex flex-column">
+            <div class="card-body">
+              <div class="bl-logo-plate is-wide">
+                <img src="https://www.balambanliempo.com/assets/images/lla-578x171.png"
+                     alt="Lalamove" width="578" height="171" loading="lazy" decoding="async">
+              </div>
+              <span class="badge badge-soft badge-soft-amber d-inline-block mb-2">Pabili &amp; courier</span>
+              <h3 class="card-title">Lalamove</h3>
+            </div>
+            <ol class="list-group list-group-numbered list-group-flush flex-shrink-0">
+              <li class="list-group-item">Open Lalamove and book a <strong>Pabili</strong> or courier trip.</li>
+              <li class="list-group-item">Pickup: your nearest Balamban Liempo branch. Drop-off: your address.</li>
+              <li class="list-group-item">List the exact items and the budget in the notes for the rider.</li>
+              <li class="list-group-item">Pay the rider for the food plus the service fee on arrival.</li>
+            </ol>
+            <div class="card-footer mt-auto">
+              <a class="btn btn-dark w-100 d-inline-flex align-items-center justify-content-center gap-2" href="https://www.lalamove.com/" target="_blank" rel="noopener">Book Lalamove <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
+            </div>
           </div>
-          <span class="sp-flag sp-flag-amber">Pabili &amp; courier</span>
-          <h3>Lalamove</h3>
-          <ol class="sp-app-steps">
-            <li>Open Lalamove and book a <strong>Pabili</strong> or courier trip.</li>
-            <li>Pickup: your nearest Balamban Liempo branch. Drop-off: your address.</li>
-            <li>List the exact items and the budget in the notes for the rider.</li>
-            <li>Pay the rider for the food plus the service fee on arrival.</li>
-          </ol>
-          <div class="sp-app-foot">
-            <a class="btn btn-dark" href="https://www.lalamove.com/" target="_blank" rel="noopener">Book Lalamove</a>
-          </div>
-        </article>
+        </div>
 
-        <article class="sp-card sp-app-card">
-          <div class="sp-app-logo">
-            <img src="https://www.balambanliempo.com/assets/images/angkas-logo-111317-e1575459449565-420x420.png"
-                 alt="Angkas" width="420" height="420" loading="lazy" decoding="async">
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="card h-100 card-hover app-card d-flex flex-column">
+            <div class="card-body">
+              <div class="bl-logo-plate">
+                <img src="https://www.balambanliempo.com/assets/images/angkas-logo-111317-e1575459449565-420x420.png"
+                     alt="Angkas" width="420" height="420" loading="lazy" decoding="async">
+              </div>
+              <span class="badge badge-soft badge-soft-amber d-inline-block mb-2">Pabili &amp; courier</span>
+              <h3 class="card-title">Angkas</h3>
+            </div>
+            <ol class="list-group list-group-numbered list-group-flush flex-shrink-0">
+              <li class="list-group-item">Open Angkas and choose <strong>Pabili</strong> for the errand.</li>
+              <li class="list-group-item">Pickup: the Balamban Liempo branch nearest you. Drop-off: your address.</li>
+              <li class="list-group-item">Type the items, quantity and budget so the rider orders right.</li>
+              <li class="list-group-item">Pay cash to the rider for the food plus the service fee.</li>
+            </ol>
+            <div class="card-footer mt-auto">
+              <a class="btn btn-dark w-100 d-inline-flex align-items-center justify-content-center gap-2" href="https://www.angkas.com/" target="_blank" rel="noopener">Book Angkas <i class="bi bi-box-arrow-up-right" aria-hidden="true"></i></a>
+            </div>
           </div>
-          <span class="sp-flag sp-flag-amber">Pabili &amp; courier</span>
-          <h3>Angkas</h3>
-          <ol class="sp-app-steps">
-            <li>Open Angkas and choose <strong>Pabili</strong> for the errand.</li>
-            <li>Pickup: the Balamban Liempo branch nearest you. Drop-off: your address.</li>
-            <li>Type the items, quantity and budget so the rider orders right.</li>
-            <li>Pay cash to the rider for the food plus the service fee.</li>
-          </ol>
-          <div class="sp-app-foot">
-            <a class="btn btn-dark" href="https://www.angkas.com/" target="_blank" rel="noopener">Book Angkas</a>
-          </div>
-        </article>
+        </div>
 
       </div>
     </div>
   </section>
 
   <!-- ============ CHANNELS ============ -->
-  <section class="sp-section" id="channels">
-    <div class="sp-wrap">
-      <div class="sp-head">
-        <span class="eyebrow">Ways to order</span>
-        <h2>Choose your <em>channel.</em></h2>
+  <section class="py-5" id="channels">
+    <div class="container">
+      <div class="row mb-4">
+        <div class="col-lg-8">
+          <span class="eyebrow">Ways to order</span>
+          <h2>Choose your <em>channel.</em></h2>
+        </div>
       </div>
 
-      <div class="sp-grid">
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <div class="col">
+          <article class="card h-100 card-hover">
+            <div class="card-body">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <span class="bl-icon"><i class="bi bi-cart3" aria-hidden="true"></i></span>
+                <span class="badge badge-soft badge-soft-herb">Fastest</span>
+              </div>
+              <h3 class="card-title">Delivery apps</h3>
+              <p class="card-text">
+                Open your usual food delivery app and search for
+                <strong>Balamban Liempo</strong>. Pick your branch, check the
+                estimated time, and track it from the kitchen to your door.
+              </p>
+            </div>
+            <div class="card-footer bg-transparent border-0">
+              <a class="text-link" href="#apps">Compare the four apps <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+            </div>
+          </article>
+        </div>
 
-        <article class="sp-card">
-          <span class="sp-card-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 17h14M6.5 17a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Zm11 0a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/>
-              <path d="M4 7h2.2l2.1 8.2h9.3l1.9-6H8"/>
-            </svg>
-          </span>
-          <span class="sp-flag">Fastest</span>
-          <h3>Delivery apps</h3>
-          <p>
-            Open your usual food delivery app and search for
-            <strong>Balamban Liempo</strong>. Pick your branch, check the
-            estimated time, and track it from the kitchen to your door.
-          </p>
-          <div class="sp-card-foot">
-            <a class="text-link" href="#apps">Compare the four apps <span aria-hidden="true">&rarr;</span></a>
-          </div>
-        </article>
+        <div class="col">
+          <article class="card h-100 card-hover">
+            <div class="card-body">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <span class="bl-icon"><i class="bi bi-chat-dots" aria-hidden="true"></i></span>
+                <span class="badge badge-soft badge-soft-amber">Best for groups</span>
+              </div>
+              <h3 class="card-title">Facebook Messenger</h3>
+              <p class="card-text">
+                Message the official page for catering trays, mixed orders, or a
+                branch recommendation. Handy when you are feeding a crowd and need
+                to confirm quantities first.
+              </p>
+            </div>
+            <div class="card-footer bg-transparent border-0">
+              <a class="text-link" href="https://www.facebook.com/OfficialBalambanLiempoPage"
+                 target="_blank" rel="noopener">Message the page <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
+            </div>
+          </article>
+        </div>
 
-        <article class="sp-card">
-          <span class="sp-card-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.3 9.3 0 0 1-3.6-.7L3 21l1.5-4.4A8.2 8.2 0 0 1 3.6 11.5 8.4 8.4 0 0 1 12 3.1a8.4 8.4 0 0 1 9 8.4Z"/>
-            </svg>
-          </span>
-          <span class="sp-flag sp-flag-amber">Best for groups</span>
-          <h3>Facebook Messenger</h3>
-          <p>
-            Message the official page for catering trays, mixed orders, or a
-            branch recommendation. Handy when you are feeding a crowd and need
-            to confirm quantities first.
-          </p>
-          <div class="sp-card-foot">
-            <a class="text-link" href="https://www.facebook.com/OfficialBalambanLiempoPage"
-               target="_blank" rel="noopener">Message the page <span aria-hidden="true">&rarr;</span></a>
-          </div>
-        </article>
-
-        <article class="sp-card">
-          <span class="sp-card-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 16.9v2.6a1.6 1.6 0 0 1-1.8 1.6 16 16 0 0 1-7-2.5 15.6 15.6 0 0 1-4.8-4.8 16 16 0 0 1-2.5-7A1.6 1.6 0 0 1 6.6 5h2.6a1.6 1.6 0 0 1 1.6 1.4c.1.8.3 1.5.6 2.2a1.6 1.6 0 0 1-.4 1.7l-1.1 1.1a13 13 0 0 0 4.8 4.8l1.1-1.1a1.6 1.6 0 0 1 1.7-.4c.7.3 1.4.5 2.2.6a1.6 1.6 0 0 1 1.4 1.6Z"/>
-            </svg>
-          </span>
-          <span class="sp-flag sp-flag-amber">Direct to branch</span>
-          <h3>Call or text</h3>
-          <p>
-            Talk to a person. Ideal for large orders, delivery outside the app
-            radius, or anything you would rather confirm before paying.
-          </p>
-          <div class="sp-card-foot">
-            <a class="text-link" href="tel:+639165146144">0916 514 6144 <span aria-hidden="true">&rarr;</span></a>
-          </div>
-        </article>
-
+        <div class="col">
+          <article class="card h-100 card-hover">
+            <div class="card-body">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <span class="bl-icon"><i class="bi bi-telephone" aria-hidden="true"></i></span>
+                <span class="badge badge-soft badge-soft-amber">Direct to branch</span>
+              </div>
+              <h3 class="card-title">Call or text</h3>
+              <p class="card-text">
+                Talk to a person. Ideal for large orders, delivery outside the app
+                radius, or anything you would rather confirm before paying.
+              </p>
+            </div>
+            <div class="card-footer bg-transparent border-0">
+              <a class="text-link" href="tel:+639165146144">0916 514 6144 <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+            </div>
+          </article>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ============ GOOD TO KNOW ============ -->
-  <section class="sp-section" id="know">
-    <div class="sp-wrap">
-      <div class="sp-note">
-        <span class="eyebrow">Good to know</span>
-        <h2>Cut-off, fees <em>&amp; coverage.</em></h2>
-        <p class="lede">
-          Delivery terms are set per branch and per platform, so the exact
-          figures live with your order rather than on this page. Here is what
-          to expect before you check out.
-        </p>
+  <section class="py-5" id="know">
+    <div class="container">
+      <div class="card bl-note p-4 p-md-5">
+        <div class="row g-4">
+          <div class="col-lg-5">
+            <span class="eyebrow">Good to know</span>
+            <h2>Cut-off, fees <em>&amp; coverage.</em></h2>
+            <p class="lede">
+              Delivery terms are set per branch and per platform, so the exact
+              figures live with your order rather than on this page. Here is what
+              to expect before you check out.
+            </p>
+            <div class="d-flex flex-wrap gap-2 mt-4">
+              <a class="btn btn-brand d-inline-flex align-items-center justify-content-center" href="index.html#contact">Ask about my area</a>
+              <a class="btn btn-outline-light d-inline-flex align-items-center justify-content-center" href="tel:+639165146144">Call 0916 514 6144</a>
+            </div>
+          </div>
 
-        <ul class="sp-facts">
-          <li>
-            <strong>Coverage</strong>
-            <span>Depends on the branch serving your address. Over 90 branches
-                  across Luzon, Visayas and Mindanao &mdash;
-                  <a href="index.html#locations">check the branch directory</a>
-                  to see who is near you.</span>
-          </li>
-          <li>
-            <strong>Cut-off time</strong>
-            <span>Set by your branch and by the delivery app. Roasting takes
-                  time, so ordering before the evening rush gets you a hotter,
-                  crispier delivery.</span>
-          </li>
-          <li>
-            <strong>Delivery fee</strong>
-            <span>Charged by the delivery platform and shown in-app before you
-                  confirm. Fees vary with distance and demand.</span>
-          </li>
-          <li>
-            <strong>Payment</strong>
-            <span>Follows whatever your chosen channel supports &mdash; cash on
-                  delivery or the app&rsquo;s own cashless options.</span>
-          </li>
-        </ul>
-
-        <div class="hero-actions">
-          <a class="btn btn-amber" href="index.html#contact">Ask about my area</a>
-          <a class="btn btn-ghost" href="tel:+639165146144">Call 0916 514 6144</a>
+          <div class="col-lg-7">
+            <ul class="list-group list-group-flush bl-facts">
+              <li class="list-group-item">
+                <strong>Coverage</strong>
+                <span>Depends on the branch serving your address. Over 90 branches
+                      across Luzon, Visayas and Mindanao &mdash;
+                      <a href="index.html#locations">check the branch directory</a>
+                      to see who is near you.</span>
+              </li>
+              <li class="list-group-item">
+                <strong>Cut-off time</strong>
+                <span>Set by your branch and by the delivery app. Roasting takes
+                      time, so ordering before the evening rush gets you a hotter,
+                      crispier delivery.</span>
+              </li>
+              <li class="list-group-item">
+                <strong>Delivery fee</strong>
+                <span>Charged by the delivery platform and shown in-app before you
+                      confirm. Fees vary with distance and demand.</span>
+              </li>
+              <li class="list-group-item">
+                <strong>Payment</strong>
+                <span>Follows whatever your chosen channel supports &mdash; cash on
+                      delivery or the app&rsquo;s own cashless options.</span>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ CATERING ============ -->
-  <section class="sp-section sp-section-alt">
-    <div class="sp-wrap">
-      <div class="sp-cta">
-        <div>
-          <span class="eyebrow">Feeding a crowd?</span>
-          <h2>Roasting station <em>on-site.</em></h2>
-          <p>
-            We grill at your venue, freshly cooked, for parties and occasions.
-            Add puso, drinks and pancit. Tell us the date, headcount and place
-            and we will quote it.
-          </p>
-        </div>
-        <div class="sp-cta-actions">
-          <a class="btn btn-dark" href="index.html#contact" data-subject="general">Request a quote</a>
-          <a class="btn btn-outline" href="whatsnew.html">See what&rsquo;s new</a>
+  <section class="py-5 bg-body-tertiary border-top border-bottom">
+    <div class="container">
+      <div class="card p-4 p-md-5">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <span class="eyebrow">Feeding a crowd?</span>
+            <h2>Roasting station <em>on-site.</em></h2>
+            <p class="mb-0 text-secondary">
+              We grill at your venue, freshly cooked, for parties and occasions.
+              Add puso, drinks and pancit. Tell us the date, headcount and place
+              and we will quote it.
+            </p>
+          </div>
+          <div class="col-lg-5">
+            <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+              <a class="btn btn-dark d-inline-flex align-items-center justify-content-center" href="index.html#contact" data-subject="general">Request a quote</a>
+              <a class="btn btn-outline-dark d-inline-flex align-items-center justify-content-center" href="whatsnew.html">See what&rsquo;s new</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ CTA ============ -->
-  <section class="sp-section">
-    <div class="sp-wrap">
-      <div class="sp-cta">
-        <div>
-          <h2>Prefer to pick it up?</h2>
-          <p>Skip the fee entirely &mdash; find your nearest branch and order at the counter.</p>
-        </div>
-        <div class="sp-cta-actions">
-          <a class="btn btn-amber" href="index.html#locations">Branch directory</a>
-          <a class="btn btn-dark" href="index.html#products">See the menu</a>
+  <section class="py-5">
+    <div class="container">
+      <div class="card p-4 p-md-5">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-7">
+            <h2>Prefer to pick it up?</h2>
+            <p class="mb-0 text-secondary">Skip the fee entirely &mdash; find your nearest branch and order at the counter.</p>
+          </div>
+          <div class="col-lg-5">
+            <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+              <a class="btn btn-brand d-inline-flex align-items-center justify-content-center" href="index.html#locations">Branch directory</a>
+              <a class="btn btn-dark d-inline-flex align-items-center justify-content-center" href="index.html#products">See the menu</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -327,62 +397,53 @@
 
 </main>
 
-<footer class="sp-foot">
-  <div class="sp-wrap">
-    <div class="sp-foot-top">
-      <div class="sp-foot-brand">
-        <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="Balamban Liempo" width="116" height="52" loading="lazy">
-        <span>
-          <strong>Balamban Liempo</strong>
-          <span>Tastier than lechon &mdash; herb-stuffed, charcoal-roasted, born in Cebu.</span>
-        </span>
+<div class="bl-actionbar d-lg-none" role="region" aria-label="Quick order actions">
+  <div class="container d-flex align-items-center gap-2">
+    <a class="btn btn-brand flex-fill d-inline-flex align-items-center justify-content-center gap-2" href="#apps"><i class="bi bi-bag-check" aria-hidden="true"></i>Order online</a>
+    <a class="btn btn-dark d-inline-flex align-items-center justify-content-center gap-2" href="tel:+639165146144"><i class="bi bi-telephone" aria-hidden="true"></i>Call</a>
+  </div>
+</div>
+
+<footer class="bg-dark text-light bl-footer py-5">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-4">
+        <div class="d-flex align-items-center gap-3">
+          <img src="https://www.balambanliempo.com/assets/images/bllogo-318x142.png" alt="Balamban Liempo" width="116" height="52" loading="lazy" class="bl-foot-logo">
+          <span>
+            <strong class="d-block">Balamban Liempo</strong>
+            <small>Tastier than lechon &mdash; herb-stuffed, charcoal-roasted, born in Cebu.</small>
+          </span>
+        </div>
       </div>
-      <nav class="sp-foot-links" aria-label="Footer">
-        <a href="index.html">Home</a>
-        <a href="index.html#products">Menu</a>
-        <a href="index.html#locations">Locations</a>
-        <a href="whatsnew.html">What&rsquo;s new</a>
-        <a href="index.html#history">Our story</a>
-        <a href="index.html#contact">Contact</a>
-        <a href="tel:+639165146144">0916 514 6144</a>
-      </nav>
+      <div class="col-lg-8">
+        <nav aria-label="Footer">
+          <ul class="nav flex-row flex-wrap gap-2 gap-lg-4 justify-content-lg-end">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#products">Menu</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#locations">Locations</a></li>
+            <li class="nav-item"><a class="nav-link" href="whatsnew.html">What&rsquo;s new</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#history">Our story</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="tel:+639165146144">0916 514 6144</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
-    <div class="sp-foot-bottom">
-      <p>&copy; 2026 Balamban Liempo. All rights reserved.</p>
+    <div class="d-flex flex-wrap justify-content-between gap-2 border-top border-light border-opacity-25 mt-4 pt-4 small text-light text-opacity-50">
+      <p class="mb-0">&copy; 2026 Balamban Liempo. All rights reserved.</p>
     </div>
   </div>
 </footer>
 
-<button class="sp-totop" id="backToTop" type="button" aria-label="Back to top">
-  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
-       stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-    <path d="M12 19V5"/><path d="m5 12 7-7 7 7"/>
-  </svg>
+<button id="backToTop" type="button"
+        class="bl-top btn btn-dark position-fixed bottom-0 end-0 m-4 rounded-circle d-flex align-items-center justify-content-center"
+        aria-label="Back to top">
+  <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 2 3 8h3.2v6h3.6V8H13L8 2z"/></svg>
 </button>
 
-<script>
-(function () {
-  var btn = document.getElementById('backToTop');
-  if (!btn) return;
-
-  var ticking = false;
-  function sync() {
-    btn.classList.toggle('is-visible', window.scrollY > 300);
-    ticking = false;
-  }
-  window.addEventListener('scroll', function () {
-    if (ticking) return;
-    ticking = true;
-    window.requestAnimationFrame(sync);
-  }, { passive: true });
-  sync();
-
-  btn.addEventListener('click', function () {
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
-  });
-})();
-</script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/backtotop.js"></script>
+<script src="js/subpage.js"></script>
 </body>
 </html>

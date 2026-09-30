@@ -1,0 +1,61 @@
+/* ==========================================================================
+   Balamban Liempo — site-wide floating "Back to Top" button
+   Shared by index.html / delivery.html / whatsnew.html.
+
+   Bootstrap utilities own positioning, alignment and shape:
+     position-fixed bottom-0 end-0 m-4   → fixed, bottom/right 1.5rem
+     d-flex align-items-center justify-content-center → pixel-perfect centering
+     rounded-circle + btn btn-dark       → shape and base button skin
+
+   This file only fine-tunes: dimensions, z-index, transitions and the
+   brand design tokens (constraint: no layout re-implementations).
+   ========================================================================== */
+
+.bl-top {
+  /* brand skin through the Bootstrap 5 button variable API */
+  --bs-btn-bg: var(--charcoal, #3a2312);
+  --bs-btn-border-color: rgba(212, 140, 40, .55);
+  --bs-btn-color: var(--cream, #f5ebe0);
+  --bs-btn-hover-bg: var(--amber, #d48c28);
+  --bs-btn-hover-border-color: var(--amber, #d48c28);
+  --bs-btn-hover-color: var(--charcoal-deep, #2a180c);
+  --bs-btn-active-bg: var(--amber-deep, #b87418);
+  --bs-btn-active-border-color: var(--amber-deep, #b87418);
+  --bs-btn-active-color: var(--charcoal-deep, #2a180c);
+  --bs-btn-disabled-bg: var(--charcoal, #3a2312);
+  --bs-btn-disabled-border-color: rgba(212, 140, 40, .55);
+  --bs-btn-disabled-color: rgba(245, 235, 224, .65);
+  --bs-btn-focus-shadow-rgb: 212, 140, 40;
+
+  --bl-top-size: 3.25rem;
+
+  width: var(--bl-top-size);
+  height: var(--bl-top-size);
+  padding: 0;
+  z-index: 1050;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px) scale(.94);
+  transition: opacity .3s ease-in-out, transform .3s ease-in-out,
+              visibility .3s ease-in-out, background-color .2s ease-in-out,
+              border-color .2s ease-in-out, box-shadow .2s ease-in-out;
+}
+
+.bl-top.is-visible { opacity: 1; visibility: visible; transform: none; }
+
+.bl-top:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--glow-amber, 0 14px 34px -14px rgba(212, 140, 40, .65));
+}
+.bl-top:active { transform: translateY(0) scale(.97); }
+.bl-top:focus-visible { outline: 3px solid var(--amber, #d48c28); outline-offset: 3px; }
+
+/* never float above an open Bootstrap modal backdrop */
+body.modal-open .bl-top { opacity: 0; visibility: hidden; }
+
+.bl-top svg { display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bl-top { transition-duration: .001ms; }
+}
