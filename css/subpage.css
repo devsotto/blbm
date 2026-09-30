@@ -1,7 +1,7 @@
 /* ==========================================================================
    Balamban Liempo — lightweight sub-page template
    Shared by delivery.html and whatsnew.html.
-   No Bootstrap, no map, no page JS: brand bar, hero, content, footer.
+   No Bootstrap, no map: brand bar, hero, content, footer.
    ========================================================================== */
 
 :root {
@@ -61,20 +61,6 @@ a { color: var(--amber-deep); }
 }
 
 ::selection { background: var(--amber); color: var(--charcoal-deep); }
-
-.sp-skip {
-  position: absolute;
-  left: -9999px;
-  top: 0;
-  z-index: 99;
-  padding: .7rem 1.1rem;
-  background: var(--charcoal);
-  color: var(--cream);
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: 0 0 8px 0;
-}
-.sp-skip:focus { left: 0; }
 
 /* ---------- shell ---------- */
 .sp-wrap {
@@ -483,6 +469,82 @@ p:last-child { margin-bottom: 0; }
 .sp-steps h3 { font-size: 1.15rem; margin-bottom: .4rem; }
 .sp-steps p { font-size: .94rem; color: rgba(58, 35, 18, .74); }
 
+/* ---------- delivery partner apps ---------- */
+.sp-apps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 232px), 1fr));
+  gap: clamp(1rem, 2.2vw, 1.5rem);
+}
+
+.sp-app-card { padding-top: clamp(1.5rem, 2.8vw, 1.9rem); }
+
+/* white plate keeps every wordmark legible on the cream card */
+.sp-app-logo {
+  display: grid;
+  place-items: center;
+  height: 92px;
+  margin-bottom: .95rem;
+  padding: .7rem .9rem;
+  background: #fff;
+  border: 1px solid rgba(58, 35, 18, .12);
+  border-radius: 8px;
+  box-shadow: inset 0 1px 2px rgba(58, 35, 18, .06), var(--lift-sm);
+  transition: transform .28s var(--ease), box-shadow .28s var(--ease);
+}
+.sp-app-card:hover .sp-app-logo {
+  transform: translateY(-3px);
+  box-shadow: inset 0 1px 2px rgba(58, 35, 18, .06), var(--lift-md);
+}
+.sp-app-logo img {
+  max-width: 100%;
+  max-height: 60px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(58, 35, 18, .18));
+}
+.sp-app-logo.is-wide img { max-height: 44px; }
+
+.sp-app-card h3 { margin-bottom: .55rem; }
+
+.sp-app-steps {
+  list-style: none;
+  counter-reset: appstep;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: .55rem;
+  font-size: .92rem;
+  line-height: 1.55;
+  color: rgba(58, 35, 18, .76);
+}
+.sp-app-steps li {
+  counter-increment: appstep;
+  position: relative;
+  padding-left: 1.95rem;
+}
+.sp-app-steps li::before {
+  content: counter(appstep);
+  position: absolute;
+  left: 0;
+  top: .1rem;
+  display: grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  font-family: var(--f-display);
+  font-size: .74rem;
+  font-weight: 800;
+  color: var(--charcoal-deep);
+  background: rgba(212, 140, 40, .16);
+  border: 1px solid rgba(212, 140, 40, .45);
+  border-radius: 50%;
+}
+.sp-app-steps strong { color: var(--charcoal); font-weight: 700; }
+
+.sp-app-foot { margin-top: auto; padding-top: 1.15rem; }
+.sp-app-foot .btn { width: 100%; min-height: 46px; font-size: .92rem; }
+
 /* ---------- note / facts table ---------- */
 .sp-note {
   position: relative;
@@ -720,6 +782,44 @@ p:last-child { margin-bottom: 0; }
 }
 .sp-foot-bottom a { color: inherit; text-decoration: none; }
 .sp-foot-bottom a:hover { color: var(--amber-bright); }
+
+/* ---------- floating back to top ---------- */
+.sp-totop {
+  position: fixed;
+  right: clamp(1rem, 3vw, 1.75rem);
+  bottom: clamp(1rem, 3vw, 1.75rem);
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 1.5px solid rgba(212, 140, 40, .55);
+  border-radius: 50%;
+  background: var(--charcoal);
+  color: var(--cream);
+  box-shadow: var(--lift-md);
+  cursor: pointer;
+  z-index: 700;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px) scale(.94);
+  transition: opacity .3s var(--ease), transform .3s var(--ease),
+              visibility .3s var(--ease), background-color .2s var(--ease),
+              border-color .2s var(--ease), color .2s var(--ease),
+              box-shadow .2s var(--ease);
+}
+.sp-totop.is-visible { opacity: 1; visibility: visible; transform: none; }
+.sp-totop:hover {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--charcoal-deep);
+  box-shadow: var(--glow-amber);
+}
+.sp-totop:active { transform: translateY(1px) scale(.97); }
+.sp-totop:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+}
 
 /* ---------- responsive ---------- */
 @media (max-width: 640px) {
