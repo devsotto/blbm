@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Balamban Liempo — product detail pages (uniform design system)
+   Shared by balamban-liempo.html / bl-spicy.html / balambanok.html.
+   Loads after css/subpage.css (brand tokens, navbar, cards, buttons, badges).
+
+   Bootstrap owns: container/row grid, breadcrumb, cards, badges, modal, btn.
+   This file only styles the five shared template blocks:
+     .hero-product-header, .product-spec-grid, .flavor-profile-card,
+     .gallery-lightbox-section, .cta-order-bar
+   ========================================================================== */
+
+/* ---------- hero product header ---------- */
+.product-title {
+  font-family: var(--f-display);
+  font-size: clamp(2.05rem, 4.4vw, 3.15rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -.03em;
+  color: var(--charcoal-deep, #2a180c);
+  font-variation-settings: "SOFT" 30, "WONK" 1;
+  text-wrap: balance;
+}
+.product-info-panel .badge-soft { letter-spacing: .16em; }
+.product-info-panel .lead { color: rgba(58, 35, 18, .76); font-size: clamp(1.02rem, 1.5vw, 1.15rem); }
+
+.product-gallery-main {
+  position: relative;
+  background: var(--cream-deep, #ede0d2);
+  border: 1px solid rgba(58, 35, 18, .1);
+}
+.product-gallery-main img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.product-description { color: rgba(58, 35, 18, .8); max-width: 62ch; }
+.product-description p { margin-bottom: 1rem; }
+.product-description p:last-child { margin-bottom: 0; }
+
+.product-callout {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  padding: .7rem 1rem;
+  border-radius: .55rem;
+  background: rgba(62, 107, 52, .1);
+  border: 1px solid rgba(62, 107, 52, .3);
+  color: var(--herb, #3e6b34);
+  font-weight: 600;
+  font-size: .9rem;
+}
+.product-callout a { color: inherit; text-underline-offset: 3px; }
+
+/* ---------- product spec grid ---------- */
+.product-spec-grid .spec-card {
+  height: 100%;
+  padding: .95rem 1.05rem;
+  background: var(--cream-warm, #fbf5ee);
+  border: 1px solid var(--bs-card-border-color, rgba(58, 35, 18, .13));
+  border-radius: var(--bs-card-border-radius, .75rem);
+  box-shadow: var(--lift-sm, 0 2px 6px rgba(58, 35, 18, .07));
+}
+.spec-label {
+  display: block;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--amber-deep, #b87418);
+  margin-bottom: .3rem;
+}
+.spec-value {
+  display: block;
+  font-family: var(--f-display);
+  font-size: 1.02rem;
+  font-weight: 750;
+  line-height: 1.25;
+  letter-spacing: -.012em;
+  color: var(--charcoal-deep, #2a180c);
+}
+.heat-meter {
+  display: inline-flex;
+  gap: .2rem;
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--amber-deep, #b87418);
+}
+.heat-meter .is-off { color: rgba(58, 35, 18, .25); }
+
+/* ---------- flavor profile cards ---------- */
+.flavor-profile-card { text-align: center; }
+.flavor-profile-card .bl-icon { width: 56px; height: 56px; font-size: 1.4rem; margin-bottom: .85rem; }
+.flavor-profile-card .card-title { font-size: 1.12rem; }
+.flavor-profile-card .card-text { color: rgba(58, 35, 18, .72); font-size: .95rem; margin-bottom: 0; }
+
+/* ---------- gallery + lightbox ---------- */
+.gallery-thumb {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: var(--cream-deep, #ede0d2);
+  border: 1px solid rgba(58, 35, 18, .12);
+  border-radius: .6rem;
+  overflow: hidden;
+  cursor: zoom-in;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease),
+              border-color .25s var(--ease);
+}
+.gallery-thumb img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform .5s var(--ease);
+}
+.gallery-thumb:hover {
+  transform: translateY(-3px);
+  border-color: rgba(212, 140, 40, .5);
+  box-shadow: var(--lift-md, 0 10px 30px -14px rgba(58, 35, 18, .35));
+}
+.gallery-thumb:hover img { transform: scale(1.05); }
+.gallery-thumb:focus-visible { outline: 3px solid var(--amber, #d48c28); outline-offset: 2px; }
+
+#productLightbox .modal-body img {
+  max-height: 72vh;
+  width: auto;
+  max-width: 100%;
+  border-radius: .5rem;
+}
+#lightboxCounter {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+/* ---------- cta order bar ---------- */
+.cta-order-bar .btn { flex: 1 1 auto; }
+@media (min-width: 576px) { .cta-order-bar .btn { flex: 0 0 auto; } }
+
+@media (max-width: 575.98px) {
+  .product-info-panel .d-flex .btn { flex: 1 1 100%; }
+}
