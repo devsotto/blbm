@@ -1,4 +1,3 @@
-in "whatsnew" page, modify the news card modal, remove "x"(close) button from the top, at the bottom "Close" button should be align to left, replace "See it on Facebook" with share icons "Facebook", "instagram", and "pinterest".
-
+in "whatsnew" page, modify the news card modal, remove "x"(close) button from the top, at the bottom "Close" button should be align to left, replace "See it on Facebook" with share icons "Facebook", "instagram", and "pinterest". new grid/card must (all) have equal height and width. add sizzling crackling background sound of roasted meat with sound icon on/off button at bottom right of hero banner, on scroll passing the hero banner section a floating icon on/off button appear just above the floating "back to top" arrow. this icon on/off only show in the home page where the hero banner section displayed.
 
 Follow current branding and styling, use the Bootstrap Framework (custom code (CSS/JS) if necessary) and have "Taste Skill" and "Awesome Design" help with UI/UX design decisions. Note: Do not use, invoke, or initialize Playwright or any browser tools for this task(s). --- Generate a downloadable, loop-engineered version of the prompt

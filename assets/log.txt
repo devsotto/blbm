@@ -1,0 +1,248 @@
+ALL PROMPTS — project 'balamban'
+Source: opencode.db | worktree: /home/victor/dev-apps/static-webapp/balamban
+Extracted: 2026-10-02T01:09:38
+Sessions: 16
+========================================================================
+
+SESSION: Checking tasks in folder  [2026-09-27 00:27]  (ses_f2174982dffegnYgUlbLo0O89e)
+------------------------------------------------------------------------
+
+--- PROMPT #1 | 2026-09-27 00:27:53 | session ses_f2174982 ---
+would you kow whats the tasks on ther folder?
+
+--- PROMPT #2 | 2026-09-27 00:35:18 | session ses_f2174982 ---
+are all the tasks in dev-apps/PROMPT: balambanliempo.md finished?
+
+--- PROMPT #3 | 2026-09-27 00:37:24 | session ses_f2174982 ---
+yes, close those unfinished tasks
+
+SESSION: Resuming previous work session  [2026-09-27 11:24]  (ses_f1f1b4408ffeSTE0araGKoeC52)
+------------------------------------------------------------------------
+
+--- PROMPT #4 | 2026-09-27 11:24:41 | session ses_f1f1b440 ---
+continue where we left off
+
+SESSION: Continuing previous work session  [2026-09-27 13:53]  (ses_f1e937114ffeHTz81IogGrlNN9)
+------------------------------------------------------------------------
+
+--- PROMPT #5 | 2026-09-27 13:53:03 | session ses_f1e93711 ---
+continue where you left off
+
+SESSION: Serving index.html in browser  [2026-09-27 17:32]  (ses_f1dcaad99ffepd3gx5rWEovByj)
+------------------------------------------------------------------------
+
+--- PROMPT #6 | 2026-09-27 17:32:20 | session ses_f1dcaad9 ---
+how do i access the index.html from the browser?
+
+--- PROMPT #7 | 2026-09-27 18:10:52 | session ses_f1dcaad9 ---
+can you access assets/updated-balamban.md?
+
+--- PROMPT #8 | 2026-09-27 18:12:35 | session ses_f1dcaad9 ---
+whould you know whats the remote git repo of this folder?
+
+--- PROMPT #9 | 2026-09-27 18:19:16 | session ses_f1dcaad9 ---
+analyze assets/updated-balamban.md and execute
+
+SESSION: Running project locally setup  [2026-09-28 15:50]  (ses_f19018c18ffew0t2ivky03ARlT)
+------------------------------------------------------------------------
+
+--- PROMPT #10 | 2026-09-28 15:50:30 | session ses_f19018c1 ---
+how to run this project locally?
+
+--- PROMPT #11 | 2026-09-28 16:39:02 | session ses_f19018c1 ---
+<system-reminder>Note: The user selected #9 from "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". ```dedicated pages for "Company Mission", "A Taste of History", "What's New (News and Update)", and "Delivery (Online Delivery)"```
+
+ This may or may not be relevant to the current task.</system-reminder>
+
+the new (local) site is currently in single page navigation styling. as an UI/UX expert, would you recommend a dedicated pages for "Company Mission", "A Taste of History", "What's New (News and Update)", and "Delivery (Online Delivery)" based on https://www.balambanliempo.com/ website structure or do you have idea and suggestions?
+
+--- PROMPT #12 | 2026-09-28 17:33:51 | session ses_f19018c1 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". This may or may not be relevant to the current task.</system-reminder>
+
+can you access and analyze assets/updated-balamban.md -- if so, execute its content
+
+--- PROMPT #13 | 2026-09-28 20:45:47 | session ses_f19018c1 ---
+<system-reminder>Note: The user selected #0-1 from "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". ```Franchise application form, Investment & ROI guide, and ROI guide — read online
+```
+
+ This may or may not be relevant to the current task.</system-reminder>
+
+are "Franchise application form", "Investment & ROI guide", and "ROI guide — read online" exist in the original balamban website?
+
+
+SESSION: Executing updated-balamban.md plan  [2026-09-28 22:59]  (ses_f17785c4cffeYh8GmxjRhVWp9B)
+------------------------------------------------------------------------
+
+--- PROMPT #14 | 2026-09-28 22:59:58 | session ses_f17785c4 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". This may or may not be relevant to the current task.</system-reminder>
+
+analyze assets/updated-balamban.md and execute
+
+SESSION: Continuing previous work  [2026-09-29 07:42]  (ses_f1599906bffeBDL0XeOUzfDGUd)
+------------------------------------------------------------------------
+
+--- PROMPT #15 | 2026-09-29 07:42:56 | session ses_f1599906 ---
+continue where we left off
+
+--- PROMPT #16 | 2026-09-29 11:45:27 | session ses_f1599906 ---
+Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.
+
+SESSION: Analyze and execute updated-balamban.md  [2026-09-29 14:27]  (ses_f142774a5ffegXVcq7ViYeZ4Qw)
+------------------------------------------------------------------------
+
+--- PROMPT #17 | 2026-09-29 14:27:12 | session ses_f142774a ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+analyze assets/updated-balamban.md and execute
+
+--- PROMPT #18 | 2026-09-29 16:36:13 | session ses_f142774a ---
+<system-reminder>Note: The user selected #8 from "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". ```Note: Do not use, invoke, or initialize Playwright or any browser tools for this task(s)```
+
+ This may or may not be relevant to the current task.</system-reminder>
+
+how do i run preview of this site?
+
+SESSION: Find About Us dropdown scroll code (@explore subagent)  [2026-09-29 14:27]  (ses_f14273f3affeCFnd4l0VxaVqw4)
+------------------------------------------------------------------------
+
+--- PROMPT #19 | 2026-09-29 14:27:26 | session ses_f14273f3 ---
+Search the repository at /home/victor/dev-apps/static-webapp/balamban for code related to an "About Us" dropdown menu that causes auto-scrolling when hovered/tapped.
+
+Be very thorough. Report:
+1. All files containing "About Us" / "about-us" / "about" dropdown markup (HTML/JSX/templating).
+2. All JS/TS files with event listeners: mouseenter, mouseover, pointerover, focus, focusin, touchstart, touchend, click handlers attached to nav/about dropdown elements.
+3. All scroll-related code: scrollIntoView, window.scrollTo, scrollTop, scrollBy, smooth-scroll utilities, IntersectionObserver, scroll-anchoring.
+4. CSS/SCSS rules: scroll-margin, scroll-padding, :target, :hover rules on nav dropdowns, any scroll-behavior rules, CSS classes tied to scroll state.
+5. Mobile menu code paths (hamburger menu) that might trigger scroll.
+
+For each finding, give exact file path and line numbers plus a short snippet. Do NOT modify anything. Return a comprehensive report.
+
+SESSION: Execute assets/updated-balamban.md  [2026-09-30 07:43]  (ses_f10726281ffekdilSAOAJXSIa0)
+------------------------------------------------------------------------
+
+--- PROMPT #20 | 2026-09-30 07:43:50 | session ses_f1072628 ---
+execute assets/updated-balamban.md
+
+--- PROMPT #21 | 2026-09-30 08:02:31 | session ses_f1072628 ---
+re-execute assets/updated-balamban.md
+
+--- PROMPT #22 | 2026-09-30 08:09:56 | session ses_f1072628 ---
+can you verify the "Skip to Content" element?
+
+--- PROMPT #23 | 2026-09-30 08:59:43 | session ses_f1072628 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+execute assets/updated-balamban.md for new prompt instructions
+
+--- PROMPT #24 | 2026-09-30 09:48:26 | session ses_f1072628 ---
+<system-reminder>Note: The user selected #0 from "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". ```delivery and whatsnew pages, as much as possible use Bootstrap Framework(CSS/JS) and convert any elements, divs/sections to use bootstrap components for consistency. if anything that bootstrap cannot handle, then custom code would be necessary. Have "Taste Skill" and "Awesome Design" to assist with the design decession for UI/UX layout. Do not use, invoke, or initialize Playwright or any browser tools for this task(s).```
+
+ This may or may not be relevant to the current task.</system-reminder>
+
+re-execute assets/updated-balamban.md for new instructions
+
+--- PROMPT #25 | 2026-09-30 10:09:34 | session ses_f1072628 ---
+Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.
+
+--- PROMPT #26 | 2026-09-30 11:02:34 | session ses_f1072628 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+re-execute assets/updated-balamban.md for further instructions
+
+--- PROMPT #27 | 2026-09-30 11:26:11 | session ses_f1072628 ---
+<system-reminder>Note: The user selected #0 from "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". ```Styling of Floating ("Back to Top") button must be in uniform site-wide. button text should be horizontaly/vertically center. Follow current branding and styling, use the Bootstrap Framework and have "Taste Skill" and "Awesome Design" help with UI/UX design decisions. Note: Do not use, invoke, or initialize Playwright or any browser tools for this task(s). --- Generate a downloadable, loop-engineered version of the prompt```
+
+ This may or may not be relevant to the current task.</system-reminder>
+
+re-execute assets/updated-balamban.md for further instructions
+
+--- PROMPT #28 | 2026-09-30 12:00:08 | session ses_f1072628 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+re-execute assets/updated-balamban.md 
+
+--- PROMPT #29 | 2026-09-30 13:37:11 | session ses_f1072628 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". This may or may not be relevant to the current task.</system-reminder>
+
+in all pages lists all links that linked externally
+
+--- PROMPT #30 | 2026-09-30 14:20:58 | session ses_f1072628 ---
+<system-reminder>Note: The user selected #0-3 from "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". ```remove the last "article" in "product-list". layout UI/UX for "Balamban Liempo (ref: https://www.balambanliempo.com/BalambanLiempo.html)", "BL Spicy (ref: https://www.balambanliempo.com/BLSpicy.html)", and "Balambanok (ref: https://www.balambanliempo.com/balambanok.html)" pages, use the content of its URL references (including the images if necessary). link to its respective "Read more" in the product list. the layout of this pages should be in uniform/same styling. don't touch any pages or elements, just add those mentioned pages. 
+
+Follow current branding and styling, use the Bootstrap Framework (custom code (CSS/JS) if necessary) and have "Taste Skill" and "Awesome Design" help with UI/UX design decisions. Note: Do not use, invoke, or initialize Playwright or any browser tools for this task(s). --- Generate a downloadable, loop-engineered version of the prompt
+```
+
+ This may or may not be relevant to the current task.</system-reminder>
+
+re-execute assets/updated-balamban.md 
+
+--- PROMPT #31 | 2026-09-30 14:35:55 | session ses_f1072628 ---
+Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.
+
+SESSION: Install open-design as standalone app  [2026-09-30 13:17]  (ses_f0f408b0fffeg9aKn2hlSbUJvQ)
+------------------------------------------------------------------------
+
+--- PROMPT #32 | 2026-09-30 13:17:54 | session ses_f0f408b0 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+install https://github.com/nexu-io/open-design#-run-from-source as independently as a standalone desktop application -- after the installation, let me know how to run it
+
+SESSION: Execute updated-balamban.md  [2026-09-30 18:29]  (ses_f0e236c72ffewGAXtD5Gs303Dn)
+------------------------------------------------------------------------
+
+--- PROMPT #33 | 2026-09-30 18:29:19 | session ses_f0e236c7 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+execute assets/updated-balamban.md
+
+SESSION: Execute updated-balamban.md instructions  [2026-09-30 23:35]  (ses_f0d0b822fffe2WdlTesrC5g6Ne)
+------------------------------------------------------------------------
+
+--- PROMPT #34 | 2026-09-30 23:35:04 | session ses_f0d0b822 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+execute assets/updated-balamban.md
+
+--- PROMPT #35 | 2026-10-01 00:38:14 | session ses_f0d0b822 ---
+Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.
+
+SESSION: Execute updated-balamban.md  [2026-10-01 10:15]  (ses_f0ac112f4ffeHY7Bn8KV6C5J8G)
+------------------------------------------------------------------------
+
+--- PROMPT #36 | 2026-10-01 10:15:37 | session ses_f0ac112f ---
+execute assets/updated-balamban.md
+
+--- PROMPT #37 | 2026-10-01 13:02:39 | session ses_f0ac112f ---
+Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.
+
+SESSION: Explore balamban codebase structure (@explore subagent)  [2026-10-01 10:15]  (ses_f0ac0ca5effe6ZIFOSHdynI0U0)
+------------------------------------------------------------------------
+
+--- PROMPT #38 | 2026-10-01 10:15:55 | session ses_f0ac0ca5 ---
+Explore the codebase at /home/victor/dev-apps/static-webapp/balamban thoroughly. I need to know:
+
+1. Overall project structure (is it a static site, what framework, build tools, package.json contents)
+2. Where the "What's New" page is (HTML file(s), any news grid/cards markup, the news card modal markup — header close button, footer with Close button and "See it on Facebook" link). Give me exact file paths and line numbers of the relevant markup.
+3. Where the Homepage hero banner section is (file path, line numbers, its structure/classes).
+4. Where the "Back to Top" floating button is implemented (HTML + JS/CSS), file paths and line numbers.
+5. Where custom CSS files live and their naming conventions / existing CSS variables (brand colors, typography).
+6. Where custom JS files live and how they're included (script tags, any bundler).
+7. Whether there's any existing audio handling in the project.
+8. Any existing share-icon/social-icon markup or icon library in use (Font Awesome, Bootstrap Icons, custom SVGs).
+
+Report back with exact file paths, line numbers, and relevant code snippets. This is research only - do not modify any files. Be very thorough.
+
+SESSION: Merging prompts into single structured prompt  [2026-10-02 01:03]  (ses_f07944d01ffeKGG4Lh6XVgPQm9)
+------------------------------------------------------------------------
+
+--- PROMPT #39 | 2026-10-02 01:03:22 | session ses_f07944d0 ---
+Can you collate all my command prompts (from the start) for a specific project, merge all request/intentions, or summarize them into a single structured prompt? Don’t execute anything yet if it's “Yes” 
+
+--- PROMPT #40 | 2026-10-02 01:04:34 | session ses_f07944d0 ---
+where can i find "transcription/log"?
+
+--- PROMPT #41 | 2026-10-02 01:07:32 | session ses_f07944d0 ---
+query the DB and extract all the prompts for project "balamban" then save it on a file named log.txt in assets/ folder in this directory
+
+========================================================================
+TOTAL PROMPTS: 41
