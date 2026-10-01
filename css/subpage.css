@@ -501,7 +501,6 @@ section[id] { scroll-margin-top: 5.25rem; }
   gap: .3rem;
   flex: 1 1 auto;
   min-width: 0;
-  padding-right: 1rem;
 }
 .news-modal-head .modal-title { font-size: clamp(1.15rem, 2.4vw, 1.4rem); }
 .news-modal-date {
@@ -525,6 +524,60 @@ section[id] { scroll-margin-top: 5.25rem; }
 .news-modal-badge[hidden],
 .news-modal-date[hidden],
 .news-modal-media[hidden] { display: none !important; }
+
+/* ---------- story modal footer: dismiss on the left, share chips on the right ----------
+   Bootstrap centres .modal-footer children by default; the spec asks for a
+   left-aligned Close, so justify-content-start does the layout and these rules
+   only clear Bootstrap's child margins and skin the share chips. */
+.news-modal-footer { gap: .65rem .75rem; }
+.news-modal-footer > * { margin: 0; }
+
+.news-share {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  margin-left: auto;
+}
+/* the Facebook / Pinterest chips are anchors, Instagram is a button — it copies
+   the link instead, because Instagram exposes no web share endpoint */
+.news-share-link {
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  font: inherit;
+  border-radius: 50%;
+  border: 1.5px solid rgba(58, 35, 18, .22);
+  background: var(--cream-warm);
+  color: var(--charcoal);
+  font-size: 1.05rem;
+  text-decoration: none;
+  transition: color .2s var(--ease), background-color .2s var(--ease),
+              border-color .2s var(--ease), transform .2s var(--ease),
+              box-shadow .2s var(--ease);
+}
+.news-share-link:hover,
+.news-share-link:focus-visible {
+  background: var(--charcoal);
+  border-color: var(--charcoal);
+  color: var(--cream);
+  transform: translateY(-2px);
+  box-shadow: var(--lift-sm);
+}
+.news-share-link:active { transform: translateY(0); }
+.news-share-link:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+
+.news-share-toast {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--herb);
+  white-space: nowrap;
+}
+.news-share-toast[hidden] { display: none !important; }
 
 /* ---------- Bootstrap pills wearing brand colours (feed filter) ---------- */
 .nav-pills .nav-link {

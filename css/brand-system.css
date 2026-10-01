@@ -122,7 +122,8 @@ a.btn-blamber:hover, a.btn-blamber:focus, a.btn-blamber:focus-visible {
 a.btn-ghost:hover, a.btn-ghost:focus, a.btn-ghost:focus-visible {
   color: #F5EBE0; /* ghost CTA lives on dark heroes */
 }
-.bl-top { padding: 0; border-radius: 50%; } /* circular back-to-top control */
+.bl-top,
+.bl-sound { padding: 0; border-radius: 50%; } /* circular floating controls */
 
 /* --- 2. Non-text links --------------------------------------------------- */
 a.footer-logo {

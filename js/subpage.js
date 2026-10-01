@@ -99,14 +99,16 @@ if (newsModal) {
     }
   }
 
+  /* a link inside a story (e.g. the catering number) keeps its own job: catch
+     the click at the top of the capture pass, before the data-api can see it */
+  window.addEventListener('click', (event) => {
+    if (event.target.closest && event.target.closest('.news-card a')) {
+      event.stopPropagation();
+    }
+  }, true);
+
   newsCards.forEach((card) => {
-    card.addEventListener('click', (event) => {
-      /* links inside a story (e.g. the catering number) keep their own
-         job — swallow the bubble so the data-api does not open the dialog */
-      if (event.target.closest('a')) {
-        event.stopPropagation();
-        return;
-      }
+    card.addEventListener('click', () => {
       activeCard = card;
     });
 
@@ -118,7 +120,64 @@ if (newsModal) {
     });
   });
 
-  newsModal.addEventListener('show.bs.modal', () => {
+  /* Bootstrap's data-api delegates from the document in the capture phase, so
+     the dialog opens *before* this card's own click handler has run and the
+     click-ordered `activeCard` fallback is still empty. The data-api passes
+     the trigger through, so take the card straight off the event — and keep
+     `activeCard` for the keyboard path, which opens the dialog itself. */
+  newsModal.addEventListener('show.bs.modal', (event) => {
+    const trigger = event.relatedTarget;
+    const card = trigger && trigger.closest ? trigger.closest('.news-card') : null;
+    if (card) activeCard = card;
     if (activeCard) populate(activeCard);
+  });
+}
+
+/* ---------- share chips (Facebook / Instagram / Pinterest) ----------------
+   The anchors ship with a static fallback href for no-JS readers; on load
+   they are rebuilt from the live address so they share the page the reader
+   is actually on. Instagram exposes no web share endpoint, so its chip
+   copies the link to the clipboard instead and says so.                */
+const shareLinks = document.querySelectorAll('[data-share]');
+
+if (shareLinks.length) {
+  const shareUrl = encodeURIComponent(window.location.href);
+  const shareTitle = encodeURIComponent(document.title);
+  const toast = document.getElementById('newsShareToast');
+  let toastTimer = 0;
+
+  const showToast = (message) => {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.hidden = false;
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => { toast.hidden = true; }, 2400);
+  };
+
+  shareLinks.forEach((link) => {
+    const kind = link.dataset.share;
+
+    if (kind === 'facebook') {
+      link.href = 'https://www.facebook.com/sharer/sharer.php?u=' + shareUrl;
+      return;
+    }
+
+    if (kind === 'pinterest') {
+      link.href = 'https://www.pinterest.com/pin/create/button/?url=' +
+                  shareUrl + '&description=' + shareTitle;
+      return;
+    }
+
+    if (kind === 'instagram') {
+      link.addEventListener('click', () => {
+        if (!navigator.clipboard || !navigator.clipboard.writeText) {
+          showToast('Copy the page address');
+          return;
+        }
+        navigator.clipboard.writeText(window.location.href)
+          .then(() => showToast('Link copied'))
+          .catch(() => showToast('Copy the page address'));
+      });
+    }
   });
 }

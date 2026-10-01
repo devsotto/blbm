@@ -134,7 +134,7 @@
 
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="newsGrid">
 
-        <div data-cat="awards">
+        <div data-cat="awards" class="d-flex flex-column">
           <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
@@ -149,7 +149,7 @@
           </article>
         </div>
 
-        <div data-cat="awards">
+        <div data-cat="awards" class="d-flex flex-column">
           <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
@@ -164,7 +164,7 @@
           </article>
         </div>
 
-        <div data-cat="awards">
+        <div data-cat="awards" class="d-flex flex-column">
           <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
@@ -179,7 +179,7 @@
           </article>
         </div>
 
-        <div data-cat="open">
+        <div data-cat="open" class="d-flex flex-column">
           <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
@@ -195,7 +195,7 @@
           </article>
         </div>
 
-        <div data-cat="open">
+        <div data-cat="open" class="d-flex flex-column">
           <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
@@ -211,7 +211,7 @@
           </article>
         </div>
 
-        <div data-cat="open">
+        <div data-cat="open" class="d-flex flex-column">
           <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
@@ -226,7 +226,7 @@
           </article>
         </div>
 
-        <div data-cat="open">
+        <div data-cat="open" class="d-flex flex-column">
           <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
@@ -241,7 +241,7 @@
           </article>
         </div>
 
-        <div data-cat="open">
+        <div data-cat="open" class="d-flex flex-column">
           <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
@@ -257,7 +257,7 @@
           </article>
         </div>
 
-        <div data-cat="open">
+        <div data-cat="open" class="d-flex flex-column">
           <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
@@ -273,7 +273,7 @@
           </article>
         </div>
 
-        <div data-cat="menu">
+        <div data-cat="menu" class="d-flex flex-column">
           <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
@@ -288,7 +288,7 @@
           </article>
         </div>
 
-        <div data-cat="menu">
+        <div data-cat="menu" class="d-flex flex-column">
           <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
@@ -303,7 +303,7 @@
           </article>
         </div>
 
-        <div data-cat="offer">
+        <div data-cat="offer" class="d-flex flex-column">
           <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
@@ -318,7 +318,7 @@
           </article>
         </div>
 
-        <div data-cat="offer">
+        <div data-cat="offer" class="d-flex flex-column">
           <article class="card h-100 card-hover news-card bl-zoom d-flex flex-column"
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
@@ -371,14 +371,28 @@
           <h5 class="modal-title" id="newsDetailModalTitle"></h5>
           <time class="news-modal-date" id="newsDetailModalDate" hidden></time>
         </div>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="news-modal-media" id="newsDetailModalMedia" hidden></div>
       <div class="modal-body" id="newsDetailModalBody"></div>
-      <div class="modal-footer">
+      <div class="modal-footer news-modal-footer justify-content-start flex-wrap">
         <button type="button" class="btn btn-md btn-outline-dark d-inline-flex align-items-center justify-content-center" data-bs-dismiss="modal">Close</button>
-        <a class="btn btn-md btn-brand d-inline-flex align-items-center justify-content-center" href="https://www.facebook.com/OfficialBalambanLiempoPage"
-           target="_blank" rel="noopener">See it on Facebook</a>
+        <div class="news-share" role="group" aria-label="Share this story">
+          <a class="news-share-link" data-share="facebook"
+             href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fwww.balambanliempo.com%2Fwhatsnew.html"
+             target="_blank" rel="noopener nofollow" aria-label="Share on Facebook" title="Share on Facebook">
+            <i class="bi bi-facebook" aria-hidden="true"></i>
+          </a>
+          <button type="button" class="news-share-link" data-share="instagram"
+                  aria-label="Copy link for Instagram" title="Copy link for Instagram">
+            <i class="bi bi-instagram" aria-hidden="true"></i>
+          </button>
+          <a class="news-share-link" data-share="pinterest"
+             href="https://www.pinterest.com/pin/create/button/?url=https%3A%2F%2Fwww.balambanliempo.com%2Fwhatsnew.html"
+             target="_blank" rel="noopener nofollow" aria-label="Share on Pinterest" title="Share on Pinterest">
+            <i class="bi bi-pinterest" aria-hidden="true"></i>
+          </a>
+          <span class="news-share-toast" id="newsShareToast" role="status" aria-live="polite" hidden>Link copied</span>
+        </div>
       </div>
     </div>
   </div>

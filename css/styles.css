@@ -618,6 +618,81 @@ h3 {
 }
 
 /* ==========================================================================
+   Ambient grill sound — hero corner toggle + floating twin above Back to Top
+   Homepage only: both controls live in index.html and js/hero-audio.js
+   bails out when the hero banner is missing.
+   ========================================================================== */
+
+.bl-sound {
+  --bl-sound-size: 3.25rem;
+  width: var(--bl-sound-size);
+  height: var(--bl-sound-size);
+
+  --bs-btn-bg: rgba(42, 24, 12, .78);
+  --bs-btn-border-color: rgba(212, 140, 40, .55);
+  --bs-btn-color: var(--cream);
+  --bs-btn-hover-bg: var(--amber, #d48c28);
+  --bs-btn-hover-border-color: var(--amber, #d48c28);
+  --bs-btn-hover-color: var(--charcoal-deep, #2a180c);
+  --bs-btn-active-bg: var(--amber-deep, #b87418);
+  --bs-btn-active-border-color: var(--amber-deep, #b87418);
+  --bs-btn-active-color: var(--charcoal-deep, #2a180c);
+  --bs-btn-focus-shadow-rgb: 212, 140, 40;
+
+  -webkit-backdrop-filter: blur(10px) saturate(1.35);
+  backdrop-filter: blur(10px) saturate(1.35);
+  box-shadow: 0 10px 26px -16px rgba(0, 0, 0, .9);
+
+  transition: opacity .3s ease-in-out, transform .3s ease-in-out,
+              visibility .3s ease-in-out, background-color .2s ease-in-out,
+              border-color .2s ease-in-out, box-shadow .2s ease-in-out;
+}
+
+.bl-sound:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--glow-amber, 0 14px 34px -14px rgba(212, 140, 40, .65));
+}
+.bl-sound:active { transform: translateY(0) scale(.97); }
+.bl-sound:focus-visible { outline: 3px solid var(--amber, #d48c28); outline-offset: 3px; }
+
+/* sound is on: the control fills with ember amber and glows */
+.bl-sound[aria-pressed="true"] {
+  --bs-btn-bg: var(--amber, #d48c28);
+  --bs-btn-border-color: var(--amber-bright, #e9a63f);
+  --bs-btn-color: var(--charcoal-deep, #2a180c);
+  box-shadow: var(--glow-amber, 0 14px 34px -14px rgba(212, 140, 40, .65));
+}
+
+/* the icon reports state: crossed-out speaker while muted, waves while playing */
+.bl-sound-icon { display: block; }
+.bl-sound-icon-on { display: none; }
+.bl-sound[aria-pressed="true"] .bl-sound-icon-on { display: block; }
+.bl-sound[aria-pressed="true"] .bl-sound-icon-off { display: none; }
+
+/* corner control — pinned to the hero banner, scrolls away with it */
+.bl-sound-hero {
+  right: clamp(1rem, 4vw, 2.5rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: 4;
+}
+
+/* floating control — m-4 already supplies the 1.5rem right inset, so
+   bottom: 4rem stacks it 0.75rem directly above the 3.25rem .bl-top */
+.bl-sound-float {
+  z-index: 1050;
+  bottom: 4rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px) scale(.94);
+}
+.bl-sound-float.is-visible { opacity: 1; visibility: visible; transform: none; }
+.bl-sound-float.is-visible:hover { transform: translateY(-3px); }
+.bl-sound-float.is-visible:active { transform: translateY(0) scale(.97); }
+
+/* never float above an open Bootstrap modal backdrop */
+body.modal-open .bl-sound-float { opacity: 0; visibility: hidden; }
+
+/* ==========================================================================
    Products — asymmetric zig-zag
    ========================================================================== */
 
