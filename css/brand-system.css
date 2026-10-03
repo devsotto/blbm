@@ -278,3 +278,25 @@ a, button, input, select, textarea, summary, label,
 .herb-popout {
   overscroll-behavior: contain;
 }
+
+/* ==========================================================================
+   6. Images — attributes reserve the box, CSS still owns the height
+   --------------------------------------------------------------------------
+   Every <img> now carries width/height so the aspect box exists before the
+   file arrives (no image-caused CLS). Those attributes also map to the
+   height property as a presentational hint, and a presentational hint is
+   only beaten by a rule that actually sets height. A component rule such as
+
+       .gallery-thumb img { width: 100%; aspect-ratio: 4 / 3; }
+
+   sets no height, so height="450" became the used height and every gallery
+   thumb laid out 450px — or 1331px for the large frames — tall.
+
+   This file is linked last on every page, so one bare `img` selector fixes
+   it everywhere. The selector is deliberately the lowest possible
+   specificity: component rules that do set a height
+   (.hero-media, .bl-carousel .carousel-item, .news-card-img, .park-card,
+   .product-figure, .bl-logo-plate …) all outrank it and keep their value.
+   ========================================================================== */
+
+img { height: auto; }
