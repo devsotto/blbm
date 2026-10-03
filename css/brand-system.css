@@ -59,7 +59,8 @@ a:hover, a:focus, .product-title-link:hover {
   border-color: var(--brand-primary) !important;
   color: #FFFFFF !important;
   font-weight: 600;
-  transition: all 0.25s ease-in-out;
+  transition: background-color 0.25s ease-in-out, border-color 0.25s ease-in-out,
+              color 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
 }
 
 .btn-primary:hover, .btn-primary:focus {
@@ -225,4 +226,55 @@ a.dropdown-item:hover, a.dropdown-item:focus, a.dropdown-item:focus-visible {
 :where(.hero, .topbar, .section-why, .section-awards, .section-franchise,
        .bl-hero, .bl-note, .bl-footer, .bl-carousel .carousel-caption) a:focus {
   color: var(--cream, #F5EBE0);
+}
+
+/* ==========================================================================
+   5. Site-wide interaction hygiene
+   --------------------------------------------------------------------------
+   This file is linked last on every page, so the rules that belong to the
+   whole interface — not to one component — live here:
+
+     skip link       first focusable node on every page. It targets <main>,
+                     which carries tabindex="-1" so activating it really moves
+                     focus, not just the scroll position.
+     touch-action    drops the double-tap zoom that fires on controls while
+                     leaving pinch zoom alone.
+     tap highlight   the OS blue wash does not belong on this palette.
+     overscroll      a scrolling dialog keeps its scroll instead of chaining
+                     back to the page behind it.
+   ========================================================================== */
+
+.skip-link {
+  position: fixed;
+  top: .75rem;
+  left: .75rem;
+  z-index: 2100;
+  padding: .72rem 1.1rem;
+  border-radius: 8px;
+  background: var(--brand-primary, #9A2C2C);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(calc(-100% - 1.5rem));
+  transition: transform .18s ease;
+}
+.skip-link:focus {
+  transform: none;
+  outline: 3px solid var(--brand-accent-bright, #F59E0B);
+  outline-offset: 3px;
+}
+
+/* controls stay put under a double tap; pinch zoom is untouched */
+a, button, input, select, textarea, summary, label,
+[role="button"], [role="tab"], [role="link"], [role="menuitem"] {
+  touch-action: manipulation;
+}
+
+* { -webkit-tap-highlight-color: rgba(212, 140, 40, .35); }
+
+.modal,
+.modal-body,
+.modal-dialog-scrollable .modal-body,
+.herb-popout {
+  overscroll-behavior: contain;
 }

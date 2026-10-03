@@ -20,6 +20,15 @@
     const thumb = thumbs[index];
     img.src = thumb.dataset.img;
     img.alt = thumb.dataset.alt || '';
+    /* Carry the slide's own dimensions over: the aspect box is reserved
+       before the file arrives, so the dialog does not reflow underneath. */
+    const thumbImg = thumb.querySelector('img');
+    const w = thumbImg && thumbImg.getAttribute('width');
+    const h = thumbImg && thumbImg.getAttribute('height');
+    if (w && h) {
+      img.setAttribute('width', w);
+      img.setAttribute('height', h);
+    }
     if (counter) counter.textContent = `${index + 1} / ${thumbs.length}`;
   };
 

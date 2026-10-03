@@ -931,6 +931,47 @@
     let region = 'all';
     let query = '';
 
+    /* The filter is part of the view, so it lives in the URL: a refresh, a
+       Back/Forward step or a pasted link lands on the same branch list. */
+    function readState() {
+      let params;
+      try { params = new URLSearchParams(window.location.search); }
+      catch (e) { return; }
+
+      const want = (params.get('region') || '').toLowerCase();
+      if (want && chips.some((c) => c.dataset.region === want)) region = want;
+
+      const q = (params.get('q') || '').trim();
+      if (q) {
+        query = q.toLowerCase();
+        if (searchEl) searchEl.value = q;
+      }
+    }
+
+    function writeState() {
+      try {
+        const url = new URL(window.location.href);
+        if (region === 'all') url.searchParams.delete('region');
+        else url.searchParams.set('region', region);
+
+        const q = searchEl ? searchEl.value.trim() : '';
+        if (q) url.searchParams.set('q', q);
+        else url.searchParams.delete('q');
+
+        window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+      } catch (e) {
+        /* file:// has no history API — the filter itself still works */
+      }
+    }
+
+    function syncChips() {
+      chips.forEach((c) => {
+        const on = c.dataset.region === region;
+        c.classList.toggle('is-active', on);
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+
     // fill the filter counters once
     chips.forEach((chip) => {
       const key = chip.dataset.region;
@@ -1101,7 +1142,8 @@
     chips.forEach((chip) => {
       chip.addEventListener('click', () => {
         region = chip.dataset.region;
-        chips.forEach((c) => c.classList.toggle('is-active', c === chip));
+        syncChips();
+        writeState();
         render();
       });
     });
@@ -1109,10 +1151,13 @@
     if (searchEl) {
       searchEl.addEventListener('input', () => {
         query = searchEl.value.trim().toLowerCase();
+        writeState();
         render();
       });
     }
 
+    readState();
+    syncChips();
     render();
   }
 

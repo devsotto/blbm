@@ -9,6 +9,8 @@
 <link rel="icon" href="https://www.balambanliempo.com/assets/images/bllogo-318x142.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://www.balambanliempo.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1;1,9..144,400..900,0..100,0..1&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
@@ -17,6 +19,8 @@
 <link href="css/brand-system.css" rel="stylesheet">
 </head>
 <body>
+
+<a class="skip-link" href="#main">Skip to content</a>
 
 <nav class="navbar navbar-expand-lg sticky-top bl-navbar" aria-label="Primary">
   <div class="container">
@@ -32,7 +36,7 @@
   </div>
 </nav>
 
-<main id="main">
+<main id="main" tabindex="-1">
 
   <!-- ============ HERO ============ -->
   <section class="bl-hero text-light">
@@ -78,7 +82,20 @@
       </div>
 
       <!-- featured announcements -->
-      <div id="featuredNews" class="carousel slide bl-carousel mb-5" data-bs-ride="true">
+      <div id="featuredNews" class="carousel slide bl-carousel mb-5"
+           data-bs-ride="carousel" data-bs-pause="false">
+        <button class="bl-carousel-toggle" id="carouselToggle" type="button"
+                data-state="playing" aria-label="Pause the featured updates">
+          <svg class="bl-carousel-icon bl-carousel-icon-pause" viewBox="0 0 16 16"
+               width="15" height="15" fill="currentColor" aria-hidden="true" focusable="false">
+            <rect x="4.5" y="3" width="2.5" height="10" rx="1"/>
+            <rect x="9" y="3" width="2.5" height="10" rx="1"/>
+          </svg>
+          <svg class="bl-carousel-icon bl-carousel-icon-play" viewBox="0 0 16 16"
+               width="15" height="15" fill="currentColor" aria-hidden="true" focusable="false">
+            <path d="M5 3.2v9.6a.6.6 0 0 0 .92.5l7.3-4.8a.6.6 0 0 0 0-1L5.92 2.7A.6.6 0 0 0 5 3.2z"/>
+          </svg>
+        </button>
         <div class="carousel-indicators">
           <button type="button" data-bs-target="#featuredNews" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
           <button type="button" data-bs-target="#featuredNews" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -87,7 +104,7 @@
         <div class="carousel-inner rounded-4">
           <div class="carousel-item active">
             <img src="https://www.balambanliempo.com/assets/images/441727324-780397564222821-9192718860551373729-n-732x732.jpg"
-                 alt="SunStar Best of Cebu award recognition for Balamban Liempo">
+                 alt="SunStar Best of Cebu award recognition for Balamban Liempo" width="732" height="732">
             <div class="carousel-caption">
               <span class="badge badge-soft badge-soft-light d-inline-block mb-2">Award</span>
               <h3>Six times Best Liempo.</h3>
@@ -96,7 +113,7 @@
           </div>
           <div class="carousel-item">
             <img src="https://www.balambanliempo.com/assets/images/513876565-722269780404794-8403549196866777266-n-732x976.jpg"
-                 alt="Now open in Surigao City">
+                 alt="Now open in Surigao City" width="732" height="976">
             <div class="carousel-caption">
               <span class="badge badge-soft badge-soft-light d-inline-block mb-2">Now open</span>
               <h3>Surigao City.</h3>
@@ -105,7 +122,7 @@
           </div>
           <div class="carousel-item">
             <img src="https://www.balambanliempo.com/assets/images/283267073-7454408317934726-4276841456887565407-n-960x721.jpg"
-                 alt="Balamban Liempo stall at Sugbo Merkado, IT Park Cebu City">
+                 alt="Balamban Liempo stall at Sugbo Merkado, IT Park Cebu City" width="960" height="721">
             <div class="carousel-caption">
               <span class="badge badge-soft badge-soft-light d-inline-block mb-2">Food park</span>
               <h3>Sugbo Merkado, IT Park.</h3>
@@ -125,11 +142,11 @@
 
       <!-- category filter -->
       <ul class="nav nav-pills flex-wrap gap-2 mb-4" aria-label="Filter updates by category">
-        <li class="nav-item"><button class="nav-link active" type="button" data-filter="all">All</button></li>
-        <li class="nav-item"><button class="nav-link" type="button" data-filter="awards">Awards</button></li>
-        <li class="nav-item"><button class="nav-link" type="button" data-filter="open">Openings</button></li>
-        <li class="nav-item"><button class="nav-link" type="button" data-filter="menu">Menu</button></li>
-        <li class="nav-item"><button class="nav-link" type="button" data-filter="offer">Offers</button></li>
+        <li class="nav-item"><button class="nav-link active" type="button" data-filter="all" aria-pressed="true">All</button></li>
+        <li class="nav-item"><button class="nav-link" type="button" data-filter="awards" aria-pressed="false">Awards</button></li>
+        <li class="nav-item"><button class="nav-link" type="button" data-filter="open" aria-pressed="false">Openings</button></li>
+        <li class="nav-item"><button class="nav-link" type="button" data-filter="menu" aria-pressed="false">Menu</button></li>
+        <li class="nav-item"><button class="nav-link" type="button" data-filter="offer" aria-pressed="false">Offers</button></li>
       </ul>
 
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="newsGrid">
@@ -184,7 +201,7 @@
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <img class="card-img-top news-card-img" src="https://www.balambanliempo.com/assets/images/513876565-722269780404794-8403549196866777266-n-732x976.jpg"
-                 alt="Now open in Surigao City" loading="lazy" decoding="async">
+                 alt="Now open in Surigao City" loading="lazy" decoding="async" width="732" height="976">
             <div class="card-body">
               <span class="badge badge-soft badge-soft-herb position-absolute top-0 start-0 m-3 z-2">Now open</span>
               <time class="news-card-date" datetime="2026-08">August 2026</time>
@@ -200,7 +217,7 @@
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <img class="card-img-top news-card-img" src="https://www.balambanliempo.com/assets/images/499932424-24832751912981570-1582682626986502094-n-732x976.jpg"
-                 alt="Now open in Nazareth, Cagayan de Oro" loading="lazy" decoding="async">
+                 alt="Now open in Nazareth, Cagayan de Oro" loading="lazy" decoding="async" width="732" height="976">
             <div class="card-body">
               <span class="badge badge-soft badge-soft-herb position-absolute top-0 start-0 m-3 z-2">Now open</span>
               <time class="news-card-date" datetime="2026-07">July 2026</time>
@@ -246,7 +263,7 @@
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <img class="card-img-top news-card-img" src="https://www.balambanliempo.com/assets/images/283267073-7454408317934726-4276841456887565407-n-960x721.jpg"
-                 alt="Balamban Liempo stall at Sugbo Merkado, IT Park Cebu City" loading="lazy" decoding="async">
+                 alt="Balamban Liempo stall at Sugbo Merkado, IT Park Cebu City" loading="lazy" decoding="async" width="960" height="721">
             <div class="card-body">
               <span class="badge badge-soft badge-soft-herb position-absolute top-0 start-0 m-3 z-2">Food park</span>
               <time class="news-card-date" datetime="2026-02">February 2026</time>
@@ -262,7 +279,7 @@
                    tabindex="0" role="button" aria-haspopup="dialog"
                    data-bs-toggle="modal" data-bs-target="#newsDetailModal">
             <img class="card-img-top news-card-img" src="https://www.balambanliempo.com/assets/images/281755143-7443988732310018-4283784170820445856-n-586x781.jpg"
-                 alt="Balamban Liempo at Atlantis Food Park, Liloan" loading="lazy" decoding="async">
+                 alt="Balamban Liempo at Atlantis Food Park, Liloan" loading="lazy" decoding="async" width="586" height="781">
             <div class="card-body">
               <span class="badge badge-soft badge-soft-herb position-absolute top-0 start-0 m-3 z-2">Food park</span>
               <time class="news-card-date" datetime="2026-01">January 2026</time>
@@ -368,7 +385,7 @@
       <div class="modal-header">
         <div class="news-modal-head">
           <span class="news-modal-badge" id="newsDetailModalBadge" hidden></span>
-          <h5 class="modal-title" id="newsDetailModalTitle"></h5>
+          <h3 class="modal-title" id="newsDetailModalTitle"></h3>
           <time class="news-modal-date" id="newsDetailModalDate" hidden></time>
         </div>
       </div>

@@ -8,18 +8,79 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
   document.querySelectorAll('[data-bs-ride]').forEach((el) => el.removeAttribute('data-bs-ride'));
 }
 
-/* ---------- news feed filter (Bootstrap nav-pills) ---------- */
+/* ---------- featured carousel pause / play ----------
+   Auto-rotation runs alongside the feed, so it carries a visible control to
+   stop it. The guard above strips data-bs-ride under reduced motion, which
+   means that state starts paused — the visitor can still opt in. */
+const featuredCarousel = document.getElementById('featuredNews');
+const featuredToggle = document.getElementById('carouselToggle');
+
+if (featuredCarousel && featuredToggle && typeof bootstrap !== 'undefined' && bootstrap.Carousel) {
+  const carousel = bootstrap.Carousel.getOrCreateInstance(featuredCarousel);
+  let playing = featuredCarousel.hasAttribute('data-bs-ride');
+
+  const sync = () => {
+    featuredToggle.dataset.state = playing ? 'playing' : 'paused';
+    featuredToggle.setAttribute(
+      'aria-label',
+      playing ? 'Pause the featured updates' : 'Play the featured updates'
+    );
+  };
+
+  featuredToggle.addEventListener('click', () => {
+    playing = !playing;
+    if (playing) carousel.cycle();
+    else carousel.pause();
+    sync();
+  });
+
+  if (!playing) carousel.pause();
+  sync();
+}
+
+/* ---------- news feed filter (Bootstrap nav-pills) ----------
+   The category is part of the view, so it lives in the URL: a refresh, a
+   Back/Forward step or a pasted link lands on the same set of cards. Each
+   pill also carries aria-pressed — selected is a state, not a colour. */
 const filterButtons = document.querySelectorAll('[data-filter]');
 if (filterButtons.length) {
+  const apply = (category) => {
+    filterButtons.forEach((btn) => {
+      const on = btn.dataset.filter === category;
+      btn.classList.toggle('active', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('#newsGrid > [data-cat]').forEach((col) => {
+      col.classList.toggle('d-none', category !== 'all' && col.dataset.cat !== category);
+    });
+  };
+
+  const writeState = (category) => {
+    try {
+      const url = new URL(window.location.href);
+      if (category === 'all') url.searchParams.delete('cat');
+      else url.searchParams.set('cat', category);
+      window.history.replaceState(null, '', url.pathname + url.search + url.hash);
+    } catch (e) {
+      /* file:// has no history API — the filter itself still works */
+    }
+  };
+
   filterButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const category = btn.dataset.filter;
-      filterButtons.forEach((b) => b.classList.toggle('active', b === btn));
-      document.querySelectorAll('#newsGrid > [data-cat]').forEach((col) => {
-        col.classList.toggle('d-none', category !== 'all' && col.dataset.cat !== category);
-      });
+      apply(btn.dataset.filter);
+      writeState(btn.dataset.filter);
     });
   });
+
+  let initial = 'all';
+  try {
+    const wanted = (new URLSearchParams(window.location.search).get('cat') || '').toLowerCase();
+    if (wanted && Array.prototype.some.call(filterButtons, (b) => b.dataset.filter === wanted)) {
+      initial = wanted;
+    }
+  } catch (e) { /* file:// */ }
+  apply(initial);
 }
 
 /* ---------- shared detail modal (Bootstrap modal) --------------------------

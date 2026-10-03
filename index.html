@@ -17,6 +17,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://www.balambanliempo.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1;1,9..144,400..900,0..100,0..1&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="vendor/leaflet/leaflet.css" rel="stylesheet">
@@ -25,6 +27,8 @@
 <link href="css/brand-system.css" rel="stylesheet">
 </head>
 <body>
+
+<a class="skip-link" href="#main">Skip to content</a>
 
 <div class="grain" aria-hidden="true"></div>
 
@@ -94,13 +98,13 @@
   </div>
 </nav>
 
-<main id="main">
+<main id="main" tabindex="-1">
 
 <!-- ============ HERO ============ -->
 <header class="hero" id="home">
   <div class="hero-media" aria-hidden="true">
     <img src="https://www.balambanliempo.com/assets/images/balambanliempo2-2000x1331.jpg"
-         alt="" fetchpriority="high" decoding="async">
+         alt="" fetchpriority="high" decoding="async" width="2000" height="1331">
     <div class="hero-veil"></div>
     <div class="hero-heat"></div>
     <canvas class="ember-canvas" id="emberCanvas"></canvas>
@@ -206,7 +210,7 @@
       <article class="product-row reveal">
         <figure class="product-figure">
           <img src="https://www.balambanliempo.com/assets/images/balambanliempo2-2000x1331.jpg"
-               alt="Whole Balamban Liempo with crackling golden skin and green herb stuffing" loading="lazy" decoding="async">
+               alt="Whole Balamban Liempo with crackling golden skin and green herb stuffing" loading="lazy" decoding="async" width="2000" height="1331">
           <figcaption class="product-tag">Signature</figcaption>
         </figure>
         <div class="product-body">
@@ -229,7 +233,7 @@
       <article class="product-row product-row-alt reveal">
         <figure class="product-figure">
           <img src="https://www.balambanliempo.com/assets/images/sean4a-676x450.jpg"
-               alt="Spicy Balamban Liempo sliced on a board with chili" loading="lazy" decoding="async">
+               alt="Spicy Balamban Liempo sliced on a board with chili" loading="lazy" decoding="async" width="676" height="450">
           <figcaption class="product-tag product-tag-hot">Spicy</figcaption>
         </figure>
         <div class="product-body">
@@ -252,7 +256,7 @@
       <article class="product-row reveal">
         <figure class="product-figure">
           <img src="https://www.balambanliempo.com/assets/images/rys5703-676x450.jpeg"
-               alt="Balambanok roasted chicken stuffed with herbs" loading="lazy" decoding="async">
+               alt="Balambanok roasted chicken stuffed with herbs" loading="lazy" decoding="async" width="676" height="450">
           <figcaption class="product-tag product-tag-alt">Roast Chicken</figcaption>
         </figure>
         <div class="product-body">
@@ -442,7 +446,7 @@
         <div class="herb-plate">
           <img src="https://www.balambanliempo.com/assets/images/3-676x450.jpg"
                alt="Close-up of chopped liempo with green herbs spilling from the stuffing"
-               loading="lazy" decoding="async">
+               loading="lazy" decoding="async" width="676" height="450">
         </div>
         <div class="herb-hint" aria-hidden="true">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 11V6a1.5 1.5 0 0 1 3 0v5"/><path d="M12 11V4.5a1.5 1.5 0 0 1 3 0V11"/><path d="M15 11V6.5a1.5 1.5 0 0 1 3 0V13a7 7 0 0 1-7 7h-1a7 7 0 0 1-7-7v-2a1.5 1.5 0 0 1 3 0"/></svg>
@@ -467,7 +471,7 @@
     <div class="herb-popout-inner">
       <figure class="herb-popout-figure">
         <img src="https://www.balambanliempo.com/assets/images/3-676x450.jpg"
-             alt="Green Cebuano herbs spilling from a freshly chopped liempo" loading="lazy" decoding="async">
+             alt="Green Cebuano herbs spilling from a freshly chopped liempo" loading="lazy" decoding="async" width="676" height="450">
         <figcaption>Hand-stuffed, then straight to the pit</figcaption>
       </figure>
 
@@ -503,7 +507,7 @@
     <div class="awards-grid">
       <figure class="awards-photo reveal">
         <img src="https://www.balambanliempo.com/assets/images/441727324-780397564222821-9192718860551373729-n-732x732.jpg"
-             alt="SunStar Best of Cebu award recognition for Balamban Liempo" loading="lazy" decoding="async">
+             alt="SunStar Best of Cebu award recognition for Balamban Liempo" loading="lazy" decoding="async" width="732" height="732">
         <figcaption>SunStar Best of Cebu &mdash; Best Liempo</figcaption>
       </figure>
 
@@ -549,10 +553,10 @@
     <div class="locator reveal">
       <div class="locator-controls">
         <div class="locator-filters" role="group" aria-label="Filter branches by region">
-          <button class="chip is-active" data-region="all" type="button">All <span class="chip-count" data-count-for="all"></span></button>
-          <button class="chip" data-region="visayas" type="button">Visayas <span class="chip-count" data-count-for="visayas"></span></button>
-          <button class="chip" data-region="luzon" type="button">Luzon <span class="chip-count" data-count-for="luzon"></span></button>
-          <button class="chip" data-region="mindanao" type="button">Mindanao <span class="chip-count" data-count-for="mindanao"></span></button>
+          <button class="chip is-active" data-region="all" type="button" aria-pressed="true">All <span class="chip-count" data-count-for="all"></span></button>
+          <button class="chip" data-region="visayas" type="button" aria-pressed="false">Visayas <span class="chip-count" data-count-for="visayas"></span></button>
+          <button class="chip" data-region="luzon" type="button" aria-pressed="false">Luzon <span class="chip-count" data-count-for="luzon"></span></button>
+          <button class="chip" data-region="mindanao" type="button" aria-pressed="false">Mindanao <span class="chip-count" data-count-for="mindanao"></span></button>
         </div>
         <div class="locator-search">
           <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -578,15 +582,15 @@
         <aside class="locator-maps" id="coverageMaps" aria-label="Branch coverage maps">
           <p class="maps-head">Branch coverage</p>
           <figure class="map-card">
-            <img src="https://www.balambanliempo.com/assets/images/mapvisayas-676x450.jpg" alt="Map of Balamban Liempo branches across the Visayas" loading="lazy" decoding="async">
+            <img src="https://www.balambanliempo.com/assets/images/mapvisayas-676x450.jpg" alt="Map of Balamban Liempo branches across the Visayas" loading="lazy" decoding="async" width="676" height="450">
             <figcaption>Visayas <span>68</span></figcaption>
           </figure>
           <figure class="map-card">
-            <img src="https://www.balambanliempo.com/assets/images/mapmindanao-676x450.jpg" alt="Map of Balamban Liempo branches across Mindanao" loading="lazy" decoding="async">
+            <img src="https://www.balambanliempo.com/assets/images/mapmindanao-676x450.jpg" alt="Map of Balamban Liempo branches across Mindanao" loading="lazy" decoding="async" width="676" height="450">
             <figcaption>Mindanao <span>23</span></figcaption>
           </figure>
           <figure class="map-card">
-            <img src="https://www.balambanliempo.com/assets/images/mapluzon-676x450.jpg" alt="Map of Balamban Liempo branches across Luzon" loading="lazy" decoding="async">
+            <img src="https://www.balambanliempo.com/assets/images/mapluzon-676x450.jpg" alt="Map of Balamban Liempo branches across Luzon" loading="lazy" decoding="async" width="676" height="450">
             <figcaption>Luzon <span>5</span></figcaption>
           </figure>
         </aside>
@@ -611,7 +615,7 @@
     <div class="parks-grid">
       <article class="park-card reveal">
         <img src="https://www.balambanliempo.com/assets/images/283267073-7454408317934726-4276841456887565407-n-960x721.jpg"
-             alt="Balamban Liempo stall at Sugbo Merkado, IT Park Cebu City" loading="lazy" decoding="async">
+             alt="Balamban Liempo stall at Sugbo Merkado, IT Park Cebu City" loading="lazy" decoding="async" width="960" height="721">
         <div class="park-body">
           <span class="park-flag">Dine-in &amp; take-out</span>
           <h3>Sugbo Merkado</h3>
@@ -621,7 +625,7 @@
 
       <article class="park-card reveal" data-delay="110">
         <img src="https://www.balambanliempo.com/assets/images/281755143-7443988732310018-4283784170820445856-n-586x781.jpg"
-             alt="Balamban Liempo at Atlantis Food Park, Liloan" loading="lazy" decoding="async">
+             alt="Balamban Liempo at Atlantis Food Park, Liloan" loading="lazy" decoding="async" width="586" height="781">
         <div class="park-body">
           <span class="park-flag">Dine-in &amp; take-out</span>
           <h3>Atlantis Food Park</h3>
@@ -631,7 +635,7 @@
 
       <article class="park-card park-card-open reveal" data-delay="220">
         <img src="https://www.balambanliempo.com/assets/images/513876565-722269780404794-8403549196866777266-n-732x976.jpg"
-             alt="Now open in Surigao City branch" loading="lazy" decoding="async">
+             alt="Now open in Surigao City branch" loading="lazy" decoding="async" width="732" height="976">
         <div class="park-body">
           <span class="park-flag park-flag-open">Now open</span>
           <h3>Surigao City</h3>
@@ -641,7 +645,7 @@
 
       <article class="park-card park-card-open reveal" data-delay="330">
         <img src="https://www.balambanliempo.com/assets/images/499932424-24832751912981570-1582682626986502094-n-732x976.jpg"
-             alt="Now open in Nazareth, Cagayan de Oro" loading="lazy" decoding="async">
+             alt="Now open in Nazareth, Cagayan de Oro" loading="lazy" decoding="async" width="732" height="976">
         <div class="park-body">
           <span class="park-flag park-flag-open">Now open</span>
           <h3>Nazareth, CDO</h3>

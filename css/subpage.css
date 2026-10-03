@@ -101,6 +101,8 @@ h3 { font-size: clamp(1.2rem, 2vw, 1.42rem); line-height: 1.18; margin: 0 0 .5re
 .btn:focus-visible { outline: 0; box-shadow: 0 0 0 .25rem rgba(212, 140, 40, .4); }
 
 section[id] { scroll-margin-top: 5.25rem; }
+/* the skip link lands on <main>, which is not a <section> */
+main[id] { scroll-margin-top: 5.25rem; }
 
 /* ---------- brand atoms ---------- */
 .eyebrow {
@@ -425,6 +427,40 @@ section[id] { scroll-margin-top: 5.25rem; }
 .bl-carousel .carousel-caption p { color: rgba(255, 255, 255, .88); max-width: 58ch; }
 .bl-carousel .carousel-indicators { margin-bottom: .85rem; }
 .bl-carousel .carousel-indicators [data-bs-target] { background-color: var(--cream); }
+
+/* ---------- auto-rotation control ----------
+   The featured carousel runs alongside the rest of the feed, so anything
+   that plays for longer than 5 seconds needs a visible way to stop it.
+   The pill sits top-right — clear of the caption at the bottom and of the
+   indicators, and above both of them in the stacking order. */
+.bl-carousel-toggle {
+  position: absolute;
+  top: .9rem;
+  right: .9rem;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0;
+  border: 1px solid rgba(245, 235, 224, .45);
+  border-radius: 50%;
+  background: rgba(42, 24, 12, .6);
+  color: var(--cream);
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background-color .2s var(--ease), border-color .2s var(--ease),
+              transform .2s var(--ease);
+}
+.bl-carousel-toggle:hover {
+  background: rgba(42, 24, 12, .85);
+  border-color: var(--amber);
+}
+.bl-carousel-toggle:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.bl-carousel-icon { display: block; }
+.bl-carousel-toggle[data-state="playing"] .bl-carousel-icon-play { display: none; }
+.bl-carousel-toggle[data-state="paused"] .bl-carousel-icon-pause { display: none; }
 
 /* ---------- news cards ---------- */
 .bl-zoom { overflow: hidden; }

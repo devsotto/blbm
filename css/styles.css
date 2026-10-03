@@ -1997,6 +1997,16 @@ a.contact-card:hover {
 }
 .field-error:empty { display: none; }
 
+/* iOS Safari auto-zooms any focused field set below 16px, which pans the
+   page away from the field the visitor just tapped. Keep the tighter brand
+   rhythm on desktop, hold the 16px floor on small screens. */
+@media (max-width: 767.98px) {
+  .field input,
+  .field textarea,
+  .field select,
+  .locator-search input { font-size: 16px; }
+}
+
 .select-wrap { position: relative; }
 .select-wrap select { appearance: none; -webkit-appearance: none; padding-right: 2.4rem; cursor: pointer; }
 .select-wrap svg {
