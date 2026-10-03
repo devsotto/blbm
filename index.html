@@ -153,8 +153,9 @@
 
   <!-- ambient grill sound — bottom-right of the hero, homepage only -->
   <button id="heroSound" type="button"
-          class="bl-sound bl-sound-hero btn btn-md btn-dark position-absolute rounded-circle d-inline-flex align-items-center justify-content-center"
-          aria-label="Turn the grill sound on" aria-pressed="false" title="Sound off">
+          class="bl-sound bl-sound-hero btn btn-md btn-dark position-absolute rounded-pill d-inline-flex align-items-center justify-content-center"
+          aria-label="Hear the Sizzling — turn sound on" aria-pressed="false" title="Hear the Sizzling — sound off">
+    <span class="bl-sound-label">Hear the Sizzling</span>
     <svg class="bl-sound-icon bl-sound-icon-on" viewBox="0 0 16 16" width="18" height="18" fill="none"
          stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
          aria-hidden="true" focusable="false">
@@ -693,8 +694,7 @@
 
         <div class="franchise-actions">
           <a class="btn btn-blamber btn-lg" href="#contact" data-subject="franchise">Inquire now</a>
-          <a class="btn btn-ghost btn-lg"
-             href="mailto:balambanliempocebu@gmail.com?subject=Balamban%20Liempo%20Franchise">Send a letter of intent</a>
+          <a class="btn btn-ghost btn-lg" href="#contactForm" data-subject="franchise">Send a letter of intent</a>
         </div>
       </div>
 
@@ -836,7 +836,7 @@
         </div>
       </div>
 
-      <form class="contact-form reveal" id="contactForm" novalidate>
+      <form class="contact-form reveal" id="contactForm" tabindex="-1" novalidate>
         <div class="form-head">
           <h3>Send us a message</h3>
           <p>Fill this in and the Cebu office gets back to you within one business day.</p>
@@ -858,9 +858,10 @@
           </div>
 
           <div class="field">
-            <label for="cfPhone">Phone Number</label>
-            <input type="tel" id="cfPhone" name="phone" autocomplete="tel"
-                   placeholder="09XX XXX XXXX" aria-describedby="cfPhoneErr">
+            <label for="cfPhone">Phone Number <span class="req" aria-hidden="true">*</span></label>
+            <input type="tel" id="cfPhone" name="phone" autocomplete="tel" required
+                   aria-required="true" placeholder="09XX XXX XXXX"
+                   aria-describedby="cfPhoneErr">
             <span class="field-error" id="cfPhoneErr" role="alert"></span>
           </div>
 

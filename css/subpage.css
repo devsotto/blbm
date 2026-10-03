@@ -539,6 +539,17 @@ section[id] { scroll-margin-top: 5.25rem; }
   gap: .5rem;
   margin-left: auto;
 }
+/* visible group label — the chips keep their own aria-labels, so the old
+   native title tooltips are gone but every icon stays named for AT */
+.news-share-label {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(58, 35, 18, .62);
+  white-space: nowrap;
+  margin-right: .1rem;
+}
 /* the Facebook / Pinterest chips are anchors, Instagram is a button — it copies
    the link instead, because Instagram exposes no web share endpoint */
 .news-share-link {

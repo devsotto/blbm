@@ -102,6 +102,29 @@ a:hover, a:focus, .product-title-link:hover {
 }
 
 /* ==========================================================================
+   VERTICAL CENTRING — every button and badge, main pages and sub-pages
+   Bootstrap's .btn and .badge ship inline-block on the text baseline, so an
+   icon + label pair (or a badge riding a line of copy) sits low. These rules
+   centre the content and lift the control to the midline; the !important
+   display utilities (d-flex / d-inline-flex / d-inline-block) still win
+   wherever a page already asks for them.
+   ========================================================================== */
+.btn, .badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
+}
+.btn > svg, .btn > i.bi,
+.badge > svg, .badge > i.bi { flex: 0 0 auto; }
+.navbar-toggler {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
    HARMONISATION PASS
    Keeps the two blocks above from leaking onto components that already carry
    their own skin, and onto dark surfaces where terracotta would fall below AA.

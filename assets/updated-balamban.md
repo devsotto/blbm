@@ -1,45 +1,41 @@
-# TASK PROMPT: What's New Page UI Updates & Hero Audio Control Implementation
-
-## OBJECTIVE
-Update the "What's New" page modal and card layout, and implement a context-aware background audio control system on the Homepage hero banner using the existing Bootstrap framework, project branding, and custom CSS/JS. Deliver UI/UX execution guided by high visual polish ("Taste Skill") and intuitive interaction design ("Awesome Design").
+# Role & Context
+Act as a Senior UI/UX Designer and Lead Front-End Engineer with exceptional visual judgment, specialized in Bootstrap framework implementations. You strictly follow clean, professional design principles ("Taste Skill" + "Awesome Design") and avoid generic, unrefined AI patterns ("AI-Slop").
 
 ---
 
-## REQUIREMENT BREAKDOWN
-
-### 1. "What's New" Page Updates
-* **News Grid/Cards:**
-  * Ensure all news cards across the grid render with uniform height and width using standard Bootstrap grid/flexbox utilities (`d-flex`, `h-100`, or CSS grid/flex stretch).
-* **News Card Modal:**
-  * **Header:** Remove the top close button (`.btn-close` / "x").
-  * **Footer Action Buttons:**
-    * Align the bottom "Close" button to the left (`justify-content-start` or custom layout).
-    * Replace the "See it on Facebook" link/button with interactive share icons for:
-      * **Facebook**
-      * **Instagram**
-      * **Pinterest**
+# Primary Directive
+Update the existing **Branch Card(s)** component within a single downloadable standard markup file (e.g., HTML/SVG/CSS/JS bundle). The updated markup must preserve all current branding, design systems, and responsive layout integrity while implementing the specific functional fixes listed below.
 
 ---
 
-## 2. Homepage Hero Banner Audio Feature
-* **Audio Setup:**
-  * Add a sizzling/crackling background sound loop of roasted meat.
-* **Hero Banner Sound Toggle:**
-  * Place a sound ON/OFF toggle button at the bottom-right corner of the Hero Banner section.
-* **Scroll-Triggered Floating Audio Toggle:**
-  * When scrolling past the Hero Banner section, display a floating sound ON/OFF button.
-  * Position this floating button directly above the existing floating "Back to Top" button.
-* **Page Scope Restriction:**
-  * Ensure the sound playback, hero toggle, and floating sound button are **only present and active on the Homepage** where the Hero Banner section exists.
+# Target Specifications & Component Fixes
+
+### 1. Iconography Refinement (Contact Number Icon)
+- **Issue:** The icon adjacent to the contact number is ambiguous/unrecognizable.
+- **Requirement:** Replace it with an unambiguous, clean "phone/cellphone" icon (e.g., Bootstrap Icons `bi-telephone`, `bi-telephone-fill`, or `bi-phone`).
+- **Standard:** Ensure visual consistency in size, alignment, optical balance, and color palette relative to neighboring card icons.
+
+### 2. Contact Number Data Insertion & Formatting
+- **Issue:** Contact number field needs realistic sample data representation.
+- **Requirement:** Inject randomized, properly formatted phone values across branch cards using standard regional/international patterns:
+  - **Telephone Format Example:** `(032) 123-4567`
+  - **Cellphone Format Example:** `0921 123 4567`
+- **Standard:** Ensure proper spacing, typography, and visual hierarchy so numbers remain crisp and legible across viewports.
 
 ---
 
-## DESIGN & TECHNICAL CONSTRAINTS
-* **Framework:** Use existing Bootstrap classes where possible; complement with concise, non-polluting custom CSS/JS.
-* **Branding & UI/UX:** Maintain current typography, color scheme, spacing, and hover states. Ensure accessibility (aria-labels, focus states) and responsive behavior across viewports.
-* **Audio Execution:** Handle browser audio autoplay policies gracefully (default muted/off state requiring initial user interaction, or unmuting via toggle).
+# Design & Quality Standards ("Taste Skill" & "Awesome Design")
+- **Framework Integrity:** Leverage standard Bootstrap utility classes (`d-flex`, `align-items-center`, `gap-2`, `text-muted`, etc.) or clean custom CSS where standard utilities fall short.
+- **Anti-AI-Slop Guardrails:** Avoid over-designed gradients, unnecessary glow effects, generic placeholder text, inconsistent padding, or awkward visual weight distribution. Keep card components structured, functional, and visually crisp.
+- **Accessibility & UX:** Maintain semantic markup (`aria-label`, accessible icon implementations, appropriate color contrast ratios).
 
 ---
 
-## OUTPUT REQUIREMENTS
-Deliver complete, production-ready code snippets (HTML, CSS, JS) with clear integration instructions.
+# Execution & Delivery Instructions
+1. **Self-Correction Loop:** Before outputting the markup, perform an internal review pass verifying that:
+   - Every contact icon is clearly recognizable as a telephone/mobile phone.
+   - Realistic telephone and cellphone formatted numbers are seamlessly integrated.
+   - Bootstrap grid and flex properties align cards neatly across breakpoint sizes.
+2. **Deliverable Format:** Output the complete, production-ready solution contained entirely within a single, downloadable standard markup file (`.html`).
+
+*(Note: Do not use, invoke, or initialize Playwright or any external browser automation tools during execution.)*

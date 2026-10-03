@@ -54,7 +54,9 @@ html {
 
 main,
 .hero,
-.section {
+.section,
+.locator-map-wrap,
+.contact-form {
   scroll-margin-top: 6.5rem;
 }
 
@@ -674,6 +676,24 @@ h3 {
   right: clamp(1rem, 4vw, 2.5rem);
   bottom: clamp(1rem, 3vw, 2rem);
   z-index: 4;
+}
+
+/* labelled variant: "Hear the Sizzling" + speaker icon on a pill. Overrides
+   the square/circle sizing on .bl-sound and the padding:0 in brand-system */
+.bl-sound.bl-sound-hero {
+  width: auto;
+  height: auto;
+  min-height: 3rem;
+  padding: .78rem 1.15rem;
+  gap: .55rem;
+  white-space: nowrap;
+}
+.bl-sound-label {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  line-height: 1;
 }
 
 /* floating control — m-4 already supplies the 1.5rem right inset, so
@@ -1297,6 +1317,9 @@ body.modal-open .bl-sound-float { opacity: 0; visibility: hidden; }
 
 .locator-filters { display: flex; flex-wrap: wrap; gap: .5rem; }
 .chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-family: var(--f-body);
   font-size: .87rem; font-weight: 600;
   padding: .5rem 1rem;
@@ -1429,13 +1452,19 @@ body.map-ready.map-tiles-down #coverageMaps { display: grid; }
   body.map-ready.map-tiles-down .locator-body { grid-template-columns: 1fr 300px; }
 }
 
-.branch-groups { columns: 1; column-gap: 1.1rem; }
-@media (min-width: 640px) { .branch-groups { columns: 2; } }
-@media (min-width: 1400px) { .branch-groups { columns: 3; } }
+/* equal-width, equal-height cards: a real grid beats the old column flow,
+   which could not level card heights. Region headers span the full row. */
+.branch-groups {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .75rem;
+}
+@media (min-width: 640px) { .branch-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1400px) { .branch-groups { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
 .branch-region {
-  break-inside: avoid;
-  margin: 0 0 .85rem;
+  grid-column: 1 / -1;
+  margin: 0 0 .35rem;
   padding-top: .4rem;
   font-family: var(--f-display);
   font-size: 1rem; font-weight: 750;
@@ -1447,83 +1476,125 @@ body.map-ready.map-tiles-down #coverageMaps { display: grid; }
 }
 .branch-region:not(:first-child) { margin-top: 1.4rem; }
 
-/* one branch = the map card + its call link; kept together in the columns */
-.branch-item { break-inside: avoid; margin-bottom: .7rem; }
-
-.branch-card {
-  break-inside: avoid;
-  display: block;
+/* one branch = the whole card box: name → address → call number. The grid
+   stretches every item to its row, and main.js publishes the tallest measured
+   height here so every card in the list — across all rows — matches it */
+.branch-item {
   position: relative;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  min-height: var(--branch-row-h, 0px);
+  padding: .85rem 2.35rem .85rem .95rem;
+  background: #fff;
+  border: 1px solid rgba(58, 35, 18, .1);
+  border-radius: 5px;
+  transition: transform .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease);
+}
+.branch-item:hover, .branch-item:focus-within {
+  transform: translateY(-4px);
+  border-color: var(--amber);
+  box-shadow: var(--lift-md);
+}
+
+/* the button carries the text only — the box, padding and lift live on the
+   wrapper so the call number can sit inside the card, after the address */
+.branch-card {
+  position: static;
   text-align: left;
   font: inherit;
   color: inherit;
   cursor: pointer;
-  background: #fff;
-  border: 1px solid rgba(58, 35, 18, .1);
-  border-radius: 5px;
-  padding: .85rem 2.3rem .85rem .95rem;
-  margin-bottom: 0;
-  text-decoration: none;
-  transition: transform .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease);
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
 }
-.branch-card:hover, .branch-card:focus-visible {
-  transform: translateY(-3px);
-  border-color: var(--amber);
-  box-shadow: var(--lift-md);
-}
-.branch-card:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+.branch-card:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 3px; }
 .branch-map-cue {
-  position: absolute; right: .85rem; top: .9rem;
+  position: absolute; right: .4rem; top: .5rem;
+  padding: .4rem .45rem;           /* grows the tap target, keeps the text
+                                      where it always sat (.85rem / .9rem) */
   font-size: .62rem; font-weight: 700;
   letter-spacing: .12em; text-transform: uppercase;
   color: var(--amber-deep);
+  text-decoration: none;
   opacity: 0;
   transform: translateX(-4px);
   transition: opacity .2s var(--ease), transform .2s var(--ease);
+  pointer-events: none;            /* an invisible cue must not steal the
+                                      click meant for the card beneath it */
 }
-.branch-card:hover .branch-map-cue,
-.branch-card:focus-visible .branch-map-cue { opacity: 1; transform: none; }
+.branch-item:hover .branch-map-cue,
+.branch-item:focus-within .branch-map-cue,
+.branch-map-cue:focus-visible {
+  opacity: 1; transform: none; pointer-events: auto;
+}
+.branch-map-cue:hover { text-decoration: underline; }
+.branch-map-cue:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
 .branch-name {
   display: block;
   font-weight: 700; font-size: .94rem;
   color: var(--charcoal);
-  margin-bottom: .2rem;
+  margin-bottom: .5rem;
 }
+/* empty branch name: muted italic placeholder, same footprint as a real one */
+.branch-name-placeholder {
+  font-weight: 500;
+  font-style: italic;
+  color: rgba(58, 35, 18, .62);
+}
+
+/* pin glyph inline with the address itself — no label between the name and
+   the address any more, so the icon alone carries the "location" read */
 .branch-addr {
-  display: block;
+  display: flex;
+  align-items: flex-start;
+  gap: .3rem;
   font-size: .82rem; line-height: 1.5;
   color: rgba(58, 35, 18, .62);
 }
-.branch-flag {
-  display: inline-block;
-  margin-top: .5rem;
-  font-size: .63rem; font-weight: 700;
-  letter-spacing: .14em; text-transform: uppercase;
-  color: var(--herb);
-  background: rgba(62, 107, 52, .12);
-  padding: .2rem .5rem;
-  border-radius: 3px;
+.branch-addr svg {
+  flex: 0 0 auto;
+  /* centres the 13px glyph on the first line of the .82rem / 1.5 address */
+  margin-top: .21rem;
+  color: var(--amber-deep);
 }
+.branch-addr-text { display: block; min-width: 0; }
 
-/* call link — sits directly under the address line, never inside the
-   .branch-card <button> (interactive content may not nest in a button) */
+/* phone number — third and last field, sitting tight under the address.
+   Sibling of the <button> (interactive content may not nest in a button);
+   the wrapper's gap plus this .15rem padding makes the whole trip from the
+   address baseline to the number ≈ 7px, and the glyph carries the affordance */
 .branch-tel {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: .4rem;
-  margin: .45rem 0 0 .95rem;
-  font-size: .82rem;
-  font-weight: 600;
+  padding: .15rem 0;
   color: var(--brand-primary, #9A2C2C);
   text-decoration: none;
   transition: color .2s var(--ease);
 }
-.branch-tel:hover, .branch-tel:focus-visible {
-  color: var(--brand-hover, #78350F);
-  text-decoration: underline;
+.branch-tel svg { flex: 0 0 auto; }
+/* tabular figures keep a column of numbers on one rhythm; nowrap keeps
+   a number from breaking across lines on a narrow card */
+.branch-tel-num {
+  font-size: .86rem; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
-.branch-tel svg { flex: 0 0 auto; opacity: .85; }
+.branch-tel:hover, .branch-tel:focus-visible { color: var(--brand-hover, #78350F); }
+.branch-tel:hover .branch-tel-num,
+.branch-tel:focus-visible .branch-tel-num { text-decoration: underline; }
+.branch-tel:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
 
 .locator-maps { display: grid; gap: .8rem; position: sticky; top: 6.5rem; }
 .maps-head {
@@ -1865,6 +1936,9 @@ a.contact-card:hover {
   padding: clamp(1.5rem, 3.5vw, 2.4rem);
   box-shadow: var(--lift-md);
 }
+/* focused programmatically by the franchise CTAs (tabindex="-1"), never by
+   Tab — no ring, but the jump still lands the caret/keyboard here */
+.contact-form:focus { outline: none; }
 
 .form-head { margin-bottom: 1.5rem; }
 .form-head h3 { margin-bottom: .35rem; }

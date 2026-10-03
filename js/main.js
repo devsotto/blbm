@@ -615,10 +615,101 @@
     ['Surigao City', 'Surigao City, Surigao del Norte', 'mindanao']
   ];
 
-  /* Standardised placeholder contact appended to every branch listing.
-     One number, one format, one tel: link — swap for the live per-branch
-     numbers when they land. */
-  const BRANCH_TEL = { display: '(032) 555-0199', dial: '+63325550199' };
+  /* ----------------------------------------------------------------------
+     Branch contacts — one realistic sample number per branch.
+     Seeded off the branch's own name + address, so every render (filter,
+     search, resize) shows the exact number its tel: link dials. Landlines
+     take the area code of the city they sit in and read (032) 123-4567;
+     mobiles take a standard 09XX prefix and read 0921 123 4567. Roughly
+     six in ten branches are landlines, the rest mobiles — a directory
+     should look like a directory, not like one repeated placeholder.
+     Swap the generator for the live per-branch numbers when they land.
+     ---------------------------------------------------------------------- */
+  const TEL_MOBILE_PREFIX = [
+    '0905', '0906', '0908', '0916', '0917', '0919', '0921', '0922',
+    '0926', '0927', '0929', '0932', '0939', '0947', '0955', '0977',
+    '0995', '0996'
+  ];
+
+  /* area code looked up off the branch's own text — first match wins */
+  const TEL_AREA_CODE = [
+    [/tagum/, '084'],
+    [/quezon city|antipolo|mandaluyong|sta\. rosa|bi[ñn]an/, '02'],
+    [/iloilo|pavia/, '033'],
+    [/bacolod|kabankalan|silay/, '034'],
+    [/dumaguete/, '035'],
+    [/bohol|tagbilaran|dauis/, '038'],
+    [/tacloban|leyte/, '053'],
+    [/dipolog/, '065'],
+    [/kidapawan/, '064'],
+    [/cagayan|valencia|malaybalay|bukidnon/, '088'],
+    [/davao|digos/, '082'],
+    [/general santos|gensan|surigao/, '086'],
+    [/cebu|mandaue|talisay|lapu-lapu|minglanilla|toledo|danao|bogo|carcar|dalaguete|moalboal|balamban|liloan|naga|cordova/, '032']
+  ];
+
+  function telAreaCode(name, addr) {
+    const hay = ((name || '') + ' ' + (addr || '')).toLowerCase();
+    for (let i = 0; i < TEL_AREA_CODE.length; i++) {
+      if (TEL_AREA_CODE[i][0].test(hay)) return TEL_AREA_CODE[i][1];
+    }
+    return '032';
+  }
+
+  /* FNV-1a + mulberry32: a tiny deterministic generator, so the numbers are
+     random-looking but never actually random at runtime */
+  function telSeed(str) {
+    let h = 2166136261;
+    for (let i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function telRandom(seed) {
+    let a = seed;
+    return function () {
+      a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function branchTel(entry) {
+    const [name, addr] = entry;
+    const rnd = telRandom(telSeed((name || '') + '|' + (addr || '')));
+    /* len digits, first one pinned so no number opens on 0 or 1 */
+    const digits = (len, first) => {
+      let s = String(first);
+      while (s.length < len) s += Math.floor(rnd() * 10);
+      return s;
+    };
+
+    if (rnd() < 0.58) {
+      const area = telAreaCode(name, addr);
+      /* Metro Manila is the one 8-digit area code; everywhere else is 7 */
+      const len = area === '02' ? 8 : 7;
+      const start = 2 + Math.floor(rnd() * 7);
+      const line = digits(len, area === '02' ? 8 : start);
+      const cut = len - 4;
+      return {
+        display: '(' + area + ') ' + line.slice(0, cut) + '-' + line.slice(cut),
+        dial: '+63' + area.slice(1) + line
+      };
+    }
+
+    const prefix = TEL_MOBILE_PREFIX[Math.floor(rnd() * TEL_MOBILE_PREFIX.length)];
+    const line = digits(7, 1 + Math.floor(rnd() * 9));
+    return {
+      display: prefix + ' ' + line.slice(0, 3) + ' ' + line.slice(3),
+      dial: '+63' + prefix.slice(1) + line
+    };
+  }
+
+  const BRANCH_TEL = new Map(BRANCHES.map((entry) => [entry, branchTel(entry)]));
+  const telFor = (entry) => BRANCH_TEL.get(entry);
 
 
   // Approximate branch coordinates (city/barangay centroid) used by the map.
@@ -769,8 +860,9 @@
       addr.textContent = entry[1];
       const tel = document.createElement('a');
       tel.className = 'bl-popup-tel';
-      tel.href = 'tel:' + BRANCH_TEL.dial;
-      tel.textContent = BRANCH_TEL.display;
+      const num = telFor(entry);
+      tel.href = 'tel:' + num.dial;
+      tel.textContent = num.display;
       const meta = document.createElement('em');
       meta.textContent = REGION_LABEL[entry[2]] + (entry[3] ? ' · ' + entry[3] : '');
       box.append(name, addr, tel, meta);
@@ -852,9 +944,24 @@
     function matches(entry) {
       const [name, addr, reg] = entry;
       if (region !== 'all' && reg !== region) return false;
-      if (query && !(name + ' ' + addr).toLowerCase().includes(query)) return false;
+      if (query && !((name || '') + ' ' + (addr || '')).toLowerCase().includes(query)) return false;
       return true;
     }
+
+    /* Bootstrap Icons, geo-alt-fill and phone, inlined: the home page ships
+       no icon font, and these are the only two glyphs the cards need. Both
+       sit on one 13px box. The handset silhouette (telephone / telephone-fill)
+       collapses into an unreadable diagonal blob at card size — the phone
+       outline keeps its shape, and it matches the pin's outline weight, so
+       the two glyphs read as a single set */
+    const ICON_PIN =
+      '<svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" ' +
+      'aria-hidden="true" focusable="false"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/></svg>';
+    const ICON_TEL =
+      '<svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" ' +
+      'aria-hidden="true" focusable="false">' +
+      '<path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>' +
+      '<path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></svg>';
 
     function render() {
       const visible = BRANCHES.filter(matches);
@@ -879,51 +986,116 @@
         wrap.appendChild(h);
 
         list.forEach((entry) => {
-          const [name, addr, , flag] = entry;
+          const [name, addr] = entry;
+          const branchName = (name || '').trim();
           const item = document.createElement('div');
           item.className = 'branch-item';
 
+          /* strict content scope: branch name → address → contact number.
+             No service badges, no status pills, nothing else */
           const card = document.createElement('button');
           card.type = 'button';
           card.className = 'branch-card';
           card.dataset.branch = String(BRANCHES.indexOf(entry));
           card.innerHTML =
             '<span class="branch-name"></span>' +
-            '<span class="branch-addr"></span>' +
-            (flag ? '<span class="branch-flag"></span>' : '') +
-            '<span class="branch-map-cue" aria-hidden="true">show on map &rarr;</span>';
+            '<span class="branch-addr">' + ICON_PIN +
+              '<span class="branch-addr-text"></span></span>';
 
-          card.querySelector('.branch-name').textContent = name;
-          card.querySelector('.branch-addr').textContent = addr;
-          if (flag) card.querySelector('.branch-flag').textContent = flag;
+          const nameEl = card.querySelector('.branch-name');
+          if (branchName) {
+            nameEl.textContent = branchName;
+          } else {
+            /* empty name: a muted italic placeholder keeps every grid cell on
+               the same rhythm instead of collapsing the first line */
+            nameEl.classList.add('branch-name-placeholder');
+            nameEl.textContent = 'Branch Location';
+          }
+          card.querySelector('.branch-addr-text').textContent = addr;
 
-          /* the call link is a sibling of the card, never a child — a <button>
-             may not contain interactive content, and the click on it must not
-             fly the map */
+          /* the call link is a sibling of the card button, never a child — a
+             <button> may not contain interactive content, and the click on it
+             must not fly the map. It still renders inside the card box, right
+             after the address, so the order reads name → address → number */
           const tel = document.createElement('a');
+          const num = telFor(entry);
           tel.className = 'branch-tel';
-          tel.href = 'tel:' + BRANCH_TEL.dial;
-          tel.setAttribute('aria-label', 'Call ' + name + ' branch, ' + BRANCH_TEL.display);
-          tel.innerHTML =
-            '<svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" ' +
-            'aria-hidden="true" focusable="false"><path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.165-.45 1.77a12.7 12.7 0 0 0 4.414 4.414c.605.211 1.286.033 1.77-.45l1.033-1.035a.678.678 0 0 0-.063-1.015l-2.07-1.43a.678.678 0 0 0-.654-.108l-1.917.64a.678.678 0 0 1-.634-.145L3.4 3.214a.678.678 0 0 0-.94-.94L1.366 3.49a.678.678 0 0 1-.145-.634l.64-1.917a.678.678 0 0 0-.108-.654l-1.43-2.07z"/></svg>' +
-            '<span class="branch-tel-num"></span>';
-          tel.querySelector('.branch-tel-num').textContent = BRANCH_TEL.display;
+          tel.href = 'tel:' + num.dial;
+          tel.setAttribute(
+            'aria-label',
+            'Call ' + (branchName ? branchName + ' branch' : 'this branch') +
+              ', ' + num.display
+          );
+          tel.innerHTML = ICON_TEL + '<span class="branch-tel-num"></span>';
+          tel.querySelector('.branch-tel-num').textContent = num.display;
 
+          /* "show on map" is a real link, so it cannot sit inside the card
+             <button> either — it overlays the card box instead, anchored to
+             the same corner. Built only when Leaflet came up, because there
+             would be no map to scroll to otherwise. */
           item.append(card, tel);
+          if (mapApi) {
+            const cue = document.createElement('a');
+            cue.className = 'branch-map-cue';
+            cue.href = '#branchMapWrap';
+            cue.textContent = 'show on map';
+            cue.setAttribute(
+              'aria-label',
+              'Show ' + (branchName ? branchName + ' branch' : 'this branch') + ' on the map'
+            );
+            item.appendChild(cue);
+          }
           wrap.appendChild(item);
         });
       });
 
       countEl.textContent =
         'Showing ' + visible.length + ' of ' + BRANCHES.length + ' branches';
+
+      equalizeRows();
     }
 
+    /* one batched read pass after a render, then a single write: every card
+       lands on the same height, not just the cards in the same row. The
+       previous value is dropped first so a filter can shrink the row again */
+    function equalizeRows() {
+      wrap.style.removeProperty('--branch-row-h');
+      const items = wrap.querySelectorAll('.branch-item');
+      if (!items.length) return;
+      let tallest = 0;
+      items.forEach((el) => {
+        const h = el.offsetHeight;
+        if (h > tallest) tallest = h;
+      });
+      if (tallest) wrap.style.setProperty('--branch-row-h', tallest + 'px');
+    }
+
+    let rowSyncTimer = 0;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(rowSyncTimer);
+      rowSyncTimer = window.setTimeout(equalizeRows, 150);
+    }, { passive: true });
+
     wrap.addEventListener('click', (e) => {
-      const card = e.target.closest('.branch-card');
-      if (!card || !mapApi) return;
+      const cue = e.target.closest('.branch-map-cue');
+      const item = e.target.closest('.branch-item');
+      const card = item && item.querySelector('.branch-card');
+      if (!card) return;
+
+      /* the cue does both: bring the map into view, then fly to the branch */
+      if (cue) {
+        e.preventDefault();
+        const mapWrap = document.getElementById('branchMapWrap');
+        if (mapWrap && !mapWrap.hidden) {
+          mapWrap.scrollIntoView({
+            behavior: reduced ? 'auto' : 'smooth',
+            block: 'start'
+          });
+        }
+      }
+
       const entry = BRANCHES[Number(card.dataset.branch)];
-      if (entry) mapApi.focus(entry);
+      if (entry && mapApi) mapApi.focus(entry);
     });
 
     chips.forEach((chip) => {
@@ -971,9 +1143,8 @@
         msg: 'Please enter a valid e-mail address.'
       },
       cfPhone: {
-        optional: true,
         test: (v) => /^[+()\d\s-]{7,20}$/.test(v),
-        msg: 'That phone number looks off — digits, spaces and + only.'
+        msg: 'Please enter a valid phone number — digits, spaces and + only.'
       },
       cfMessage: {
         test: (v) => v.length >= 5,
@@ -1101,10 +1272,17 @@
       );
     });
 
-    // franchise CTAs pre-select the subject before scrolling to the form
+    // franchise CTAs: pick the subject, then jump straight into the form
+    // instead of opening the visitor's mail client
     document.querySelectorAll('a[data-subject]').forEach((link) => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
         if (subjectEl) subjectEl.value = link.dataset.subject;
+        form.scrollIntoView({
+          behavior: reduced ? 'auto' : 'smooth',
+          block: 'start'
+        });
+        form.focus({ preventScroll: true });
       });
     });
 

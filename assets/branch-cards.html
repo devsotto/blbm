@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Branch Cards — Balamban Liempo</title>
+<meta name="description" content="Balamban Liempo branch card component: region filters, live search, per-branch contact numbers and an interactive map, in one self-contained file.">
+<meta name="theme-color" content="#3A2312">
+<link rel="icon" href="https://www.balambanliempo.com/assets/images/bllogo-318x142.png">
+
+<!--
+  Balamban Liempo — Branch Card component, single-file build.
+  Markup, styles and script are self-contained; only Bootstrap 5.3.3,
+  Leaflet 1.9.4 and the Fraunces/Archivo webfonts load from their CDNs.
+
+  Contact fixes carried in this build:
+    1. the glyph beside the number is a 13px Bootstrap Icons `phone`
+       (mobile) outline, on the same optical box and outline weight as
+       the address pin — the telephone handset silhouette in this size
+       reads as an undifferentiated diagonal blob;
+    2. every branch carries its own number — a landline in (032) 123-4567
+       form or a mobile in 0921 123 4567 form — seeded off the branch name
+       and address, so re-renders never re-roll it and the tel: link always
+       matches what is on screen.
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..900,0..100,0..1;1,9..144,400..900,0..100,0..1&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   Balamban Liempo — design system
+   Palette: roasted charcoal / golden amber / herb green / banana leaf / cream
+   Type:    Fraunces (display) + Archivo (UI/body)
+   ========================================================================== */
+
+:root {
+  /* core palette */
+  --charcoal:      #3A2312;
+  --charcoal-deep: #2A180C;
+  --charcoal-soft: #4C3119;
+  --amber:         #D48C28;
+  --amber-bright:  #E9A63F;
+  --amber-deep:    #B87418;
+  --herb:          #3E6B34;
+  --herb-bright:   #5A8C4B;
+  --banana:        #8C9E5B;
+  --cream:         #F5EBE0;
+  --cream-deep:    #EDE0D2;
+  --cream-warm:    #FBF5EE;
+
+  /* brand link colours — AA-safe on white and cream */
+  --brand-primary:        #9A2C2C;
+  --brand-primary-soft:   #B13A3A;
+  --brand-hover:          #78350F;
+  --brand-accent:         #D97706;
+  --brand-accent-bright:  #F59E0B;
+
+  /* type */
+  --f-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --f-body: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* layout */
+  --shell: 1280px;
+  --gutter: clamp(1.15rem, 4vw, 2.5rem);
+  --section-y: clamp(4.5rem, 9vw, 8rem);
+
+  /* elevation — tinted, single light source (top-left) */
+  --lift-sm: 0 2px 6px rgba(58, 35, 18, .07);
+  --lift-md: 0 10px 30px -14px rgba(58, 35, 18, .35);
+  --lift-lg: 0 28px 60px -30px rgba(58, 35, 18, .5);
+  --glow-amber: 0 14px 34px -14px rgba(212, 140, 40, .65);
+
+  /* motion */
+  --ease: cubic-bezier(.22, .68, .24, 1);
+  --dur: .45s;
+
+  /* z-scale */
+  --z-grain: 900;
+  --z-nav: 800;
+  --z-topbar: 700;
+}
+
+/* ---------- reset-ish ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+main,
+.section,
+.locator-map-wrap {
+  scroll-margin-top: 6.5rem;
+}
+
+body {
+  margin: 0;
+  font-family: var(--f-body);
+  font-size: 1.0625rem;
+  line-height: 1.68;
+  color: var(--charcoal);
+  background-color: var(--cream);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+::selection { background: var(--amber); color: var(--charcoal-deep); }
+
+:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* unified brand link treatment, loaded after Bootstrap like brand-system.css */
+a, .product-title-link {
+  color: var(--brand-primary);
+  text-decoration: none;
+  transition: color .2s ease-in-out;
+}
+a:hover, a:focus, .product-title-link:hover {
+  color: var(--brand-hover);
+  text-decoration: underline;
+}
+
+/* fine grain overlay — breaks digital flatness */
+.grain {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: var(--z-grain);
+  opacity: .32;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+.display-2 {
+  font-family: var(--f-display);
+  font-size: clamp(2.1rem, 4.6vw, 3.6rem);
+  font-weight: 750;
+  line-height: 1.02;
+  letter-spacing: -.028em;
+  margin: 0 0 1.15rem;
+  font-variation-settings: "SOFT" 24, "WONK" 1;
+  text-wrap: balance;
+}
+
+h3 {
+  font-family: var(--f-display);
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.018em;
+  margin: 0 0 .55rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--amber-deep);
+  margin-bottom: 1rem;
+}
+
+.section-lede {
+  font-size: clamp(1.02rem, 1.35vw, 1.16rem);
+  line-height: 1.7;
+  max-width: 62ch;
+  color: rgba(58, 35, 18, .78);
+  margin: 0;
+}
+
+/* ==========================================================================
+   Sections
+   ========================================================================== */
+
+.section { padding: var(--section-y) 0; position: relative; }
+
+.section-cream {
+  background-color: var(--cream);
+  background-image:
+    repeating-linear-gradient(45deg, rgba(140, 158, 91, .075) 0 1.5px, transparent 1.5px 15px),
+    repeating-linear-gradient(-45deg, rgba(140, 158, 91, .075) 0 1.5px, transparent 1.5px 15px);
+}
+
+.section-head { max-width: 60ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.section-head-split {
+  max-width: none;
+  display: grid;
+  gap: 1.5rem 4rem;
+  align-items: end;
+}
+@media (min-width: 992px) {
+  .section-head-split { grid-template-columns: 1.1fr .9fr; }
+}
+
+/* ==========================================================================
+   Locator
+   ========================================================================== */
+
+.locator {
+  background: var(--cream-warm);
+  border: 1px solid rgba(58, 35, 18, .12);
+  border-radius: 8px;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  box-shadow: var(--lift-md);
+}
+
+.locator-controls {
+  display: grid; gap: 1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(58, 35, 18, .12);
+}
+@media (min-width: 860px) {
+  .locator-controls { grid-template-columns: 1fr auto; align-items: center; }
+}
+
+.locator-filters { display: flex; flex-wrap: wrap; gap: .5rem; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--f-body);
+  font-size: .87rem; font-weight: 600;
+  padding: .5rem 1rem;
+  border-radius: 40px;
+  border: 1.5px solid rgba(58, 35, 18, .2);
+  background: transparent;
+  color: var(--charcoal);
+  cursor: pointer;
+  transition: background-color .22s var(--ease), color .22s var(--ease),
+              border-color .22s var(--ease), transform .22s var(--ease);
+}
+.chip:hover { border-color: var(--charcoal); transform: translateY(-1.5px); }
+.chip.is-active { background: var(--charcoal); border-color: var(--charcoal); color: var(--cream); }
+.chip-count {
+  display: inline-block;
+  font-size: .74rem;
+  font-variant-numeric: tabular-nums;
+  opacity: .6;
+  margin-left: .25rem;
+}
+
+.locator-search {
+  display: flex; align-items: center; gap: .6rem;
+  background: #fff;
+  border: 1.5px solid rgba(58, 35, 18, .18);
+  border-radius: 7px;
+  padding: .55rem .9rem;
+  color: rgba(58, 35, 18, .55);
+  transition: border-color .22s var(--ease), box-shadow .22s var(--ease);
+}
+.locator-search:focus-within {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 4px rgba(212, 140, 40, .18);
+}
+.locator-search input {
+  border: 0; outline: 0; background: transparent;
+  font-family: var(--f-body); font-size: .95rem;
+  color: var(--charcoal);
+  width: 100%; min-width: 0;
+}
+.locator-search input::placeholder { color: rgba(58, 35, 18, .45); }
+
+.locator-count {
+  margin: 1rem 0 1.25rem;
+  font-size: .8rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(58, 35, 18, .55);
+}
+
+.locator-body { display: grid; gap: 2rem; }
+
+/* --- interactive map --- */
+.locator-map-wrap { margin: 0 0 1.5rem; }
+.locator-map {
+  height: clamp(330px, 46vh, 470px);
+  border: 1.5px solid rgba(58, 35, 18, .16);
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--cream-deep);
+  box-shadow: var(--lift-sm);
+}
+.map-hint {
+  display: flex; align-items: center; gap: .55rem;
+  margin: .75rem 0 0;
+  font-size: .74rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(58, 35, 18, .5);
+}
+.map-hint-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--amber);
+  box-shadow: 0 0 0 4px rgba(212, 140, 40, .22);
+  flex: none;
+}
+
+.bl-pin {
+  background: none;
+  border: none;
+}
+.bl-pin-core {
+  display: block;
+  width: 16px; height: 16px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  background: var(--charcoal);
+  border: 2.5px solid var(--amber-bright);
+  box-shadow: 0 4px 10px -3px rgba(42, 24, 12, .7);
+  transition: transform .2s var(--ease), background-color .2s var(--ease);
+}
+.bl-pin:hover .bl-pin-core,
+.leaflet-marker-icon:focus .bl-pin-core {
+  background: var(--herb);
+  transform: rotate(-45deg) scale(1.16);
+}
+.leaflet-popup-content-wrapper {
+  border-radius: 6px;
+  background: var(--cream);
+  color: var(--charcoal);
+  box-shadow: var(--lift-md);
+  border: 1px solid rgba(58, 35, 18, .16);
+}
+.leaflet-popup-content { margin: .8rem .95rem; }
+.leaflet-popup-tip { background: var(--cream); }
+.bl-popup { display: grid; gap: .18rem; min-width: 168px; }
+.bl-popup strong { font-size: .95rem; }
+.bl-popup span { font-size: .82rem; color: rgba(58, 35, 18, .74); }
+.bl-popup em {
+  font-style: normal;
+  font-size: .66rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--herb);
+  margin-top: .25rem;
+}
+.leaflet-container a { color: var(--amber-deep); }
+/* map popup call link — amber-deep only reaches 3.5:1 on the popup's white,
+   so the tel link takes the brand link colour instead (7.6:1) */
+.leaflet-container a.bl-popup-tel {
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--brand-primary, #9A2C2C);
+}
+.leaflet-container a.bl-popup-tel:hover { color: var(--brand-hover, #78350F); }
+
+/* equal-width, equal-height cards: a real grid beats the old column flow,
+   which could not level card heights. Region headers span the full row. */
+.branch-groups {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: .75rem;
+}
+@media (min-width: 640px) { .branch-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1400px) { .branch-groups { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.branch-region {
+  grid-column: 1 / -1;
+  margin: 0 0 .35rem;
+  padding-top: .4rem;
+  font-family: var(--f-display);
+  font-size: 1rem; font-weight: 750;
+  letter-spacing: -.01em;
+  color: var(--herb);
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--amber);
+  padding-bottom: .4rem;
+}
+.branch-region:not(:first-child) { margin-top: 1.4rem; }
+
+/* one branch = the whole card box: name → address → call number. The grid
+   stretches every item to its row, and the renderer publishes the tallest
+   measured height here so every card in the list matches it */
+.branch-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  min-height: var(--branch-row-h, 0px);
+  padding: .85rem 2.35rem .85rem .95rem;
+  background: #fff;
+  border: 1px solid rgba(58, 35, 18, .1);
+  border-radius: 5px;
+  transition: transform .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease);
+}
+.branch-item:hover, .branch-item:focus-within {
+  transform: translateY(-4px);
+  border-color: var(--amber);
+  box-shadow: var(--lift-md);
+}
+
+/* the button carries the text only — the box, padding and lift live on the
+   wrapper so the call number can sit inside the card, after the address */
+.branch-card {
+  position: static;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+.branch-card:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; border-radius: 3px; }
+.branch-map-cue {
+  position: absolute; right: .4rem; top: .5rem;
+  padding: .4rem .45rem;
+  font-size: .62rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--amber-deep);
+  text-decoration: none;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity .2s var(--ease), transform .2s var(--ease);
+  pointer-events: none;            /* an invisible cue must not steal the
+                                      click meant for the card beneath it */
+}
+.branch-item:hover .branch-map-cue,
+.branch-item:focus-within .branch-map-cue,
+.branch-map-cue:focus-visible {
+  opacity: 1; transform: none; pointer-events: auto;
+}
+.branch-map-cue:hover { text-decoration: underline; }
+.branch-map-cue:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+.branch-name {
+  display: block;
+  font-weight: 700; font-size: .94rem;
+  color: var(--charcoal);
+  margin-bottom: .5rem;
+}
+/* empty branch name: muted italic placeholder, same footprint as a real one */
+.branch-name-placeholder {
+  font-weight: 500;
+  font-style: italic;
+  color: rgba(58, 35, 18, .62);
+}
+
+/* pin glyph inline with the address itself — no label between the name and
+   the address any more, so the icon alone carries the "location" read */
+.branch-addr {
+  display: flex;
+  align-items: flex-start;
+  gap: .3rem;
+  font-size: .82rem; line-height: 1.5;
+  color: rgba(58, 35, 18, .62);
+}
+.branch-addr svg {
+  flex: 0 0 auto;
+  /* centres the 13px glyph on the first line of the .82rem / 1.5 address */
+  margin-top: .21rem;
+  color: var(--amber-deep);
+}
+.branch-addr-text { display: block; min-width: 0; }
+
+/* phone number — third and last field, sitting tight under the address.
+   Sibling of the <button> (interactive content may not nest in a button);
+   the wrapper's gap plus this .15rem padding makes the whole trip from the
+   address baseline to the number ≈ 7px, and the glyph carries the affordance */
+.branch-tel {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .15rem 0;
+  color: var(--brand-primary, #9A2C2C);
+  text-decoration: none;
+  transition: color .2s var(--ease);
+}
+.branch-tel svg { flex: 0 0 auto; }
+/* tabular figures keep a column of numbers on one rhythm; nowrap keeps
+   a number from breaking across lines on a narrow card */
+.branch-tel-num {
+  font-size: .86rem; font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.branch-tel:hover, .branch-tel:focus-visible { color: var(--brand-hover, #78350F); }
+.branch-tel:hover .branch-tel-num,
+.branch-tel:focus-visible .branch-tel-num { text-decoration: underline; }
+.branch-tel:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  border: 1.5px dashed rgba(58, 35, 18, .25);
+  border-radius: 6px;
+  color: rgba(58, 35, 18, .65);
+}
+.empty-state strong {
+  display: block;
+  font-family: var(--f-display);
+  font-size: 1.35rem; color: var(--charcoal);
+  margin-bottom: .4rem;
+}
+.empty-state p { margin: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .chip, .branch-item, .branch-map-cue, .locator-search, .branch-tel, a {
+    transition-duration: .01ms !important;
+  }
+  .chip:hover, .branch-item:hover, .branch-item:focus-within { transform: none; }
+}
+</style>
+</head>
+
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<main>
+  <section class="section section-cream" id="locations">
+    <div class="container-xxl">
+      <div class="section-head section-head-split">
+        <div>
+          <span class="eyebrow">Asa dapit?</span>
+          <h2 class="display-2">Find your<br>nearest pit.</h2>
+        </div>
+        <p class="section-lede mb-0">
+          From Cebu City to Cagayan de Oro, Iloilo to Davao. Filter by island or
+          search a city.
+        </p>
+      </div>
+
+      <div class="locator">
+        <div class="locator-controls">
+          <div class="locator-filters" role="group" aria-label="Filter branches by region">
+            <button class="chip is-active" data-region="all" type="button">All <span class="chip-count" data-count-for="all"></span></button>
+            <button class="chip" data-region="visayas" type="button">Visayas <span class="chip-count" data-count-for="visayas"></span></button>
+            <button class="chip" data-region="luzon" type="button">Luzon <span class="chip-count" data-count-for="luzon"></span></button>
+            <button class="chip" data-region="mindanao" type="button">Mindanao <span class="chip-count" data-count-for="mindanao"></span></button>
+          </div>
+          <div class="locator-search">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input type="search" id="branchSearch" placeholder="Search city or branch…" aria-label="Search branches" autocomplete="off">
+          </div>
+        </div>
+
+        <p class="locator-count" id="branchCount" role="status">Showing all branches</p>
+
+        <div class="locator-map-wrap" id="branchMapWrap">
+          <div class="locator-map" id="branchMap" role="region"
+               aria-label="Interactive map of Balamban Liempo branches"></div>
+          <p class="map-hint">
+            <span class="map-hint-dot" aria-hidden="true"></span>
+            Every pin is a branch &mdash; click one for the address, or click a
+            branch below to fly to it.
+          </p>
+        </div>
+
+        <div class="locator-body">
+          <div class="branch-groups" id="branchGroups"></div>
+        </div>
+
+        <div class="empty-state" id="branchEmpty" hidden>
+          <strong>No branch matches that search.</strong>
+          <p>Try a city name like <em>Cebu</em>, <em>Iloilo</em> or <em>Davao</em>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const BRANCHES = [
+    // ---- Luzon ----
+    ['P. Tuazon', 'P. Tuazon Street, Project 4, Quezon City', 'luzon'],
+    ['Antipolo', '60 Hon. B. Soliven Avenue, Antipolo', 'luzon'],
+    ['Mandaluyong', '1550 Sierra Madre, Mandaluyong, Metro Manila', 'luzon'],
+    ['Sta. Rosa, Laguna', 'Brgy. Balibago, Sta. Rosa City — beside Uno1 Fuel Gasoline Station', 'luzon'],
+    ['Biñan, Laguna', 'National Highway, Canlalay, Biñan City, Laguna', 'luzon'],
+
+    // ---- Visayas — Cebu ----
+    ['Panagdait', 'F. Cabahug St., Kasambagan, Cebu City', 'visayas', 'Dine-in'],
+    ['Escario', 'Escario St., Cebu City', 'visayas'],
+    ['Banawa', 'P. Duterte St., Banawa, Cebu City', 'visayas'],
+    ['Guadalupe', 'V. Rama, Cebu City', 'visayas'],
+    ['Bulacao', 'Prince Warehouse, Bulacao, Cebu City', 'visayas'],
+    ['Urgello', 'Urgello, Cebu City', 'visayas'],
+    ['Katipunan', 'Katipunan St., Brgy. Tisa, Cebu City', 'visayas'],
+    ['Talamban 2', 'Minza St. cor. Kauswagan Road, Cebu City', 'visayas'],
+    ['Punta', 'F. Llamas St., Punta Princesa, Cebu City', 'visayas'],
+    ['Minglanilla', 'Minglanilla Proper, Cebu', 'visayas'],
+    ['Pakigne', 'Pakigne, Minglanilla, Cebu', 'visayas'],
+    ['Cortes', 'Cabahug Street, Ibabao, Mandaue City', 'visayas'],
+    ['Sugbo Merkado', 'Sugbo Merkado, IT Park, Cebu City', 'visayas', 'Dine-in & take-out'],
+    ['BL Cordova', 'Cordova Poblacion, beside Mimi’s Petshop', 'visayas'],
+    ['Gabi, Cordova', 'M.L. Quezon National Highway, Brgy. Gabi, Cordova', 'visayas'],
+    ['Tisa, Labangon', 'Tisa, Labangon, Cebu City', 'visayas'],
+    ['Atlantis', 'Atlantis Food Park, Liloan', 'visayas', 'Dine-in & take-out'],
+    ['Bogo 2', 'Colon St., Bogo City', 'visayas'],
+    ['Paknaan', 'Plaridel St., Paknaan, Mandaue City', 'visayas'],
+    ['Naga', 'Poblacion, Naga City', 'visayas'],
+    ['Calawisan', 'Babag 1 cor. Calawisan, Cebu City', 'visayas'],
+    ['Moalboal', 'Poblacion, Moalboal, Cebu', 'visayas'],
+    ['Marigondon', 'Kadulang, Marigondon, Lapu-Lapu City', 'visayas'],
+    ['Carmen', 'Washington St., Cogon West, Carmen, Cebu', 'visayas'],
+    ['Danao 2', 'Sabang, Danao City', 'visayas'],
+    ['Talamban 1', 'Piazza Elisea, Nasipit, Talamban, Cebu City', 'visayas'],
+    ['Pardo', 'Pardo, Cebu City', 'visayas'],
+    ['Lahug', 'Lot 1 & 2 Block 2, Gorordo Ave., Lahug, Cebu City', 'visayas'],
+    ['Buanoy, Balamban', 'Buanoy, Balamban, Cebu', 'visayas'],
+    ['Bogo 1', 'Surdirovio St., Sto. Rosario, Bogo City', 'visayas'],
+    ['Danao 1', 'F. Rallota St., Danao City', 'visayas'],
+    ['Carcar', 'P. Nellas St., Carcar City', 'visayas'],
+    ['Banilad', 'Banilad, Cebu City', 'visayas'],
+    ['Casuntingan', '828-L Quezon St., Casuntingan, Mandaue City', 'visayas'],
+    ['Dalaguete', 'Poblacion, Dalaguete', 'visayas'],
+    ['Dumlog', 'Dumlog, Talisay City', 'visayas'],
+    ['Mohon', 'Upper Mohon, Talisay City', 'visayas'],
+    ['Pajak', 'Pajak, Lapu-Lapu City', 'visayas'],
+    ['Pusok', 'Pusok, Lapu-Lapu City', 'visayas'],
+    ['Sangi', 'Sangi, Toledo City', 'visayas'],
+
+    // ---- Visayas — Iloilo / Bacolod ----
+    ['Alta Tierra', 'Alta Tierra Village, McArthur Hiway, Taboc Suba, Jaro, Iloilo', 'visayas'],
+    ['Pavia', 'Zone 1, Aganan, Pavia, Iloilo', 'visayas'],
+    ['Baluarte (East)', 'Lopez Jaena St., Barangay East, Iloilo City', 'visayas'],
+    ['Baluarte (Molo)', 'Molo, Iloilo City', 'visayas'],
+    ['Lapuz', 'Jalandoni, Lapuz, Iloilo City', 'visayas'],
+    ['Villa', 'Quezon St., Arevalo, Iloilo City', 'visayas'],
+    ['Lapaz', 'La Granja Sur, Lapaz, Iloilo City', 'visayas'],
+    ['Singko', 'Banga Singko, Brgy. Jibao-an, Pavia, Iloilo City', 'visayas'],
+    ['Tagbak', 'North Central, Iloilo Transport Terminal, Brgy. Tagbak, Jaro, Iloilo City', 'visayas'],
+    ['Libertad', 'Unit 1, Uptown Arcade, Libertad Ext., Taculing, Bacolod City', 'visayas'],
+    ['Libertad Taculing', 'Hernaez St., Libertad Taculing Ext., Bacolod City', 'visayas'],
+    ['Burgos', 'Near Lopez East Center, Villamonte, Bacolod City', 'visayas'],
+    ['Kabankalan', 'Guanzon St., Brgy. 5, Kabankalan City', 'visayas'],
+    ['Fortune Town', 'Celina Homes Subdivision, Brgy. Estefania, Bacolod City', 'visayas'],
+    ['Silay', 'Balamban Liempo Silay, Bacolod', 'visayas'],
+
+    // ---- Visayas — Eastern / Dumaguete / Bohol ----
+    ['Caibaan', 'Brgy. 95, Caibaan, Tacloban City, Leyte', 'visayas'],
+    ['San Jose', 'San Jose, Brgy. 84, Tacloban City', 'visayas'],
+    ['VNG', 'Calanipawan, Brgy. 96, Tacloban City', 'visayas'],
+    ['Nula Tula', 'PHHC Subn, Brgy. 72, Tacloban City', 'visayas'],
+    ['Campetic', 'Brgy. Pawing, Palo, Leyte', 'visayas'],
+    ['Apitong', 'Brgy. 110 Utap, Tacloban City', 'visayas'],
+    ['Real', 'Brgy. 60 Aslum, Sagkahan, Tacloban City', 'visayas'],
+    ['Sogod', 'Sogod, Southern Leyte', 'visayas'],
+    ['Duma 1', 'San Jose Extension, Daro, Dumaguete', 'visayas'],
+    ['Duma 2', '36 North National Highway, West Bantayan, Dumaguete', 'visayas'],
+    ['Duma 3', 'Bagacay, Dumaguete', 'visayas'],
+    ['Tagbilaran', 'Near ACE Medical Center, Tagbilaran, Bohol', 'visayas'],
+    ['Dauis', 'Dauis, Bohol', 'visayas'],
+
+    // ---- Mindanao — CDO / Bukidnon ----
+    ['Nazareth', 'Nazareth, Cagayan de Oro', 'mindanao'],
+    ['Cogon', 'Pres. Quirino–Hayee Sts., Brgy. 37, Cagayan de Oro', 'mindanao'],
+    ['Patag', 'Brgy. Patag, Cagayan de Oro', 'mindanao'],
+    ['Gusa', 'Brgy. Gusa, Cagayan de Oro', 'mindanao'],
+    ['Canitoan', 'Zone 6, Calaanan, Canitoan, Cagayan de Oro', 'mindanao'],
+    ['Calaanan', 'Canitoan, Cagayan de Oro City', 'mindanao'],
+    ['BL Agusan', 'Agusan, Cagayan de Oro', 'mindanao'],
+    ['Valencia', 'Poblacion, Valencia City', 'mindanao'],
+    ['Malaybalay', 'Brgy. 2, Malaybalay City, Bukidnon', 'mindanao'],
+
+    // ---- Mindanao — Davao / SOX ----
+    ['Bacaca', 'Lenares Bldg., Garcia Heights, Bajada, Brgy. 19-B, Davao City', 'mindanao'],
+    ['Catalunan', 'Catalunan Grande, Davao City', 'mindanao'],
+    ['Buhangin', 'San Nicolas, Buhangin, Davao City', 'mindanao'],
+    ['Tagum 1', 'Visayan Village, Tagum City', 'mindanao'],
+    ['Tagum 2', 'Magugpo, Poblacion, Tagum City', 'mindanao'],
+    ['Tagum 3', 'Pioneer Ave., Ferido Bldg., Tagum City', 'mindanao'],
+    ['Gensan 1', 'Rivera St., Lagao, General Santos City', 'mindanao'],
+    ['Gensan 2', 'Adarante St., General Santos City', 'mindanao'],
+    ['Digos', 'Digos City, Davao del Sur', 'mindanao'],
+    ['Kidapawan', 'Quezon Boulevard, Kidapawan', 'mindanao'],
+    ['Toril', 'Crossing Bayabas, Toril, Davao City', 'mindanao'],
+    ['Dipolog', 'Osmeña Street, beside Minute Burger, Dipolog', 'mindanao'],
+    ['Dipolog (Miputak)', 'Miputak, Dipolog', 'mindanao'],
+    ['Surigao City', 'Surigao City, Surigao del Norte', 'mindanao']
+  ];
+
+/* ----------------------------------------------------------------------
+     Branch contacts — one realistic sample number per branch.
+     Seeded off the branch's own name + address, so every render (filter,
+     search, resize) shows the exact number its tel: link dials. Landlines
+     take the area code of the city they sit in and read (032) 123-4567;
+     mobiles take a standard 09XX prefix and read 0921 123 4567. Roughly
+     six in ten branches are landlines, the rest mobiles — a directory
+     should look like a directory, not like one repeated placeholder.
+     Swap the generator for the live per-branch numbers when they land.
+     ---------------------------------------------------------------------- */
+  const TEL_MOBILE_PREFIX = [
+    '0905', '0906', '0908', '0916', '0917', '0919', '0921', '0922',
+    '0926', '0927', '0929', '0932', '0939', '0947', '0955', '0977',
+    '0995', '0996'
+  ];
+
+  /* area code looked up off the branch's own text — first match wins */
+  const TEL_AREA_CODE = [
+    [/tagum/, '084'],
+    [/quezon city|antipolo|mandaluyong|sta\. rosa|bi[ñn]an/, '02'],
+    [/iloilo|pavia/, '033'],
+    [/bacolod|kabankalan|silay/, '034'],
+    [/dumaguete/, '035'],
+    [/bohol|tagbilaran|dauis/, '038'],
+    [/tacloban|leyte/, '053'],
+    [/dipolog/, '065'],
+    [/kidapawan/, '064'],
+    [/cagayan|valencia|malaybalay|bukidnon/, '088'],
+    [/davao|digos/, '082'],
+    [/general santos|gensan|surigao/, '086'],
+    [/cebu|mandaue|talisay|lapu-lapu|minglanilla|toledo|danao|bogo|carcar|dalaguete|moalboal|balamban|liloan|naga|cordova/, '032']
+  ];
+
+  function telAreaCode(name, addr) {
+    const hay = ((name || '') + ' ' + (addr || '')).toLowerCase();
+    for (let i = 0; i < TEL_AREA_CODE.length; i++) {
+      if (TEL_AREA_CODE[i][0].test(hay)) return TEL_AREA_CODE[i][1];
+    }
+    return '032';
+  }
+
+  /* FNV-1a + mulberry32: a tiny deterministic generator, so the numbers are
+     random-looking but never actually random at runtime */
+  function telSeed(str) {
+    let h = 2166136261;
+    for (let i = 0; i < str.length; i++) {
+      h ^= str.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return h >>> 0;
+  }
+
+  function telRandom(seed) {
+    let a = seed;
+    return function () {
+      a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function branchTel(entry) {
+    const [name, addr] = entry;
+    const rnd = telRandom(telSeed((name || '') + '|' + (addr || '')));
+    /* len digits, first one pinned so no number opens on 0 or 1 */
+    const digits = (len, first) => {
+      let s = String(first);
+      while (s.length < len) s += Math.floor(rnd() * 10);
+      return s;
+    };
+
+    if (rnd() < 0.58) {
+      const area = telAreaCode(name, addr);
+      /* Metro Manila is the one 8-digit area code; everywhere else is 7 */
+      const len = area === '02' ? 8 : 7;
+      const start = 2 + Math.floor(rnd() * 7);
+      const line = digits(len, area === '02' ? 8 : start);
+      const cut = len - 4;
+      return {
+        display: '(' + area + ') ' + line.slice(0, cut) + '-' + line.slice(cut),
+        dial: '+63' + area.slice(1) + line
+      };
+    }
+
+    const prefix = TEL_MOBILE_PREFIX[Math.floor(rnd() * TEL_MOBILE_PREFIX.length)];
+    const line = digits(7, 1 + Math.floor(rnd() * 9));
+    return {
+      display: prefix + ' ' + line.slice(0, 3) + ' ' + line.slice(3),
+      dial: '+63' + prefix.slice(1) + line
+    };
+  }
+
+  const BRANCH_TEL = new Map(BRANCHES.map((entry) => [entry, branchTel(entry)]));
+  const telFor = (entry) => BRANCH_TEL.get(entry);
+
+  // Approximate branch coordinates (city/barangay centroid) used by the map.
+const COORDS = {
+    "P. Tuazon": [14.62835, 121.03166],
+    "Antipolo": [14.58720, 121.17592],
+    "Mandaluyong": [14.57458, 121.04788],
+    "Sta. Rosa, Laguna": [14.31460, 121.11370],
+    "Bi\u00f1an, Laguna": [14.34359, 121.06860],
+    "Panagdait": [10.32560, 123.91649],
+    "Escario": [10.31829, 123.89873],
+    "Banawa": [10.30763, 123.87596],
+    "Guadalupe": [10.29719, 123.88884],
+    "Bulacao": [10.27373, 123.84941],
+    "Urgello": [10.30485, 123.89308],
+    "Katipunan": [10.29500, 123.87700],
+    "Talamban 2": [10.36936, 123.91693],
+    "Punta": [10.29845, 123.86976],
+    "Minglanilla": [10.24603, 123.79606],
+    "Pakigne": [10.25111, 123.80557],
+    "Cortes": [10.33700, 123.93400],
+    "Sugbo Merkado": [10.31250, 123.90700],
+    "BL Cordova": [10.25219, 123.94947],
+    "Gabi, Cordova": [10.26352, 123.96167],
+    "Tisa, Labangon": [10.30032, 123.87405],
+    "Atlantis": [10.41600, 123.96600],
+    "Bogo 2": [11.05127, 124.00351],
+    "Paknaan": [10.34622, 123.96021],
+    "Naga": [10.20780, 123.75050],
+    "Calawisan": [10.28383, 123.93821],
+    "Moalboal": [9.94097, 123.38980],
+    "Marigondon": [10.27442, 123.97608],
+    "Carmen": [10.59421, 124.01702],
+    "Danao 2": [10.51956, 124.02713],
+    "Talamban 1": [10.36936, 123.91693],
+    "Pardo": [10.27943, 123.85542],
+    "Lahug": [10.33093, 123.89813],
+    "Buanoy, Balamban": [10.46865, 123.70072],
+    "Bogo 1": [11.05127, 124.00351],
+    "Danao 1": [10.51956, 124.02713],
+    "Carcar": [10.10556, 123.64067],
+    "Banilad": [10.34652, 123.91111],
+    "Casuntingan": [10.34530, 123.93054],
+    "Dalaguete": [9.76248, 123.53154],
+    "Dumlog": [10.24501, 123.83955],
+    "Mohon": [10.24937, 123.82715],
+    "Pajak": [10.29932, 123.97910],
+    "Pusok": [10.32453, 123.97430],
+    "Sangi": [10.35000, 123.63500],
+    "Alta Tierra": [10.73000, 122.56000],
+    "Pavia": [10.76936, 122.53370],
+    "Baluarte (East)": [10.69210, 122.54935],
+    "Baluarte (Molo)": [10.69704, 122.54407],
+    "Lapuz": [10.70423, 122.57390],
+    "Villa": [10.68761, 122.52161],
+    "Lapaz": [10.69700, 122.56500],
+    "Singko": [10.77300, 122.54800],
+    "Tagbak": [10.74400, 122.57000],
+    "Libertad": [10.61700, 122.96400],
+    "Libertad Taculing": [10.64754, 122.96213],
+    "Burgos": [10.65000, 122.97200],
+    "Kabankalan": [9.99195, 122.81397],
+    "Fortune Town": [10.65600, 122.96200],
+    "Silay": [10.79941, 122.97561],
+    "Caibaan": [11.20600, 124.99137],
+    "San Jose": [11.20414, 125.02149],
+    "VNG": [11.20740, 124.99871],
+    "Nula Tula": [11.25032, 124.97409],
+    "Campetic": [11.18223, 125.00256],
+    "Apitong": [11.22595, 124.99084],
+    "Real": [11.22562, 125.00156],
+    "Sogod": [10.38459, 124.98080],
+    "Duma 1": [9.33500, 123.30200],
+    "Duma 2": [9.33500, 123.31200],
+    "Duma 3": [9.29967, 123.29328],
+    "Tagbilaran": [9.64026, 123.85598],
+    "Dauis": [9.62525, 123.86517],
+    "Nazareth": [8.46934, 124.64704],
+    "Cogon": [8.47300, 124.64300],
+    "Patag": [8.48812, 124.62716],
+    "Gusa": [8.47477, 124.68514],
+    "Canitoan": [8.46932, 124.60567],
+    "Calaanan": [8.47212, 124.59346],
+    "BL Agusan": [8.48870, 124.73794],
+    "Valencia": [7.91112, 125.09337],
+    "Malaybalay": [8.15885, 125.12517],
+    "Bacaca": [7.07800, 125.60800],
+    "Catalunan": [7.08016, 125.54379],
+    "Buhangin": [7.11203, 125.61749],
+    "Tagum 1": [7.43184, 125.80379],
+    "Tagum 2": [7.44874, 125.80165],
+    "Tagum 3": [7.44708, 125.80949],
+    "Gensan 1": [6.12512, 125.19253],
+    "Gensan 2": [6.11222, 125.17219],
+    "Digos": [6.74410, 125.35553],
+    "Kidapawan": [7.00822, 125.08958],
+    "Toril": [7.02296, 125.49482],
+    "Dipolog": [8.58636, 123.34488],
+    "Dipolog (Miputak)": [8.58244, 123.33833],
+    "Surigao City": [9.79050, 125.49357],
+  };
+
+const REGION_LABEL = { luzon: 'Luzon', visayas: 'Visayas', mindanao: 'Mindanao' };
+  const REGION_ORDER = ['visayas', 'luzon', 'mindanao'];
+
+function initMap() {
+    const el = document.getElementById('branchMap');
+    const wrap = document.getElementById('branchMapWrap');
+    const hide = () => { if (wrap) wrap.hidden = true; };
+    if (!el || typeof L === 'undefined') { hide(); return null; }
+
+    let map;
+    try {
+      map = L.map(el, { scrollWheelZoom: false, zoomControl: true })
+        .setView([10.55, 123.95], 7);
+    } catch (err) {
+      hide();
+      return null;
+    }
+
+    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    let tilesDown = false;
+    tiles.on('tileerror', () => {
+      if (tilesDown) return;
+      tilesDown = true;
+      document.body.classList.add('map-tiles-down');
+    });
+
+    document.body.classList.add('map-ready');
+
+    const layer = L.layerGroup().addTo(map);
+    const markers = new Map();
+    let lastKey = '';
+
+    function popupFor(entry) {
+      const box = document.createElement('div');
+      box.className = 'bl-popup';
+      const name = document.createElement('strong');
+      name.textContent = entry[0];
+      const addr = document.createElement('span');
+      addr.textContent = entry[1];
+      const tel = document.createElement('a');
+      tel.className = 'bl-popup-tel';
+      const num = telFor(entry);
+      tel.href = 'tel:' + num.dial;
+      tel.textContent = num.display;
+      const meta = document.createElement('em');
+      meta.textContent = REGION_LABEL[entry[2]] + (entry[3] ? ' · ' + entry[3] : '');
+      box.append(name, addr, tel, meta);
+      return box;
+    }
+
+    function setVisible(list) {
+      layer.clearLayers();
+      markers.clear();
+
+      const pts = [];
+      list.forEach((entry) => {
+        const ll = COORDS[entry[0]];
+        if (!ll) return;
+        const marker = L.marker(ll, {
+          icon: L.divIcon({
+            className: 'bl-pin',
+            html: '<span class="bl-pin-core"></span>',
+            iconSize: [18, 18],
+            iconAnchor: [9, 9],
+            popupAnchor: [0, -11]
+          }),
+          title: entry[0],
+          alt: entry[0]
+        });
+        marker.bindPopup(popupFor(entry), { closeButton: false, className: 'bl-popup-shell' });
+        marker.addTo(layer);
+        markers.set(entry[0], marker);
+        pts.push(ll);
+      });
+
+      const key = list.map((e) => e[0]).join('|');
+      if (key === lastKey) return;
+      lastKey = key;
+
+      if (!pts.length) return;
+      if (pts.length === 1) {
+        map.setView(pts[0], 13, { animate: !reduced });
+      } else {
+        map.fitBounds(L.latLngBounds(pts), { padding: [28, 28], maxZoom: 11 });
+      }
+    }
+
+    function focus(entry) {
+      const ll = COORDS[entry[0]];
+      const marker = markers.get(entry[0]);
+      if (!ll) return;
+      map.flyTo(ll, Math.max(map.getZoom(), 12), { duration: reduced ? 0 : 0.75 });
+      if (marker) marker.openPopup();
+    }
+
+    window.setTimeout(() => map.invalidateSize(), 250);
+
+    return { setVisible: setVisible, focus: focus };
+  }
+
+function initLocator() {
+    const wrap = document.getElementById('branchGroups');
+    const countEl = document.getElementById('branchCount');
+    const emptyEl = document.getElementById('branchEmpty');
+    const searchEl = document.getElementById('branchSearch');
+    const chips = Array.from(document.querySelectorAll('.locator-filters .chip'));
+    if (!wrap) return;
+
+    const mapApi = initMap();
+    let region = 'all';
+    let query = '';
+
+    // fill the filter counters once
+    chips.forEach((chip) => {
+      const key = chip.dataset.region;
+      const n = key === 'all'
+        ? BRANCHES.length
+        : BRANCHES.filter((b) => b[2] === key).length;
+      const slot = chip.querySelector('[data-count-for]');
+      if (slot) slot.textContent = '(' + n + ')';
+    });
+
+    function matches(entry) {
+      const [name, addr, reg] = entry;
+      if (region !== 'all' && reg !== region) return false;
+      if (query && !((name || '') + ' ' + (addr || '')).toLowerCase().includes(query)) return false;
+      return true;
+    }
+
+    /* Bootstrap Icons, geo-alt-fill and phone, inlined: the home page ships
+       no icon font, and these are the only two glyphs the cards need. Both
+       sit on one 13px box. The handset silhouette (telephone / telephone-fill)
+       collapses into an unreadable diagonal blob at card size — the phone
+       outline keeps its shape, and it matches the pin's outline weight, so
+       the two glyphs read as a single set */
+    const ICON_PIN =
+      '<svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" ' +
+      'aria-hidden="true" focusable="false"><path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/></svg>';
+    const ICON_TEL =
+      '<svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor" ' +
+      'aria-hidden="true" focusable="false">' +
+      '<path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>' +
+      '<path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></svg>';
+
+    function render() {
+      const visible = BRANCHES.filter(matches);
+      wrap.innerHTML = '';
+      if (mapApi) mapApi.setVisible(visible);
+
+      if (!visible.length) {
+        emptyEl.hidden = false;
+        countEl.textContent = 'No branches found';
+        return;
+      }
+      emptyEl.hidden = true;
+
+      const groups = REGION_ORDER
+        .map((reg) => [reg, visible.filter((b) => b[2] === reg)])
+        .filter(([, list]) => list.length);
+
+      groups.forEach(([reg, list]) => {
+        const h = document.createElement('h3');
+        h.className = 'branch-region';
+        h.textContent = REGION_LABEL[reg] + ' · ' + list.length;
+        wrap.appendChild(h);
+
+        list.forEach((entry) => {
+          const [name, addr] = entry;
+          const branchName = (name || '').trim();
+          const item = document.createElement('div');
+          item.className = 'branch-item';
+
+          /* strict content scope: branch name → address → contact number.
+             No service badges, no status pills, nothing else */
+          const card = document.createElement('button');
+          card.type = 'button';
+          card.className = 'branch-card';
+          card.dataset.branch = String(BRANCHES.indexOf(entry));
+          card.innerHTML =
+            '<span class="branch-name"></span>' +
+            '<span class="branch-addr">' + ICON_PIN +
+              '<span class="branch-addr-text"></span></span>';
+
+          const nameEl = card.querySelector('.branch-name');
+          if (branchName) {
+            nameEl.textContent = branchName;
+          } else {
+            /* empty name: a muted italic placeholder keeps every grid cell on
+               the same rhythm instead of collapsing the first line */
+            nameEl.classList.add('branch-name-placeholder');
+            nameEl.textContent = 'Branch Location';
+          }
+          card.querySelector('.branch-addr-text').textContent = addr;
+
+          /* the call link is a sibling of the card button, never a child — a
+             <button> may not contain interactive content, and the click on it
+             must not fly the map. It still renders inside the card box, right
+             after the address, so the order reads name → address → number */
+          const tel = document.createElement('a');
+          const num = telFor(entry);
+          tel.className = 'branch-tel';
+          tel.href = 'tel:' + num.dial;
+          tel.setAttribute(
+            'aria-label',
+            'Call ' + (branchName ? branchName + ' branch' : 'this branch') +
+              ', ' + num.display
+          );
+          tel.innerHTML = ICON_TEL + '<span class="branch-tel-num"></span>';
+          tel.querySelector('.branch-tel-num').textContent = num.display;
+
+          /* "show on map" is a real link, so it cannot sit inside the card
+             <button> either — it overlays the card box instead, anchored to
+             the same corner. Built only when Leaflet came up, because there
+             would be no map to scroll to otherwise. */
+          item.append(card, tel);
+          if (mapApi) {
+            const cue = document.createElement('a');
+            cue.className = 'branch-map-cue';
+            cue.href = '#branchMapWrap';
+            cue.textContent = 'show on map';
+            cue.setAttribute(
+              'aria-label',
+              'Show ' + (branchName ? branchName + ' branch' : 'this branch') + ' on the map'
+            );
+            item.appendChild(cue);
+          }
+          wrap.appendChild(item);
+        });
+      });
+
+      countEl.textContent =
+        'Showing ' + visible.length + ' of ' + BRANCHES.length + ' branches';
+
+      equalizeRows();
+    }
+
+    /* one batched read pass after a render, then a single write: every card
+       lands on the same height, not just the cards in the same row. The
+       previous value is dropped first so a filter can shrink the row again */
+    function equalizeRows() {
+      wrap.style.removeProperty('--branch-row-h');
+      const items = wrap.querySelectorAll('.branch-item');
+      if (!items.length) return;
+      let tallest = 0;
+      items.forEach((el) => {
+        const h = el.offsetHeight;
+        if (h > tallest) tallest = h;
+      });
+      if (tallest) wrap.style.setProperty('--branch-row-h', tallest + 'px');
+    }
+
+    let rowSyncTimer = 0;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(rowSyncTimer);
+      rowSyncTimer = window.setTimeout(equalizeRows, 150);
+    }, { passive: true });
+
+    wrap.addEventListener('click', (e) => {
+      const cue = e.target.closest('.branch-map-cue');
+      const item = e.target.closest('.branch-item');
+      const card = item && item.querySelector('.branch-card');
+      if (!card) return;
+
+      /* the cue does both: bring the map into view, then fly to the branch */
+      if (cue) {
+        e.preventDefault();
+        const mapWrap = document.getElementById('branchMapWrap');
+        if (mapWrap && !mapWrap.hidden) {
+          mapWrap.scrollIntoView({
+            behavior: reduced ? 'auto' : 'smooth',
+            block: 'start'
+          });
+        }
+      }
+
+      const entry = BRANCHES[Number(card.dataset.branch)];
+      if (entry && mapApi) mapApi.focus(entry);
+    });
+
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        region = chip.dataset.region;
+        chips.forEach((c) => c.classList.toggle('is-active', c === chip));
+        render();
+      });
+    });
+
+    if (searchEl) {
+      searchEl.addEventListener('input', () => {
+        query = searchEl.value.trim().toLowerCase();
+        render();
+      });
+    }
+
+    render();
+  }
+
+  initLocator();
+})();
+</script>
+</body>
+</html>

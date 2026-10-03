@@ -1,7 +1,7 @@
 ALL PROMPTS — project 'balamban'
 Source: opencode.db | worktree: /home/victor/dev-apps/static-webapp/balamban
-Extracted: 2026-10-02T01:09:38
-Sessions: 16
+Extracted: 2026-10-03T02:13:02
+Sessions: 24
 ========================================================================
 
 SESSION: Checking tasks in folder  [2026-09-27 00:27]  (ses_f2174982dffegnYgUlbLo0O89e)
@@ -68,7 +68,6 @@ can you access and analyze assets/updated-balamban.md -- if so, execute its cont
  This may or may not be relevant to the current task.</system-reminder>
 
 are "Franchise application form", "Investment & ROI guide", and "ROI guide — read online" exist in the original balamban website?
-
 
 SESSION: Executing updated-balamban.md plan  [2026-09-28 22:59]  (ses_f17785c4cffeYh8GmxjRhVWp9B)
 ------------------------------------------------------------------------
@@ -159,7 +158,7 @@ re-execute assets/updated-balamban.md for further instructions
 --- PROMPT #28 | 2026-09-30 12:00:08 | session ses_f1072628 ---
 <system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
 
-re-execute assets/updated-balamban.md 
+re-execute assets/updated-balamban.md
 
 --- PROMPT #29 | 2026-09-30 13:37:11 | session ses_f1072628 ---
 <system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". This may or may not be relevant to the current task.</system-reminder>
@@ -174,7 +173,7 @@ Follow current branding and styling, use the Bootstrap Framework (custom code (C
 
  This may or may not be relevant to the current task.</system-reminder>
 
-re-execute assets/updated-balamban.md 
+re-execute assets/updated-balamban.md
 
 --- PROMPT #31 | 2026-09-30 14:35:55 | session ses_f1072628 ---
 Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.
@@ -236,7 +235,7 @@ SESSION: Merging prompts into single structured prompt  [2026-10-02 01:03]  (ses
 ------------------------------------------------------------------------
 
 --- PROMPT #39 | 2026-10-02 01:03:22 | session ses_f07944d0 ---
-Can you collate all my command prompts (from the start) for a specific project, merge all request/intentions, or summarize them into a single structured prompt? Don’t execute anything yet if it's “Yes” 
+Can you collate all my command prompts (from the start) for a specific project, merge all request/intentions, or summarize them into a single structured prompt? Don’t execute anything yet if it's “Yes”
 
 --- PROMPT #40 | 2026-10-02 01:04:34 | session ses_f07944d0 ---
 where can i find "transcription/log"?
@@ -244,5 +243,215 @@ where can i find "transcription/log"?
 --- PROMPT #41 | 2026-10-02 01:07:32 | session ses_f07944d0 ---
 query the DB and extract all the prompts for project "balamban" then save it on a file named log.txt in assets/ folder in this directory
 
+--- PROMPT #42 | 2026-10-02 01:14:17 | session ses_f07944d0 ---
+Can you collate all my command prompts (from the start) for a specific project, merge all request/intentions, or summarize them into a single structured prompt? Don’t execute anything yet if it's “Yes”
+
+--- PROMPT #43 | 2026-10-02 01:17:48 | session ses_f07944d0 ---
+use assets/log.txt merge, analyze to create one structured master prompt, save in assets/master-prompt.md
+
+SESSION: Replace background sound with sizzling.mp3  [2026-10-02 09:32]  (ses_f05c20de8ffeFfZpr2rn7fxfBC)
+------------------------------------------------------------------------
+
+--- PROMPT #44 | 2026-10-02 09:32:38 | session ses_f05c20de ---
+replace the current background sound effect with assets/sizzling.mp3
+
+--- PROMPT #45 | 2026-10-02 09:46:56 | session ses_f05c20de ---
+<system-reminder>Note: The user selected #0 from "/home/victor/dev-apps/static-webapp/balamban/assets/review.txt". ```Review the current project ("balamban") against Web Interface Guidelines and highlight top UI/UX flaws or accessibility issues and recommend fixies."```
+
+ This may or may not be relevant to the current task.</system-reminder>
+
+Review the current project ("balamban") against Web Interface Guidelines and highlight top UI/UX flaws or accessibility issues and recommend fixies."
+
+--- PROMPT #46 | 2026-10-02 11:40:55 | session ses_f05c20de ---
+<system-reminder>Note: The user selected #0-2 from "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". ```Add the label "Hear the Sizzling" beside the on/off (sound) icon (ex: Hear the Sizzling "icon" (button)) in the hero banner. Place the branch contact number within the "branch-card" wrapper after the address. All these branch cards must have equal height and width. On the " What's New " page, the modal pop-up: add the label "Share on" beside the 3 icons (ex: Share on Icon1 Icon2 Icon3). Make sure all the buttons/badges (including sub-pages) are vertically centered.
+
+Follow current branding and styling, use the Bootstrap Framework (custom code (CSS/JS) if necessary), and have "Taste Skill" and "Awesome Design" help with UI/UX design decisions. Note: Do not use, invoke, or initialize Playwright or any browser tools for this task(s). --- Generate a downloadable, loop-engineered version of the prompt```
+
+ This may or may not be relevant to the current task.</system-reminder>
+
+execute assets/updated-balamban.md
+
+--- PROMPT #47 | 2026-10-02 13:05:10 | session ses_f05c20de ---
+<system-reminder>Note: The user selected #0-4 from "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". ```in the branch card(s) remove "dine-in" and "dine-in & take out" badges, strickly only "branch name (randomly empty)", "address" and "contact number" on the branch card, re-format UI/UX if needed.
+
+--
+
+Follow current branding and styling, use the Bootstrap Framework (custom code (CSS/JS) if necessary), and have "Taste Skill" and "Awesome Design" help with UI/UX design decisions. Note: Do not use, invoke, or initialize Playwright or any browser tools for this task(s). --- Generate a downloadable, loop-engineered version of the prompt ```
+
+ This may or may not be relevant to the current task.</system-reminder>
+
+execute assets/fixies.md
+
+--- PROMPT #48 | 2026-10-02 13:30:13 | session ses_f05c20de ---
+remove the border between tbe address and contact number, and remove the wording "contact number" on each branch card. clean up CSS/JS  related to branch card(s)
+
+--- PROMPT #49 | 2026-10-02 13:36:19 | session ses_f05c20de ---
+reduce space between tbe address and contact number on each branch card(s). clean up CSS/JS  related to branch card(s)
+
+--- PROMPT #50 | 2026-10-02 13:44:54 | session ses_f05c20de ---
+Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.
+
+SESSION: Review index.html vs guidelines (@explore subagent)  [2026-10-02 09:59]  (ses_f05a91cc8ffeKmDxvyA5tg6gO3)
+------------------------------------------------------------------------
+
+--- PROMPT #51 | 2026-10-02 09:59:53 | session ses_f05a91cc ---
+Read the rules in /home/victor/dev-apps/open-design/skills/web-design-guidelines/references/guidelines.md (Vercel Web Interface Guidelines), then audit /home/victor/dev-apps/static-webapp/balamban/index.html (about 1400 lines) thoroughly against EVERY rule in that file — accessibility, focus states, forms, animation, typography, content handling, images, performance, navigation/state, touch, safe areas, dark mode, i18n, hover states, content/copy, anti-patterns.
+
+This is a read-only review. Do NOT edit files.
+
+Be concrete and cite exact line numbers. Check things like: img tags missing alt/width/height, icon buttons without aria-label, div/span with click handlers, outline:none, transition:all, "..." instead of "…", straight quotes in copy, missing form labels/autocomplete, missing prefers-reduced-motion, missing touch-action, missing theme-color/color-scheme, viewport user-scalable=no, missing skip link, heading hierarchy, aria-live, lazy loading below-fold images, preload/preconnect, hover states, hardcoded dates/numbers, button copy specificity, etc.
+
+Return ONLY a terse list of findings in this exact format (one per line, no preamble):
+index.html:LINE - issue (rule violated: short rule name)
+If a whole category passes, don't mention it. Prioritize: real issues only, no speculation. If you find 40 issues, list all 40. Also note the 3 most severe issues at the end under "TOP 3:".
+
+SESSION: Review secondary HTML pages (@explore subagent)  [2026-10-02 09:59]  (ses_f05a911e3ffefGOFdI3X2r7FgC)
+------------------------------------------------------------------------
+
+--- PROMPT #52 | 2026-10-02 09:59:56 | session ses_f05a911e ---
+Read the rules in /home/victor/dev-apps/open-design/skills/web-design-guidelines/references/guidelines.md (Vercel Web Interface Guidelines), then audit these files thoroughly against EVERY rule in that file:
+- /home/victor/dev-apps/static-webapp/balamban/whatsnew.html
+- /home/victor/dev-apps/static-webapp/balamban/delivery.html
+- /home/victor/dev-apps/static-webapp/balamban/balamban-liempo.html
+- /home/victor/dev-apps/static-webapp/balamban/balambanok.html
+- /home/victor/dev-apps/static-webapp/balamban/bl-spicy.html
+
+This is a read-only review. Do NOT edit files.
+
+Check: img missing alt/width/height, icon buttons without aria-label, div/span click handlers, outline:none, transition:all, "..." vs "…", missing labels/autocomplete/type on inputs, missing prefers-reduced-motion, missing touch-action, viewport zoom lock, missing skip link, heading hierarchy, aria-live, lazy loading, hover states, hardcoded dates/numbers, button copy, modal focus/keyboard handling, etc.
+
+Return ONLY terse findings, grouped per file, format:
+<filename>:LINE - issue (rule violated: short rule name)
+No preamble, no restating the rules. Real issues only with exact line numbers. At the end add "TOP 3:" naming the 3 most severe across all files.
+
+SESSION: Review franchise pages (@explore subagent)  [2026-10-02 09:59]  (ses_f05a9031bffeJzIQTsLKsDYhJf)
+------------------------------------------------------------------------
+
+--- PROMPT #53 | 2026-10-02 09:59:59 | session ses_f05a9031 ---
+Read the rules in /home/victor/dev-apps/open-design/skills/web-design-guidelines/references/guidelines.md (Vercel Web Interface Guidelines), then audit these files against EVERY rule:
+- /home/victor/dev-apps/static-webapp/balamban/franchise/application-form.html
+- /home/victor/dev-apps/static-webapp/balamban/franchise/roi-guide.html
+
+This is a read-only review. Do NOT edit files.
+
+These likely contain forms — scrutinize: labels (label/for or wrapping), autocomplete attributes, input types (email/tel/number), inputmode, spellcheck on email fields, placeholders style (should end with … and show example), inline errors + aria-live + focus first error, submit button/spinner state, paste blocking, required indicators, checkbox/radio label hit targets, unsaved-changes warning. Also all general rules: alt text, aria-label on icon buttons, focus-visible, outline:none, transition: all, prefers-reduced-motion, heading hierarchy, skip link, img dimensions/lazy, hover states, "..." vs "…", theme-color.
+
+Return ONLY terse findings grouped per file, format:
+<filename>:LINE - issue (rule violated: short rule name)
+No preamble. Exact line numbers. At the end "TOP 3:" with the most severe issues.
+
+SESSION: Review CSS and JS (@explore subagent)  [2026-10-02 10:00]  (ses_f05a8f134ffeoArkXXAEEzxQSg)
+------------------------------------------------------------------------
+
+--- PROMPT #54 | 2026-10-02 10:00:04 | session ses_f05a8f13 ---
+Read the rules in /home/victor/dev-apps/open-design/skills/web-design-guidelines/references/guidelines.md (Vercel Web Interface Guidelines), then audit these files:
+- /home/victor/dev-apps/static-webapp/balamban/css/styles.css
+- /home/victor/dev-apps/static-webapp/balamban/css/subpage.css
+- /home/victor/dev-apps/static-webapp/balamban/css/brand-system.css
+- /home/victor/dev-apps/static-webapp/balamban/css/product.css
+- /home/victor/dev-apps/static-webapp/balamban/css/backtotop.css
+- /home/victor/dev-apps/static-webapp/balamban/js/main.js
+- /home/victor/dev-apps/static-webapp/balamban/js/subpage.js
+- /home/victor/dev-apps/static-webapp/balamban/js/product.js
+- /home/victor/dev-apps/static-webapp/balamban/js/backtotop.js
+- /home/victor/dev-apps/static-webapp/balamban/js/hero-audio.js
+
+This is a read-only review. Do NOT edit files.
+
+Focus on: transition: all; outline: none without :focus-visible replacement; missing prefers-reduced-motion media queries; animations using layout properties (left/top/width/height) instead of transform/opacity; missing transform-origin; scroll-margin-top on headings; touch-action: manipulation; overscroll-behavior: contain on modals; color-scheme/theme-color; min-width:0 on flex children; long-text truncation (line-clamp/word-break); tabular-nums; text-wrap: balance on headings; layout reads in JS (getBoundingClientRect/offsetHeight in scroll handlers, throttled?); div/span click handlers in JS; keyboard handling; aria updates; -webkit-tap-highlight-color; env(safe-area-inset-*); text "..." vs "…".
+
+Return ONLY terse findings grouped per file, format:
+<file>:LINE - issue (rule violated: short rule name)
+No preamble, exact line numbers, real issues only. At the end "TOP 3:" with most severe.
+
+SESSION: Running updated-balamban.md asset  [2026-10-02 16:09]  (ses_f0457171affeeSctHzpORnYXaZ)
+------------------------------------------------------------------------
+
+--- PROMPT #55 | 2026-10-02 16:09:06 | session ses_f0457171 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+execute assets/updated-balamban
+
+--- PROMPT #56 | 2026-10-02 16:13:44 | session ses_f0457171 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+execute assets/updated-balamban
+
+SESSION: Execute updated-balamban.md instructions  [2026-10-02 16:14]  (ses_f04527220ffe72lkvTvDG2k75x)
+------------------------------------------------------------------------
+
+--- PROMPT #57 | 2026-10-02 16:14:10 | session ses_f0452722 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+execute assets/updated-balamban.md
+
+--- PROMPT #58 | 2026-10-02 16:15:55 | session ses_f0452722 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+execute assets/updated-balamban.md
+
+--- PROMPT #59 | 2026-10-02 16:16:44 | session ses_f0452722 ---
+do you touch any files already?
+
+--- PROMPT #60 | 2026-10-02 16:22:15 | session ses_f0452722 ---
+<system-reminder>Note: The user selected #0-10 from "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". ```Branch Card(s):
+- remove wording "Address". re-align the "globe" icon with actual address, add phone/mobile icon along side contact number.
+- on click (of each) "show on map" link, (aside to zoom view) should scroll to map view port or branch map wrapper. 
+
+Contact Us Form:
+- Phone field mark required
+- on click "Send a letter of intent" should jump into contactform subject field shoue auto change to "Franchise / Joint Venture"
+
+--
+
+Follow current branding and styling, use the Bootstrap Framework (custom code (CSS/JS) if necessary), and have "Taste Skill" and "Awesome Design" help with UI/UX design decisions, Avoid AI-Slop. Note: Do not use, invoke, or initialize Playwright or any browser tools for this task(s). --- Generate a downloadable single file, loop-engineered version of the prompt```
+
+ This may or may not be relevant to the current task.</system-reminder>
+
+execute assets/updated-balamban.md
+
+--- PROMPT #61 | 2026-10-02 17:12:53 | session ses_f0452722 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+restore the previous (backup) homepage including branding and styling. EVERYTHING from the backup
+
+--- PROMPT #62 | 2026-10-02 17:19:19 | session ses_f0452722 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". This may or may not be relevant to the current task.</system-reminder>
+
+analyze assets/addfeatures.txt -- do not touch or do anything yet. let me know what you understand?
+
+--- PROMPT #63 | 2026-10-02 17:20:07 | session ses_f0452722 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/addfeatures.txt". This may or may not be relevant to the current task.</system-reminder>
+
+re-analyze assets/addfeatures.txt -- do not touch or do anything yet. let me know what you understand?
+
+--- PROMPT #64 | 2026-10-02 17:33:18 | session ses_f0452722 ---
+Continue if you have next steps, or stop and ask for clarification if you are unsure how to proceed.
+
+--- PROMPT #65 | 2026-10-02 18:42:24 | session ses_f0452722 ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+read and analyze assets/updated-balamban.md (only this file, don't look for other instructions outside of this file)
+
+--- PROMPT #66 | 2026-10-02 18:44:33 | session ses_f0452722 ---
+<system-reminder>Note: The user selected #60 from "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". ```Playwr```
+
+ This may or may not be relevant to the current task.</system-reminder>
+
+what happened here, is it finished?
+
+SESSION: Execute updated-balamban.md instructions  [2026-10-03 00:07]  (ses_f02a14defffezvaDxvXUGq4dyG)
+------------------------------------------------------------------------
+
+--- PROMPT #67 | 2026-10-03 00:07:16 | session ses_f02a14de ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+execute assets/updated-balamban.md
+
+--- PROMPT #68 | 2026-10-03 02:08:24 | session ses_f02a14de ---
+<system-reminder>Note: The user opened the file "/home/victor/dev-apps/static-webapp/balamban/assets/updated-balamban.md". This may or may not be relevant to the current task.</system-reminder>
+
+query the DB and extract all the prompts for project "balamban" then save it on a file named log.txt in assets/ folder in this directory
+
 ========================================================================
-TOTAL PROMPTS: 41
+TOTAL PROMPTS: 68
