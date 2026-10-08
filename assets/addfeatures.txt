@@ -1,13 +1,1 @@
-
-Branch Card(s):
-- the "phone/mobile" icon besides the contact number is unrecognizable, make sure the icon symbolize "phone/cellphone" icon, example: https://icons.getbootstrap.com/icons/telephone/
-- randomly add contact contact number in telephone or cellphone format, example: telephone - (032)1234567, cellphone - 0921 1234567
-
-Follow current branding and styling, use the Bootstrap Framework (custom code (CSS/JS) if necessary), and have "Taste Skill" and "Awesome Design" help with UI/UX design decisions, Avoid AI-Slop. Note: Do not use, invoke, or initialize Playwright or any browser tools for this task(s). 
-
--------
-
-Convert the above command/request into (downloadable single markup file) loop-engineered version prompt
-
-
-show on map →
+Replace "leftlit map" with "Google Map", Follow current branding and styling, use the Bootstrap Framework (custom code (CSS/JS) if necessary), and to avoid AI-Slop have (1) "Taste Skill" and (2) DESIGN.md (found in the current root folder) to help with UI/UX design decisions. Note: Do not use, invoke, or initialize Playwright or any browser tools for this task(s).
