@@ -553,25 +553,27 @@ h3 {
   color: rgba(245, 235, 224, .6);
 }
 
-/* award stamp */
+/* award stamp — the whole component is scaled 1.25× (size, type and padding
+   together) so the .6rem micro type inside reads at 12px instead of 9.6px */
 .hero-badge { display: none; }
 @media (min-width: 1100px) { .hero-badge { display: block; } }
 
 .stamp {
-  --stamp-size: clamp(180px, 15vw, 230px);
+  --stamp-scale: 1.25;
+  --stamp-size: calc(clamp(180px, 15vw, 230px) * var(--stamp-scale));
   width: var(--stamp-size); height: var(--stamp-size);
   border-radius: 50%;
   display: grid;
   place-content: center;
   text-align: center;
-  gap: .28rem;
-  padding: 1rem;
+  gap: calc(.28rem * var(--stamp-scale));
+  padding: calc(1rem * var(--stamp-scale));
   color: var(--cream);
   background:
     radial-gradient(circle at 32% 26%, rgba(233, 166, 63, .3), transparent 62%),
     rgba(42, 24, 12, .5);
   border: 2px dashed rgba(233, 166, 63, .65);
-  box-shadow: inset 0 0 0 7px rgba(42, 24, 12, .35), var(--lift-lg);
+  box-shadow: inset 0 0 0 calc(7px * var(--stamp-scale)) rgba(42, 24, 12, .35), var(--lift-lg);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   transform: rotate(-8deg);
@@ -582,13 +584,13 @@ h3 {
   to   { transform: rotate(-4deg) translateY(8px); }
 }
 .stamp-top, .stamp-bot {
-  font-size: .6rem; font-weight: 700;
+  font-size: calc(.6rem * var(--stamp-scale)); font-weight: 700;
   letter-spacing: .17em; text-transform: uppercase;
   color: var(--amber-bright);
 }
 .stamp-mid {
   font-family: var(--f-display);
-  font-size: clamp(1.55rem, 2.4vw, 2rem);
+  font-size: calc(clamp(1.55rem, 2.4vw, 2rem) * var(--stamp-scale));
   font-weight: 800; line-height: .95;
   letter-spacing: -.02em;
 }
