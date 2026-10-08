@@ -55,8 +55,7 @@ html {
 main,
 .hero,
 .section,
-.locator-map-wrap,
-.contact-form {
+.locator-map-wrap {
   scroll-margin-top: 6.5rem;
 }
 
@@ -553,25 +552,27 @@ h3 {
   color: rgba(245, 235, 224, .6);
 }
 
-/* award stamp */
+/* award stamp — the whole component is scaled 1.25× (size, type and padding
+   together) so the .6rem micro type inside reads at 12px instead of 9.6px */
 .hero-badge { display: none; }
 @media (min-width: 1100px) { .hero-badge { display: block; } }
 
 .stamp {
-  --stamp-size: clamp(180px, 15vw, 230px);
+  --stamp-scale: 1.25;
+  --stamp-size: calc(clamp(180px, 15vw, 230px) * var(--stamp-scale));
   width: var(--stamp-size); height: var(--stamp-size);
   border-radius: 50%;
   display: grid;
   place-content: center;
   text-align: center;
-  gap: .28rem;
-  padding: 1rem;
+  gap: calc(.28rem * var(--stamp-scale));
+  padding: calc(1rem * var(--stamp-scale));
   color: var(--cream);
   background:
     radial-gradient(circle at 32% 26%, rgba(233, 166, 63, .3), transparent 62%),
     rgba(42, 24, 12, .5);
   border: 2px dashed rgba(233, 166, 63, .65);
-  box-shadow: inset 0 0 0 7px rgba(42, 24, 12, .35), var(--lift-lg);
+  box-shadow: inset 0 0 0 calc(7px * var(--stamp-scale)) rgba(42, 24, 12, .35), var(--lift-lg);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   transform: rotate(-8deg);
@@ -582,13 +583,13 @@ h3 {
   to   { transform: rotate(-4deg) translateY(8px); }
 }
 .stamp-top, .stamp-bot {
-  font-size: .6rem; font-weight: 700;
+  font-size: calc(.6rem * var(--stamp-scale)); font-weight: 700;
   letter-spacing: .17em; text-transform: uppercase;
   color: var(--amber-bright);
 }
 .stamp-mid {
   font-family: var(--f-display);
-  font-size: clamp(1.55rem, 2.4vw, 2rem);
+  font-size: calc(clamp(1.55rem, 2.4vw, 2rem) * var(--stamp-scale));
   font-weight: 800; line-height: .95;
   letter-spacing: -.02em;
 }
@@ -1361,6 +1362,11 @@ body.modal-open .bl-sound-float { opacity: 0; visibility: hidden; }
   width: 100%; min-width: 0;
 }
 .locator-search input::placeholder { color: rgba(58, 35, 18, .45); }
+/* iOS Safari auto-zooms any focused field set below 16px, which pans the page
+   away from the field the visitor just tapped */
+@media (max-width: 767.98px) {
+  .locator-search input { font-size: 16px; }
+}
 
 .locator-count {
   margin: 1rem 0 1.25rem;
@@ -1885,13 +1891,23 @@ body.map-ready.map-tiles-down #coverageMaps { display: grid; }
    Contact
    ========================================================================== */
 
-.contact-grid { display: grid; gap: clamp(2.25rem, 5vw, 4rem); align-items: start; }
-@media (min-width: 992px) { .contact-grid { grid-template-columns: .85fr 1.15fr; } }
+/* head row: headline block on the left, quiet "Follow" cluster parked on the
+   right edge; the cards take the full container width underneath */
+.contact-head {
+  display: grid;
+  gap: 1.5rem 3rem;
+  align-items: end;
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+@media (min-width: 992px) {
+  .contact-head { grid-template-columns: minmax(0, 1fr) auto; }
+  .contact-social { text-align: right; }
+  .contact-social .social-row { justify-content: flex-end; }
+}
 
-.contact-intro .section-lede { margin-bottom: 1.75rem; }
-.contact-intro .contact-cards { margin-bottom: .5rem; }
-.contact-social { margin-top: 1.6rem; }
-.contact-social .contact-label { display: block; }
+.contact-intro .section-lede { margin-bottom: 0; max-width: 46ch; }
+.contact-social .contact-label { display: block; margin-bottom: .15rem; }
+.contact-social .social-row { margin-top: .55rem; }
 
 .contact-cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
 
@@ -1926,173 +1942,6 @@ a.contact-card:hover {
   overflow-wrap: break-word;
 }
 .contact-sub { font-size: .87rem; color: rgba(58, 35, 18, .62); }
-
-/* --- form --- */
-.contact-form {
-  background: var(--cream-warm);
-  border: 1px solid rgba(58, 35, 18, .13);
-  border-top: 4px solid var(--amber);
-  border-radius: 8px;
-  padding: clamp(1.5rem, 3.5vw, 2.4rem);
-  box-shadow: var(--lift-md);
-}
-/* focused programmatically by the franchise CTAs (tabindex="-1"), never by
-   Tab — no ring, but the jump still lands the caret/keyboard here */
-.contact-form:focus { outline: none; }
-
-.form-head { margin-bottom: 1.5rem; }
-.form-head h3 { margin-bottom: .35rem; }
-.form-head p { margin: 0; font-size: .95rem; color: rgba(58, 35, 18, .68); }
-
-.form-grid { display: grid; gap: 1.05rem; }
-@media (min-width: 620px) {
-  .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .field-full { grid-column: 1 / -1; }
-}
-
-.field { display: grid; align-content: start; }
-.field label {
-  font-size: .82rem; font-weight: 600;
-  letter-spacing: .04em;
-  color: var(--charcoal-soft);
-  margin-bottom: .4rem;
-}
-.req { color: var(--amber-deep); }
-
-.field input,
-.field textarea,
-.field select {
-  font-family: var(--f-body);
-  font-size: .98rem;
-  color: var(--charcoal);
-  background: #fff;
-  border: 1.5px solid rgba(58, 35, 18, .18);
-  border-radius: 6px;
-  padding: .72rem .85rem;
-  width: 100%;
-  transition: border-color .2s var(--ease), box-shadow .2s var(--ease),
-              background-color .2s var(--ease);
-}
-.field textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
-.field ::placeholder { color: rgba(58, 35, 18, .38); }
-
-.field input:focus,
-.field textarea:focus,
-.field select:focus {
-  outline: none;
-  border-color: var(--amber);
-  box-shadow: 0 0 0 3px rgba(212, 140, 40, .22);
-}
-.field input.is-invalid,
-.field textarea.is-invalid,
-.field select.is-invalid {
-  border-color: #B3341F;
-  background: #FDF3F1;
-}
-.field-error {
-  font-size: .78rem;
-  font-weight: 500;
-  color: #B3341F;
-  margin-top: .32rem;
-}
-.field-error:empty { display: none; }
-
-/* iOS Safari auto-zooms any focused field set below 16px, which pans the
-   page away from the field the visitor just tapped. Keep the tighter brand
-   rhythm on desktop, hold the 16px floor on small screens. */
-@media (max-width: 767.98px) {
-  .field input,
-  .field textarea,
-  .field select,
-  .locator-search input { font-size: 16px; }
-}
-
-.select-wrap { position: relative; }
-.select-wrap select { appearance: none; -webkit-appearance: none; padding-right: 2.4rem; cursor: pointer; }
-.select-wrap svg {
-  position: absolute;
-  right: .85rem; top: 50%;
-  transform: translateY(-50%);
-  color: var(--amber-deep);
-  pointer-events: none;
-}
-
-/* --- visual captcha --- */
-.captcha {
-  margin-top: 1.35rem;
-  background: rgba(140, 158, 91, .09);
-  border: 1px dashed rgba(58, 35, 18, .3);
-  border-radius: 7px;
-  padding: 1rem 1.1rem 1.15rem;
-}
-.captcha-head {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 1rem; margin-bottom: .8rem;
-}
-.captcha-refresh {
-  display: inline-flex; align-items: center; gap: .4rem;
-  font-family: var(--f-body);
-  font-size: .74rem; font-weight: 700;
-  letter-spacing: .1em; text-transform: uppercase;
-  color: var(--amber-deep);
-  background: transparent;
-  border: 1px solid rgba(184, 116, 24, .45);
-  border-radius: 40px;
-  padding: .35rem .75rem;
-  cursor: pointer;
-  transition: background-color .2s var(--ease), color .2s var(--ease),
-              border-color .2s var(--ease);
-}
-.captcha-refresh:hover {
-  background: var(--amber);
-  border-color: var(--amber);
-  color: var(--charcoal-deep);
-}
-
-.captcha-body { display: grid; gap: 1rem; align-items: end; }
-@media (min-width: 620px) { .captcha-body { grid-template-columns: auto minmax(0, 1fr); } }
-
-.captcha-visual {
-  display: grid; place-items: center;
-  min-width: 178px; height: 66px;
-  background:
-    repeating-linear-gradient(45deg, rgba(140, 158, 91, .16) 0 2px, transparent 2px 11px),
-    repeating-linear-gradient(-45deg, rgba(212, 140, 40, .13) 0 2px, transparent 2px 11px),
-    var(--cream);
-  border: 1px solid rgba(58, 35, 18, .2);
-  border-radius: 6px;
-  overflow: hidden;
-}
-.captcha-visual svg { display: block; width: 100%; height: 100%; }
-
-.form-foot {
-  display: flex; flex-wrap: wrap; align-items: center;
-  gap: 1rem 1.5rem;
-  margin-top: 1.5rem;
-}
-.form-note { margin: 0; font-size: .9rem; color: rgba(58, 35, 18, .66); }
-.form-note a { color: var(--amber-deep); font-weight: 600; text-decoration: none; }
-.form-note a:hover { text-decoration: underline; }
-
-.form-status {
-  display: none;
-  margin: 1.15rem 0 0;
-  font-size: .93rem;
-  font-weight: 500;
-  border-radius: 6px;
-  padding: .8rem 1rem;
-}
-.form-status.is-shown { display: block; }
-.form-status.is-success {
-  background: rgba(62, 107, 52, .12);
-  border: 1px solid rgba(62, 107, 52, .4);
-  color: var(--herb);
-}
-.form-status.is-error {
-  background: rgba(179, 52, 31, .09);
-  border: 1px solid rgba(179, 52, 31, .35);
-  color: #B3341F;
-}
 
 /* ==========================================================================
    Footer
