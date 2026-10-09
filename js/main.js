@@ -378,7 +378,7 @@
   }
 
   /* ----------------------------------------------------------------------
-     4. Herb stuffing pop-outs
+     4. Herb stuffing — interactive ingredient picker
      ---------------------------------------------------------------------- */
   const HERBS = [
     {
@@ -421,10 +421,7 @@
   function initHerbs() {
     const chipWrap = document.querySelector('.herb-chips');
     const detail = document.getElementById('herbDetail');
-    const popout = document.getElementById('herbPopout');
     if (!chipWrap || !detail) return;
-
-    let current = 0;
 
     HERBS.forEach((herb, i) => {
       const btn = document.createElement('button');
@@ -433,11 +430,7 @@
       btn.textContent = herb.name;
       btn.setAttribute('role', 'tab');
       btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-      btn.addEventListener('click', () => {
-        // second tap on the active ingredient opens the pop-out
-        if (current === i && popout) return openPopout(i);
-        select(i);
-      });
+      btn.addEventListener('click', () => select(i));
       chipWrap.appendChild(btn);
     });
 
@@ -445,7 +438,6 @@
 
     function select(index) {
       const herb = HERBS[index];
-      current = index;
 
       chips.forEach((c, i) => {
         c.classList.toggle('is-active', i === index);
@@ -461,42 +453,9 @@
         '<h3 class="herb-detail-title">' + herb.name +
         '<span class="herb-detail-cebu">' + herb.cebu + '</span></h3>' +
         '<p class="herb-detail-text">' + herb.text + '</p>' +
-        '<p class="herb-detail-note"><strong>Note.</strong> ' + herb.note + '</p>' +
-        '<button class="herb-popout-trigger" type="button">' +
-        'Open the pop-out<span aria-hidden="true"> &rarr;</span></button>';
+        '<p class="herb-detail-note"><strong>Note.</strong> ' + herb.note + '</p>';
 
       detail.classList.add('is-swapping');
-    }
-
-    detail.addEventListener('click', (e) => {
-      if (e.target.closest('.herb-popout-trigger')) openPopout(current);
-    });
-
-    function openPopout(index) {
-      const herb = HERBS[index];
-      if (!popout) return;
-
-      popout.querySelector('.herb-popout-name').textContent = herb.name;
-      popout.querySelector('.herb-popout-cebu').textContent = herb.cebu;
-      document.getElementById('herbPopoutText').textContent = herb.text;
-      document.getElementById('herbPopoutNote').innerHTML =
-        '<strong>Note.</strong> ' + herb.note;
-      document.getElementById('herbPopoutCebu2').textContent = herb.cebu;
-
-      if (typeof popout.showModal === 'function') popout.showModal();
-      else popout.setAttribute('open', '');
-    }
-
-    if (popout) {
-      const close = () => {
-        if (typeof popout.close === 'function') popout.close();
-        else popout.removeAttribute('open');
-      };
-
-      document.getElementById('herbPopoutClose').addEventListener('click', close);
-      popout.addEventListener('click', (e) => {
-        if (e.target === popout) close();
-      });
     }
 
     select(0);
