@@ -251,8 +251,7 @@ a, button, input, select, textarea, summary, label,
 
 .modal,
 .modal-body,
-.modal-dialog-scrollable .modal-body,
-.herb-popout {
+.modal-dialog-scrollable .modal-body {
   overscroll-behavior: contain;
 }
 
