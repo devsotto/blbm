@@ -1010,7 +1010,7 @@ body.modal-open .bl-sound-float { opacity: 0; visibility: hidden; }
 .why-list p { margin: 0; color: rgba(245, 235, 224, .74); max-width: 56ch; font-size: .99rem; }
 
 /* ==========================================================================
-   Herb secret — interactive pop-outs
+   Herb secret — interactive ingredient picker
    ========================================================================== */
 
 .herb-layout { display: grid; gap: clamp(2rem, 5vw, 3.5rem); align-items: start; }
@@ -1118,104 +1118,6 @@ body.modal-open .bl-sound-float { opacity: 0; visibility: hidden; }
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: none; }
 }
-
-.herb-popout-trigger {
-  display: inline-flex; align-items: center; gap: .4rem;
-  margin-top: 1.05rem;
-  padding: 0;
-  border: none; background: none;
-  font-family: var(--f-body);
-  font-size: .82rem; font-weight: 700;
-  letter-spacing: .12em; text-transform: uppercase;
-  color: var(--herb);
-  cursor: pointer;
-  border-bottom: 2px solid rgba(62, 107, 52, .35);
-  padding-bottom: .18rem;
-  transition: color .2s var(--ease), border-color .2s var(--ease), gap .2s var(--ease);
-}
-.herb-popout-trigger:hover { color: var(--amber-deep); border-color: var(--amber); gap: .7rem; }
-.herb-popout-trigger:focus-visible { outline: 2px solid var(--herb); outline-offset: 4px; }
-
-.herb-popout {
-  border: none; padding: 0;
-  background: transparent;
-  max-width: min(960px, 94vw);
-  width: 100%;
-  margin: auto;
-  overflow: visible;
-}
-.herb-popout::backdrop {
-  background: rgba(30, 17, 8, .74);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
-}
-.herb-popout[open] .herb-popout-inner { animation: popOutIn .34s var(--ease) both; }
-@keyframes popOutIn {
-  from { opacity: 0; transform: translateY(14px) scale(.975); }
-  to   { opacity: 1; transform: none; }
-}
-.herb-popout-inner {
-  position: relative;
-  display: grid;
-  background: var(--cream);
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 30px 70px rgba(30, 17, 8, .45);
-  border: 1px solid rgba(58, 35, 18, .16);
-}
-@media (min-width: 860px) {
-  .herb-popout-inner { grid-template-columns: .92fr 1.08fr; }
-}
-.herb-popout-figure { margin: 0; display: grid; background: var(--charcoal); }
-.herb-popout-figure img { width: 100%; height: 100%; min-height: 210px; object-fit: cover; }
-.herb-popout-figure figcaption {
-  font-size: .7rem; letter-spacing: .13em; text-transform: uppercase;
-  color: rgba(245, 235, 224, .72);
-  background: var(--charcoal);
-  padding: .7rem 1.1rem;
-}
-.herb-popout-body { padding: clamp(1.5rem, 3.4vw, 2.4rem); }
-.herb-popout-title {
-  font-size: clamp(1.6rem, 3vw, 2.3rem);
-  margin: 0 0 .85rem;
-  line-height: 1.08;
-}
-.herb-popout-cebu {
-  display: block;
-  font-family: var(--f-display);
-  font-style: italic;
-  font-size: .5em;
-  color: var(--amber-deep);
-  margin-top: .3em;
-}
-.herb-popout-text { margin: 0 0 1.1rem; color: rgba(58, 35, 18, .8); line-height: 1.66; }
-.herb-popout-facts {
-  display: grid; gap: .55rem;
-  margin: 1.25rem 0 0;
-  padding-top: 1.1rem;
-  border-top: 1px solid rgba(58, 35, 18, .14);
-}
-.herb-popout-facts > div { display: flex; gap: .7rem; align-items: baseline; flex-wrap: wrap; }
-.herb-popout-facts dt {
-  font-size: .66rem; font-weight: 700;
-  letter-spacing: .15em; text-transform: uppercase;
-  color: var(--herb);
-  min-width: 6.4rem;
-}
-.herb-popout-facts dd { margin: 0; font-size: .92rem; color: rgba(58, 35, 18, .78); }
-.herb-popout-close {
-  position: absolute; top: .7rem; right: .7rem;
-  width: 40px; height: 40px;
-  display: grid; place-items: center;
-  border-radius: 50%;
-  border: 1px solid rgba(58, 35, 18, .18);
-  background: rgba(245, 235, 224, .92);
-  color: var(--charcoal);
-  cursor: pointer;
-  transition: transform .2s var(--ease), background-color .2s var(--ease);
-}
-.herb-popout-close:hover { transform: rotate(90deg); background: var(--amber); }
-.herb-popout-close:focus-visible { outline: 2px solid var(--herb); outline-offset: 3px; }
 
 /* ==========================================================================
    Awards — dark
