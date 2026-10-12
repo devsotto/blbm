@@ -19,8 +19,8 @@
   --bs-btn-hover-bg: var(--amber, #d48c28);
   --bs-btn-hover-border-color: var(--amber, #d48c28);
   --bs-btn-hover-color: var(--charcoal-deep, #2a180c);
-  --bs-btn-active-bg: var(--amber-deep, #b87418);
-  --bs-btn-active-border-color: var(--amber-deep, #b87418);
+  --bs-btn-active-bg: var(--amber-deep, #8C5A14);
+  --bs-btn-active-border-color: var(--amber-deep, #8C5A14);
   --bs-btn-active-color: var(--charcoal-deep, #2a180c);
   --bs-btn-disabled-bg: var(--charcoal, #3a2312);
   --bs-btn-disabled-border-color: rgba(212, 140, 40, .55);

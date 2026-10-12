@@ -17,7 +17,7 @@
   --charcoal-soft: #4C3119;
   --amber:         #D48C28;
   --amber-bright:  #E9A63F;
-  --amber-deep:    #B87418;
+  --amber-deep:    #8C5A14;
   --herb:          #3E6B34;
   --herb-bright:   #5A8C4B;
   --banana:        #8C9E5B;
@@ -44,9 +44,13 @@
   --bs-body-line-height: 1.62;
   --bs-emphasis-color: #2A180C;
   --bs-heading-color: #2A180C;
-  --bs-secondary-color: rgba(58, 35, 18, .72);
+  /* Bootstrap's .text-secondary utility resolves --bs-secondary-rgb, not
+     --bs-secondary-color — both have to be overridden or the default grey
+     #6c757d leaks through on cream. */
+  --bs-secondary-rgb: 92, 74, 58;
+  --bs-secondary-color: rgb(92, 74, 58);
   --bs-tertiary-bg: #EDE0D2;
-  --bs-link-color: #B87418;
+  --bs-link-color: #8C5A14;
   --bs-link-hover-color: #3A2312;
   --bs-focus-ring-color: rgba(212, 140, 40, .35);
 
@@ -98,7 +102,16 @@ h3 { font-size: clamp(1.2rem, 2vw, 1.42rem); line-height: 1.18; margin: 0 0 .5re
 ::selection { background: var(--amber); color: var(--charcoal-deep); }
 
 :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
-.btn:focus-visible { outline: 0; box-shadow: 0 0 0 .25rem rgba(212, 140, 40, .4); }
+.btn:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+.btn-ghost:focus-visible,
+.btn-dark:focus-visible,
+.btn-outline-light:focus-visible {
+  outline-color: var(--cream);
+}
 
 section[id] { scroll-margin-top: 5.25rem; }
 /* deep links to #main (old bookmarks) must clear the fixed navbar too */
@@ -151,7 +164,7 @@ main[id] { scroll-margin-top: 5.25rem; }
   font-size: .95rem;
   color: var(--amber-deep);
   text-decoration: none;
-  border-bottom: 1.5px solid rgba(184, 116, 24, .35);
+  border-bottom: 1.5px solid rgba(140, 90, 20, .35);
   padding-bottom: 2px;
   transition: gap .22s var(--ease), border-color .22s var(--ease), color .22s var(--ease);
 }
@@ -173,8 +186,8 @@ main[id] { scroll-margin-top: 5.25rem; }
   --bs-btn-hover-bg: #E9A63F;
   --bs-btn-hover-border-color: #E9A63F;
   --bs-btn-hover-color: #2A180C;
-  --bs-btn-active-bg: #B87418;
-  --bs-btn-active-border-color: #B87418;
+  --bs-btn-active-bg: #8C5A14;
+  --bs-btn-active-border-color: #8C5A14;
   --bs-btn-active-color: #2A180C;
   --bs-btn-disabled-bg: #D48C28;
   --bs-btn-disabled-border-color: #D48C28;
@@ -208,7 +221,7 @@ main[id] { scroll-margin-top: 5.25rem; }
 
 /* ---------- Bootstrap badge + brand colour ---------- */
 .badge-soft {
-  font-size: .66rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -266,7 +279,7 @@ main[id] { scroll-margin-top: 5.25rem; }
 .bl-brand-text span {
   display: block;
   font-family: var(--f-body);
-  font-size: .62rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .2em;
   text-transform: uppercase;
@@ -418,7 +431,7 @@ main[id] { scroll-margin-top: 5.25rem; }
   text-align: left;
   padding: clamp(2.5rem, 8vw, 5rem) clamp(1.1rem, 4vw, 3rem) clamp(1.35rem, 4vw, 2.5rem);
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .55) 45%, rgba(0, 0, 0, .88) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, .6) 0%, rgba(0, 0, 0, .68) 45%, rgba(0, 0, 0, .9) 100%),
     linear-gradient(180deg, transparent, rgba(20, 12, 6, .88));
   color: #ffffff !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, .7);
@@ -521,7 +534,7 @@ main[id] { scroll-margin-top: 5.25rem; }
 
 .news-card-date {
   display: block;
-  font-size: .68rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .16em;
   text-transform: uppercase;
@@ -578,11 +591,11 @@ main[id] { scroll-margin-top: 5.25rem; }
 /* visible group label — the chips keep their own aria-labels, so the old
    native title tooltips are gone but every icon stays named for AT */
 .news-share-label {
-  font-size: .68rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: rgba(58, 35, 18, .62);
+  color: rgba(58, 35, 18, .72);
   white-space: nowrap;
   margin-right: .1rem;
 }
