@@ -421,7 +421,10 @@
   function initHerbs() {
     const chipWrap = document.querySelector('.herb-chips');
     const detail = document.getElementById('herbDetail');
+    const stage = document.querySelector('.herb-stage');
     if (!chipWrap || !detail) return;
+
+    detail.id = detail.id || 'herbDetail';
 
     HERBS.forEach((herb, i) => {
       const btn = document.createElement('button');
@@ -430,19 +433,44 @@
       btn.textContent = herb.name;
       btn.setAttribute('role', 'tab');
       btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-      btn.addEventListener('click', () => select(i));
+      btn.setAttribute('aria-controls', detail.id);
+      btn.tabIndex = i === 0 ? 0 : -1;
+      btn.addEventListener('click', () => select(i, { user: true }));
       chipWrap.appendChild(btn);
     });
 
     const chips = Array.from(chipWrap.querySelectorAll('.herb-chip'));
 
-    function select(index) {
+    /* arrow-key navigation — a tablist is one tab stop, so without this the
+       chips are unreachable once the first one takes the tab */
+    chipWrap.addEventListener('keydown', (e) => {
+      const i = chips.indexOf(document.activeElement);
+      if (i < 0) return;
+      const last = chips.length - 1;
+      let next = null;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = i === last ? 0 : i + 1;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = i === 0 ? last : i - 1;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = last;
+      if (next === null) return;
+      e.preventDefault();
+      select(next, { focus: true, user: true });
+    });
+
+    function select(index, { focus = false, user = false } = {}) {
       const herb = HERBS[index];
 
       chips.forEach((c, i) => {
         c.classList.toggle('is-active', i === index);
         c.setAttribute('aria-selected', i === index ? 'true' : 'false');
+        /* roving tabindex — a tablist exposes one stop, not seven */
+        c.tabIndex = i === index ? 0 : -1;
       });
+      if (focus) chips[index].focus();
+
+      /* the hint is only true before the visitor makes a pick — select(0)
+         runs on init to seed the panel, and must not consume it */
+      if (stage && user) stage.classList.add('is-picked');
 
       detail.classList.remove('is-swapping');
       // force reflow so the animation restarts on repeat clicks
