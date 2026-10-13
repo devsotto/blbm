@@ -911,12 +911,26 @@
     const countEl = document.getElementById('branchCount');
     const emptyEl = document.getElementById('branchEmpty');
     const searchEl = document.getElementById('branchSearch');
+    const clearEl = document.getElementById('branchClear');
     const chips = Array.from(document.querySelectorAll('.locator-filters .chip'));
     if (!wrap) return;
 
     const mapApi = initMap();
+    const DEFAULT_LIMIT = 6;
     let region = 'all';
+    let regionPicked = false;
     let query = '';
+
+    function shuffled(list) {
+      const out = list.slice();
+      for (let i = out.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const t = out[i];
+        out[i] = out[j];
+        out[j] = t;
+      }
+      return out;
+    }
 
     /* The filter is part of the view, so it lives in the URL: a refresh, a
        Back/Forward step or a pasted link lands on the same branch list. */
@@ -926,7 +940,10 @@
       catch (e) { return; }
 
       const want = (params.get('region') || '').toLowerCase();
-      if (want && chips.some((c) => c.dataset.region === want)) region = want;
+      if (want && chips.some((c) => c.dataset.region === want)) {
+        region = want;
+        regionPicked = true;
+      }
 
       const q = (params.get('q') || '').trim();
       if (q) {
@@ -938,7 +955,7 @@
     function writeState() {
       try {
         const url = new URL(window.location.href);
-        if (region === 'all') url.searchParams.delete('region');
+        if (!regionPicked) url.searchParams.delete('region');
         else url.searchParams.set('region', region);
 
         const q = searchEl ? searchEl.value.trim() : '';
@@ -953,10 +970,28 @@
 
     function syncChips() {
       chips.forEach((c) => {
-        const on = c.dataset.region === region;
+        const on = regionPicked && c.dataset.region === region;
         c.classList.toggle('is-active', on);
         c.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
+    }
+
+    /* the X only shows while there is something to clear */
+    function syncClear() {
+      if (clearEl) clearEl.hidden = !(searchEl && searchEl.value.trim());
+    }
+
+    /* clearing the box puts the whole locator back to its landing state:
+       no query, no filter, six random branches, no region headings */
+    function resetToDefault() {
+      region = 'all';
+      regionPicked = false;
+      query = '';
+      if (searchEl) searchEl.value = '';
+      syncChips();
+      syncClear();
+      writeState();
+      render();
     }
 
     // fill the filter counters once
@@ -972,7 +1007,7 @@
     function matches(entry) {
       const [name, addr, reg] = entry;
       if (region !== 'all' && reg !== region) return false;
-      if (query && !((name || '') + ' ' + (addr || '')).toLowerCase().includes(query)) return false;
+      if (query && !((name || '') + ' ' + (addr || '') + ' ' + (REGION_LABEL[reg] || '')).toLowerCase().includes(query)) return false;
       return true;
     }
 
@@ -992,7 +1027,8 @@
       '<path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></svg>';
 
     function render() {
-      const visible = BRANCHES.filter(matches);
+      let visible = BRANCHES.filter(matches);
+      if (!query && !regionPicked) visible = shuffled(visible).slice(0, DEFAULT_LIMIT);
       wrap.innerHTML = '';
       if (mapApi) mapApi.setVisible(visible);
 
@@ -1007,11 +1043,15 @@
         .map((reg) => [reg, visible.filter((b) => b[2] === reg)])
         .filter(([, list]) => list.length);
 
+      const showRegionHeads = Boolean(query) || regionPicked;
+
       groups.forEach(([reg, list]) => {
-        const h = document.createElement('h3');
-        h.className = 'branch-region';
-        h.textContent = REGION_LABEL[reg] + ' · ' + list.length;
-        wrap.appendChild(h);
+        if (showRegionHeads) {
+          const h = document.createElement('h3');
+          h.className = 'branch-region';
+          h.textContent = REGION_LABEL[reg] + ' · ' + list.length;
+          wrap.appendChild(h);
+        }
 
         list.forEach((entry) => {
           const [name, addr] = entry;
@@ -1129,6 +1169,7 @@
     chips.forEach((chip) => {
       chip.addEventListener('click', () => {
         region = chip.dataset.region;
+        regionPicked = true;
         syncChips();
         writeState();
         render();
@@ -1137,14 +1178,29 @@
 
     if (searchEl) {
       searchEl.addEventListener('input', () => {
-        query = searchEl.value.trim().toLowerCase();
+        const next = searchEl.value.trim().toLowerCase();
+        if (!next && query) {
+          region = 'all';
+          regionPicked = false;
+          syncChips();
+        }
+        query = next;
+        syncClear();
         writeState();
         render();
       });
     }
 
+    if (clearEl && searchEl) {
+      clearEl.addEventListener('click', () => {
+        resetToDefault();
+        searchEl.focus();
+      });
+    }
+
     readState();
     syncChips();
+    syncClear();
     render();
   }
 

@@ -508,24 +508,71 @@ main[id] { scroll-margin-top: 5.25rem; }
 .news-card .bl-cover { height: 200px; aspect-ratio: auto; }
 
 /* ---------- news card is the whole story trigger ----------
-   No "Read the story" button any more: the card itself is the target, so it
-   needs pointer affordance, a visible focus ring and a press state on top of
-   the .card-hover lift. */
+   The control is a real <button> around the headline: the headline text is
+   its accessible name, and the article keeps badge, date and body as content
+   a screen reader can read. Bootstrap's .stretched-link ::after carries that
+   button's hit area over the whole card, which is what the pointer
+   affordance, the press state and the focus ring below promise. */
 .news-card { cursor: pointer; }
+.news-card-trigger {
+  display: inline-block;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  text-transform: inherit;
+  text-rendering: inherit;
+  cursor: pointer;
+}
 .news-card:active { transform: translateY(-2px); box-shadow: var(--lift-md); }
-.news-card:focus-visible {
-  /* the global :focus-visible rule drops every control to a 3px radius —
-     keep the card's own rounded corners while it is focused */
+
+/* focus belongs to the card the visitor is standing on rather than to the
+   headline inside it, so the ring keeps the card's own rounded corners; the
+   @supports fallback rings the button for engines without :has() */
+.news-card:has(.news-card-trigger:focus-visible) {
   border-radius: var(--bs-card-border-radius, .75rem);
   outline: 3px solid var(--amber);
   outline-offset: 3px;
   box-shadow: var(--lift-md);
 }
+.news-card-trigger:focus-visible { outline: 0; box-shadow: none; }
+@supports not selector(:has(*)) {
+  .news-card-trigger:focus-visible {
+    outline: 3px solid var(--amber);
+    outline-offset: 3px;
+  }
+}
+
+/* card body copy is the tinted brown of .text-secondary, where a crimson
+   #9A2C2C link lands at 1.11:1 against the words around it — colour cannot
+   be the only thing that says "link" (WCAG 1.4.1). The hairline carries
+   what the hue cannot, so the crimson stays and so does its oak hover */
+.card-text a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* the stretched hit area sits above the card body: a story link (the
+   catering number) lifts above it so it keeps its own job, and the badge
+   lets clicks through so no corner of the card goes dead */
+.news-card .card-text a { position: relative; z-index: 2; }
 
 /* the badge is absolutely positioned over the cover photo — it needs an
-   opaque plate, otherwise the tinted background disappears against the image */
+   opaque plate, otherwise the tinted background disappears against the image.
+   It sits above the stretched hit area, so it hands clicks straight through */
 .news-card .badge-soft {
   z-index: 2;
+  pointer-events: none;
   background: rgba(251, 245, 238, .95);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);

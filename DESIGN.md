@@ -73,6 +73,16 @@ typography:
     fontSize: "1rem"
     fontWeight: 600
     lineHeight: 1
+  caption:
+    fontFamily: "Archivo, system-ui, -apple-system, Segoe UI, sans-serif"
+    fontSize: "0.875rem"
+    fontWeight: 500
+    lineHeight: 1.5
+  code:
+    fontFamily: "SF Mono, ui-monospace, Cascadia Mono, Menlo, Consolas, monospace"
+    fontSize: "0.9em"
+    fontWeight: 400
+    lineHeight: 1.5
 rounded:
   none: "0px"
   xs: "4px"
@@ -258,6 +268,9 @@ only place it lives.
 
 **Display Font:** Fraunces (with `"Iowan Old Style", Georgia, serif` fallback)
 **Body Font:** Archivo (with `system-ui, -apple-system, "Segoe UI", sans-serif` fallback)
+**Code Font:** "SF Mono" (with `ui-monospace, "Cascadia Mono", Menlo, Consolas, monospace`
+fallback): file paths, selectors, code and measurement readouts in technical
+artifacts such as audit reports. Never for prose or UI copy.
 
 **Character:** A decorated voice answering to a plain one. Fraunces is an
 optical-size serif pushed into its variable axes — `SOFT` 24–30 softens the
