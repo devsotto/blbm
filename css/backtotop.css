@@ -3,9 +3,14 @@
    Shared by index.html / delivery.html / whatsnew.html.
 
    Bootstrap utilities own positioning, alignment and shape:
-     position-fixed bottom-0 end-0 m-4   → fixed, bottom/right 1.5rem
-     d-flex align-items-center justify-content-center → pixel-perfect centering
-     rounded-circle + btn btn-dark       → shape and base button skin
+      position-fixed bottom-0 end-0 m-4   → fixed, bottom/right 1.5rem (24px)
+      d-flex align-items-center justify-content-center → pixel-perfect centering
+      rounded-circle + btn btn-dark       → shape and base button skin
+
+   Responsive placement (>= 768px js/backtotop.js docks it centred on
+   .footer-bottom by writing inline top/left, which win over the utilities
+   via over-constraint; < 768px keeps the right edge + 24px inset from the
+   m-4 utility):
 
    This file only fine-tunes: dimensions, z-index, transitions and the
    brand design tokens (constraint: no layout re-implementations).
@@ -43,6 +48,14 @@
 }
 
 .bl-top.is-visible { opacity: 1; visibility: visible; transform: none; }
+
+/* notched devices: hold the 1.5rem inset clear of the home indicator and
+   sensor cutout. The dock maths measures these margins, so centring on the
+   footer bar stays exact. */
+.bl-top {
+  margin-right: calc(1.5rem + env(safe-area-inset-right, 0px)) !important;
+  margin-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important;
+}
 
 .bl-top:hover {
   transform: translateY(-3px);

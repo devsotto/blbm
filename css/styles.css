@@ -63,7 +63,10 @@ main,
 .hero,
 .section,
 .locator-map-wrap,
-.contact-form {
+.contact-form,
+/* anchor targets can be section wrappers OR a heading inside them — a bare
+   #history-style deep link must clear the sticky nav either way */
+h1, h2, h3, h4, h5, h6 {
   scroll-margin-top: 6.5rem;
 }
 
@@ -149,6 +152,7 @@ h3 {
   line-height: 1.15;
   letter-spacing: -.018em;
   margin: 0 0 .55rem;
+  text-wrap: balance;
 }
 
 .eyebrow {
@@ -219,11 +223,21 @@ h3 {
   text-decoration: none;
   border-bottom: 1.5px solid rgba(140, 90, 20, .35);
   padding-bottom: 2px;
-  transition: gap .22s var(--ease), border-color .22s var(--ease), color .22s var(--ease);
+  transition: border-color .22s var(--ease), color .22s var(--ease);
 }
-.text-link:hover { gap: .8rem; color: var(--charcoal); border-color: var(--charcoal); }
+/* the arrow slides instead of the gap widening — animating `gap` relayouts
+   every line box, this stays on the compositor */
+.text-link > span,
+.text-link > i.bi { transition: transform .22s var(--ease); }
+.text-link:hover, .text-link:focus-visible {
+  color: var(--charcoal); border-color: var(--charcoal);
+}
+.text-link:hover > span, .text-link:focus-visible > span,
+.text-link:hover > i.bi, .text-link:focus-visible > i.bi {
+  transform: translateX(.35rem);
+}
 .text-link-light { color: var(--amber-bright); border-color: rgba(233, 166, 63, .4); }
-.text-link-light:hover { color: var(--cream); border-color: var(--cream); }
+.text-link-light:hover, .text-link-light:focus-visible { color: var(--cream); border-color: var(--cream); }
 
 /* ==========================================================================
    Top bar + nav
@@ -256,13 +270,16 @@ h3 {
   border-bottom: 1px solid rgba(58, 35, 18, .09);
   padding: .55rem 0;
   z-index: var(--z-nav);
-  transition: box-shadow .3s var(--ease), padding .3s var(--ease),
+  /* Paint-only: the sticky bar keeps ONE height in and out of .is-stuck.
+     Shrinking its padding on scroll used to (a) animate a layout property
+     and (b) reflow everything under the bar mid-scroll — the background and
+     shadow change instead, which the compositor can do alone. */
+  transition: box-shadow .3s var(--ease),
               background-color .3s var(--ease);
 }
 .bl-nav.is-stuck {
   box-shadow: var(--lift-md);
   background: rgba(245, 235, 224, .95);
-  padding: .3rem 0;
 }
 .navbar-brand { padding: 0; margin-right: 1.5rem; }
 .brand-mark { width: 132px; height: auto; transition: transform .3s var(--ease); }
@@ -299,37 +316,16 @@ h3 {
 .navbar-toggler[aria-expanded="true"] .bl-burger i:nth-child(2) { opacity: 0; }
 .navbar-toggler[aria-expanded="true"] .bl-burger i:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* --- social icons (header, contact, footer) --- */
+/* --- social icons (header nav) ---
+   The .social-row / .social-link skin itself now lives in css/footer.css,
+   shared with the three product pages; only the header size overrides
+   stay here. */
 .nav-social {
   list-style: none;
   display: flex; align-items: center; gap: .4rem;
   margin: 0; padding: 0;
 }
 
-.social-row {
-  list-style: none;
-  display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
-  margin: .7rem 0 0; padding: 0;
-}
-
-.social-link {
-  display: inline-grid; place-items: center;
-  width: 34px; height: 34px;
-  border-radius: 50%;
-  color: rgba(58, 35, 18, .72);
-  background: rgba(255, 255, 255, .55);
-  border: 1px solid rgba(58, 35, 18, .16);
-  transition: transform .24s var(--ease), background-color .24s var(--ease),
-              color .24s var(--ease), border-color .24s var(--ease),
-              box-shadow .24s var(--ease);
-}
-.social-link:hover, .social-link:focus-visible {
-  background: var(--amber);
-  border-color: var(--amber);
-  color: var(--charcoal-deep);
-  transform: translateY(-2px);
-  box-shadow: var(--glow-amber);
-}
 .nav-social .social-link { width: 30px; height: 30px; background: transparent; }
 .nav-social .social-link:hover { background: var(--amber); }
 
@@ -431,18 +427,6 @@ h3 {
   }
   .bl-nav .bl-subnav::before { display: none; }
   .bl-nav .bl-subnav .dropdown-item { padding: .5rem .8rem; }
-}
-
-.social-row-dark .social-link {
-  color: rgba(245, 235, 224, .78);
-  background: rgba(245, 235, 224, .07);
-  border-color: rgba(245, 235, 224, .2);
-}
-.social-row-dark .social-link:hover,
-.social-row-dark .social-link:focus-visible {
-  background: var(--amber);
-  border-color: var(--amber);
-  color: var(--charcoal-deep);
 }
 
 /* ==========================================================================
@@ -672,7 +656,7 @@ h3 {
 
   -webkit-backdrop-filter: blur(10px) saturate(1.35);
   backdrop-filter: blur(10px) saturate(1.35);
-  box-shadow: 0 10px 26px -16px rgba(0, 0, 0, .9);
+  box-shadow: 0 10px 26px -16px rgba(58, 35, 18, .65);
 
   transition: opacity .3s ease-in-out, transform .3s ease-in-out,
               visibility .3s ease-in-out, background-color .2s ease-in-out,
@@ -700,6 +684,33 @@ h3 {
 .bl-sound[aria-pressed="true"] .bl-sound-icon-on { display: block; }
 .bl-sound[aria-pressed="true"] .bl-sound-icon-off { display: none; }
 
+/* busy state — the first press fetches the sizzle, so the control spins
+   instead of looking dead. Same specificity as the icon rules above, so it
+   has to come after them to win. */
+.bl-sound-busy {
+  display: none;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: bl-sound-spin .7s linear infinite;
+}
+.bl-sound.is-loading .bl-sound-busy { display: block; }
+.bl-sound.is-loading .bl-sound-icon-on,
+.bl-sound.is-loading .bl-sound-icon-off { display: none; }
+
+@keyframes bl-sound-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  /* the busy signal survives, the rotation does not */
+  .bl-sound-busy {
+    animation: none;
+    border-right-color: currentColor;
+    opacity: .55;
+  }
+}
+
 /* corner control — pinned to the hero banner, scrolls away with it */
 .bl-sound-hero {
   right: clamp(1rem, 4vw, 2.5rem);
@@ -725,14 +736,32 @@ h3 {
   line-height: 1;
 }
 
-/* floating control — m-4 already supplies the 1.5rem right inset, so
-   bottom: 4rem stacks it 0.75rem directly above the 3.25rem .bl-top */
+/* floating control — parks on the bottom-right stack, 0.75rem above the
+   3.25rem .bl-top it used to share a lane with. That corner is the one part
+   of the viewport no reading column occupies on the way past.
+
+   The vertical midline is a lane only while the viewport leaves a margin
+   wider than the control: content ends (100vw − 1320px) / 2 + 12px from the
+   edge, the control's left edge sits 1.5rem + 3.25rem in, and those cross at
+   1440px. Below it the control lands on the content column — measured
+   collisions at 390 / 768 / 992 / 1280 / 1366 — so the midline is claimed
+   at ≥ 1440px only.
+
+   The centring formula must pay back everything below the box: half its own
+   height (3.25rem / 2) plus the bottom margin it carries (1.5rem + safe-area
+   inset). Omitting the inset parks the control above the midline on notched
+   devices, so it is subtracted here. */
 .bl-sound-float {
   z-index: 1050;
   bottom: 4rem;
+  margin-right: calc(1.5rem + env(safe-area-inset-right, 0px)) !important;
+  margin-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important;
   opacity: 0;
   visibility: hidden;
   transform: translateY(14px) scale(.94);
+}
+@media (min-width: 1440px) {
+  .bl-sound-float { bottom: calc(50% - 3.125rem - env(safe-area-inset-bottom, 0px)); }
 }
 .bl-sound-float.is-visible { opacity: 1; visibility: visible; transform: none; }
 .bl-sound-float.is-visible:hover { transform: translateY(-3px); }
@@ -1020,10 +1049,14 @@ body.modal-open .bl-sound-float { opacity: 0; visibility: hidden; }
   gap: clamp(1rem, 3vw, 2rem);
   padding: clamp(1.5rem, 3vw, 2.1rem) 0;
   border-top: 1px solid rgba(245, 235, 224, .16);
-  transition: padding-left .3s var(--ease);
 }
 .why-list li:last-child { border-bottom: 1px solid rgba(245, 235, 224, .16); }
-.why-list li:hover { padding-left: .7rem; }
+/* the hover nudge moves the row's content, not its padding — padding is a
+   layout property, so it would relayout the whole list on every hover */
+.why-list li > span,
+.why-list li > div { transition: transform .3s var(--ease); }
+.why-list li:hover > span,
+.why-list li:hover > div { transform: translateX(.7rem); }
 .why-num {
   font-family: var(--f-display);
   font-size: clamp(1.6rem, 3vw, 2.2rem);
@@ -1445,6 +1478,12 @@ body.map-ready.map-tiles-down #coverageMaps { display: grid; }
   border: 1px solid rgba(58, 35, 18, .1);
   border-radius: 5px;
   transition: transform .22s var(--ease), border-color .22s var(--ease), box-shadow .22s var(--ease);
+  /* a region pick can render 60+ cards at once; skip rendering (and layout)
+     for the ones that are nowhere near the viewport. The remembered size plus
+     --branch-row-h keeps the grid honest, and the browser forces rendering
+     back on for a card that receives focus */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 7.5rem;
 }
 .branch-item:hover, .branch-item:focus-within {
   transform: translateY(-4px);
@@ -1889,8 +1928,10 @@ a.contact-card:hover {
   box-shadow: var(--lift-md);
 }
 /* focused programmatically by the franchise CTAs (tabindex="-1"), never by
-   Tab — no ring, but the jump still lands the caret/keyboard here */
-.contact-form:focus { outline: none; }
+   Tab — no ring for a programmatic jump, but the jump still lands the
+   caret/keyboard here. Keyboard users can still reach the container, so only
+   drop the outline for pointer/programmatic focus, never for :focus-visible. */
+.contact-form:focus:not(:focus-visible) { outline: none; }
 
 .form-head { margin-bottom: 1.5rem; }
 .form-head h3 { margin-bottom: .35rem; }
@@ -2046,60 +2087,6 @@ a.contact-card:hover {
   color: #B3341F;
 }
 
-/* ==========================================================================
-   Footer
-   ========================================================================== */
-
-.bl-footer {
-  background: var(--charcoal-deep);
-  color: rgba(245, 235, 224, .7);
-  padding-top: clamp(3rem, 6vw, 4.5rem);
-  border-top: 4px solid var(--amber);
-}
-.footer-top {
-  display: grid; gap: clamp(2rem, 5vw, 3.5rem);
-  padding-bottom: clamp(2rem, 4vw, 3rem);
-}
-@media (min-width: 900px) { .footer-top { grid-template-columns: .8fr 1.2fr; } }
-
-.footer-brand img { width: 150px; height: auto; margin-bottom: 1rem; }
-.footer-brand p { margin: 0; max-width: 34ch; font-size: .95rem; line-height: 1.6; }
-
-.footer-nav { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
-.footer-nav h4 {
-  font-family: var(--f-body);
-  font-size: .72rem; font-weight: 700;
-  letter-spacing: .17em; text-transform: uppercase;
-  color: var(--amber-bright);
-  margin: 0 0 .95rem;
-}
-.footer-nav a {
-  display: block;
-  color: rgba(245, 235, 224, .72);
-  text-decoration: none;
-  font-size: .93rem;
-  padding: .3rem 0;
-  transition: color .2s var(--ease), transform .2s var(--ease);
-}
-.footer-nav a:hover { color: var(--amber-bright); transform: translateX(4px); }
-
-.footer-bottom {
-  display: flex; flex-wrap: wrap; gap: 1rem;
-  justify-content: space-between; align-items: center;
-  /* bottom padding clears the fixed back-to-top control (3.25rem + 1.5rem
-     margin) so it never sits on top of the legal links */
-  padding: 1.4rem 0 4.75rem;
-  border-top: 1px solid rgba(245, 235, 224, .14);
-  font-size: .85rem;
-}
-.footer-bottom p { margin: 0; }
-.footer-legal { display: flex; flex-wrap: wrap; gap: 1.35rem; align-items: center; }
-.footer-legal a {
-  color: rgba(245, 235, 224, .66);
-  text-decoration: none;
-  transition: color .2s var(--ease);
-}
-.footer-legal a:hover { color: var(--amber-bright); }
 
 /* ==========================================================================
    Reveal on scroll
@@ -2122,7 +2109,6 @@ a.contact-card:hover {
   .hero-facts { gap: 1.1rem 1.6rem; }
   .hero-cta .btn { flex: 1 1 100%; }
   .product-body { padding-left: 0; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; }
 }
 
 @media (prefers-reduced-motion: reduce) {

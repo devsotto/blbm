@@ -906,6 +906,12 @@
     return { setVisible: setVisible, focus: focus };
   }
 
+  /* counts go through Intl so grouping (and, if this site is ever localised,
+     the numerals) follow the locale instead of string concatenation */
+  const COUNT_FMT = (typeof Intl !== 'undefined' && Intl.NumberFormat)
+    ? new Intl.NumberFormat('en-PH')
+    : { format: (n) => String(n) };
+
   function initLocator() {
     const wrap = document.getElementById('branchGroups');
     const countEl = document.getElementById('branchCount');
@@ -1001,7 +1007,7 @@
         ? BRANCHES.length
         : BRANCHES.filter((b) => b[2] === key).length;
       const slot = chip.querySelector('[data-count-for]');
-      if (slot) slot.textContent = '(' + n + ')';
+      if (slot) slot.textContent = '(' + COUNT_FMT.format(n) + ')';
     });
 
     function matches(entry) {
@@ -1049,7 +1055,7 @@
         if (showRegionHeads) {
           const h = document.createElement('h3');
           h.className = 'branch-region';
-          h.textContent = REGION_LABEL[reg] + ' · ' + list.length;
+          h.textContent = REGION_LABEL[reg] + ' · ' + COUNT_FMT.format(list.length);
           wrap.appendChild(h);
         }
 
@@ -1118,7 +1124,8 @@
       });
 
       countEl.textContent =
-        'Showing ' + visible.length + ' of ' + BRANCHES.length + ' branches';
+        'Showing ' + COUNT_FMT.format(visible.length) +
+        ' of ' + COUNT_FMT.format(BRANCHES.length) + ' branches';
 
       equalizeRows();
     }
@@ -1220,6 +1227,23 @@
     const statusEl = document.getElementById('formStatus');
     const subjectEl = document.getElementById('cfSubject');
     let code = '';
+
+    /* the form hands off to the visitor's mail app instead of posting, so a
+       half-typed message has no server copy to fall back on. Warn before the
+       tab goes away, and stop warning once the message has been handed off. */
+    let dirty = false;
+    form.addEventListener('input', () => { dirty = true; });
+    window.addEventListener('beforeunload', (e) => {
+      if (!dirty) return;
+      e.preventDefault();
+      e.returnValue = '';
+    });
+    if (statusEl) {
+      statusEl.addEventListener('click', (e) => {
+        const link = e.target.closest('a[href^="mailto:"]');
+        if (link) dirty = false;
+      });
+    }
 
     const FIELDS = {
       cfName: {

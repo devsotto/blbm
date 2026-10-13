@@ -83,6 +83,21 @@ if (filterButtons.length) {
   apply(initial);
 }
 
+/* ---------- dates ----------
+   The static markup already ships readable English, so this only re-formats
+   <time datetime="YYYY-MM"> through Intl instead of trusting a hardcoded
+   month name. Year-only stamps ("Year-round") are copy, not dates, and are
+   left exactly as written. */
+const newsDates = document.querySelectorAll('.news-card-date[datetime]');
+if (newsDates.length && typeof Intl !== 'undefined' && Intl.DateTimeFormat) {
+  const monthLong = new Intl.DateTimeFormat('en-PH', { month: 'long', year: 'numeric' });
+  newsDates.forEach((el) => {
+    const parts = /^(\d{4})-(\d{2})/.exec(el.getAttribute('datetime') || '');
+    if (!parts) return;
+    el.textContent = monthLong.format(new Date(Number(parts[1]), Number(parts[2]) - 1, 1));
+  });
+}
+
 /* ---------- shared detail modal (Bootstrap modal) --------------------------
    Every .news-card opens the same dialog. The trigger is a real <button>
    wrapped around the headline, so the headline is the name a screen reader
