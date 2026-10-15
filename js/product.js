@@ -5,6 +5,12 @@
    ========================================================================== */
 
 (() => {
+  /* footer year — index.html rolls this over from js/main.js#initYear, and
+     the product pages ship no main.js, so the footer's <span id="year">
+     fallback would otherwise stand still forever. */
+  const yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
   const modalEl = document.getElementById('productLightbox');
   if (!modalEl) return;
 

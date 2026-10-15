@@ -1,0 +1,146 @@
+/* ==========================================================================
+   Balamban Liempo — shared footer skin (single source)
+
+   index.html and the three product pages render the footer markup verbatim,
+   so they share one stylesheet for it instead of a copy in css/styles.css
+   and another in css/subpage.css — two copies is how the two footers drift
+   apart again.
+
+   Load order: index links this BEFORE css/styles.css, the product pages
+   BEFORE css/subpage.css. Base rules land first so each page file keeps
+   overriding them in the order it always did (the header's .nav-social
+   overrides, for instance, still come last).
+
+   Scope: the legacy delivery / what's-new footer is .bg-dark.bl-footer with
+   no .footer-top inside it, so everything footer-specific below is keyed off
+   :has(.footer-top) and never touches those two pages.
+
+   It carries two parity pins that the markup alone cannot: the footer keeps
+   index.html's type base (17px / 1.68) and its h3 leading (1.15) on routes
+   that run Bootstrap's 16px / 1.62 body and an h3 at 1.18 — without them the
+   same footer renders 11px shorter off-index.
+   ========================================================================== */
+
+/* --- social chips (header, contact, footer) --- */
+.social-row {
+  list-style: none;
+  display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+  margin: .7rem 0 0; padding: 0;
+}
+
+.social-link {
+  display: inline-grid; place-items: center;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  color: rgba(58, 35, 18, .72);
+  background: rgba(255, 255, 255, .55);
+  border: 1px solid rgba(58, 35, 18, .16);
+  transition: transform .24s var(--ease), background-color .24s var(--ease),
+              color .24s var(--ease), border-color .24s var(--ease),
+              box-shadow .24s var(--ease);
+}
+.social-link:hover, .social-link:focus-visible {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--charcoal-deep);
+  transform: translateY(-2px);
+  box-shadow: var(--glow-amber);
+}
+.social-row-dark .social-link {
+  color: rgba(245, 235, 224, .78);
+  background: rgba(245, 235, 224, .07);
+  border-color: rgba(245, 235, 224, .2);
+}
+.social-row-dark .social-link:hover,
+.social-row-dark .social-link:focus-visible {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: var(--charcoal-deep);
+}
+
+/* --- footer (index-parity) --- */
+.bl-footer:has(.footer-top) {
+  background: var(--charcoal-deep);
+  color: rgba(245, 235, 224, .7);
+  padding-top: clamp(3rem, 6vw, 4.5rem);
+  border-top: 4px solid var(--amber);
+  /* type-base pin: identical text metrics on every route */
+  font-size: 1.0625rem;
+  line-height: 1.68;
+}
+.footer-top {
+  display: grid; gap: clamp(2rem, 5vw, 3.5rem);
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+}
+@media (min-width: 900px) { .footer-top { grid-template-columns: .8fr 1.2fr; } }
+
+/* display is pinned, not inherited: css/styles.css sets img { display: block }
+   and the product pages do not, which alone left their footer 9px shorter —
+   an inline-block logo and a block logo put their baselines in different
+   places for the tagline that follows. */
+.footer-brand img { display: block; width: 150px; height: auto; margin-bottom: 1rem; }
+.footer-brand p { margin: 0; max-width: 34ch; font-size: .95rem; line-height: 1.6; }
+
+.footer-nav { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+.footer-nav h3 {
+  font-family: var(--f-body);
+  font-size: .72rem; font-weight: 700;
+  letter-spacing: .17em; text-transform: uppercase;
+  line-height: 1.15;
+  color: var(--amber-bright);
+  margin: 0 0 .95rem;
+}
+.footer-nav a {
+  display: block;
+  color: rgba(245, 235, 224, .72);
+  text-decoration: none;
+  font-size: .93rem;
+  padding: .3rem 0;
+  transition: color .2s var(--ease), transform .2s var(--ease);
+}
+.footer-nav a:hover { color: var(--amber-bright); transform: translateX(4px); }
+
+.footer-bottom {
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  justify-content: space-between; align-items: center;
+  /* uniform on every page: 1.5rem top and bottom. >= 768px the back-to-top
+     control docks centred on this bar (see js/backtotop.js) so the footer
+     needs no extra room below it */
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(245, 235, 224, .14);
+  font-size: .85rem;
+}
+.footer-bottom p { margin: 0; }
+.footer-legal { display: flex; flex-wrap: wrap; gap: 1.35rem; align-items: center; }
+.footer-legal a {
+  display: inline-flex; align-items: center;
+  min-height: 24px;
+  color: rgba(245, 235, 224, .66);
+  text-decoration: none;
+  transition: color .2s var(--ease);
+}
+.footer-legal a:hover { color: var(--amber-bright); }
+
+/* < 768px the control stays pinned bottom-right instead of docking on this
+   bar, so the footer itself carries the clearance that keeps Privacy/Terms
+   reachable — the bar's own padding stays a uniform 1.5rem 0 */
+@media (max-width: 767.98px) {
+  .bl-footer:has(.footer-top) {
+    padding-bottom: calc(4.75rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+@media (max-width: 575.98px) {
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+}
+
+/* touch pointers get the 44px row and hit area the desktop footer skips:
+   same markup, same rhythm on mouse, comfortable targets under a thumb.
+   The widened social gap keeps the 44px hit areas from overlapping (34px
+   chips at a .5rem gap leave 2px of contested ground between neighbours). */
+@media (pointer: coarse) {
+  .footer-nav a { padding: .6rem 0; }
+  .footer-legal a { min-height: 44px; }
+  .bl-footer .social-row { gap: .75rem; }
+  .bl-footer .social-link { position: relative; }
+  .bl-footer .social-link::after { content: ""; position: absolute; inset: -5px; }
+}

@@ -54,6 +54,8 @@
 .product-callout a { color: inherit; text-underline-offset: 3px; }
 
 /* ---------- product spec grid ---------- */
+/* five equal inline columns at md+ (price sits right after heat);
+   two-up on phones */
 .product-spec-grid .spec-card {
   height: 100%;
   padding: .95rem 1.05rem;
@@ -64,11 +66,11 @@
 }
 .spec-label {
   display: block;
-  font-size: .66rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: var(--amber-deep, #b87418);
+  color: var(--amber-deep, #8C5A14);
   margin-bottom: .3rem;
 }
 .spec-value {
@@ -85,7 +87,7 @@
   gap: .2rem;
   font-size: 1.05rem;
   line-height: 1;
-  color: var(--amber-deep, #b87418);
+  color: var(--amber-deep, #8C5A14);
 }
 .heat-meter .is-off { color: rgba(58, 35, 18, .25); }
 

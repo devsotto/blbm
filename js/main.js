@@ -421,7 +421,10 @@
   function initHerbs() {
     const chipWrap = document.querySelector('.herb-chips');
     const detail = document.getElementById('herbDetail');
+    const stage = document.querySelector('.herb-stage');
     if (!chipWrap || !detail) return;
+
+    detail.id = detail.id || 'herbDetail';
 
     HERBS.forEach((herb, i) => {
       const btn = document.createElement('button');
@@ -430,19 +433,44 @@
       btn.textContent = herb.name;
       btn.setAttribute('role', 'tab');
       btn.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-      btn.addEventListener('click', () => select(i));
+      btn.setAttribute('aria-controls', detail.id);
+      btn.tabIndex = i === 0 ? 0 : -1;
+      btn.addEventListener('click', () => select(i, { user: true }));
       chipWrap.appendChild(btn);
     });
 
     const chips = Array.from(chipWrap.querySelectorAll('.herb-chip'));
 
-    function select(index) {
+    /* arrow-key navigation — a tablist is one tab stop, so without this the
+       chips are unreachable once the first one takes the tab */
+    chipWrap.addEventListener('keydown', (e) => {
+      const i = chips.indexOf(document.activeElement);
+      if (i < 0) return;
+      const last = chips.length - 1;
+      let next = null;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = i === last ? 0 : i + 1;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = i === 0 ? last : i - 1;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = last;
+      if (next === null) return;
+      e.preventDefault();
+      select(next, { focus: true, user: true });
+    });
+
+    function select(index, { focus = false, user = false } = {}) {
       const herb = HERBS[index];
 
       chips.forEach((c, i) => {
         c.classList.toggle('is-active', i === index);
         c.setAttribute('aria-selected', i === index ? 'true' : 'false');
+        /* roving tabindex — a tablist exposes one stop, not seven */
+        c.tabIndex = i === index ? 0 : -1;
       });
+      if (focus) chips[index].focus();
+
+      /* the hint is only true before the visitor makes a pick — select(0)
+         runs on init to seed the panel, and must not consume it */
+      if (stage && user) stage.classList.add('is-picked');
 
       detail.classList.remove('is-swapping');
       // force reflow so the animation restarts on repeat clicks
@@ -878,17 +906,37 @@
     return { setVisible: setVisible, focus: focus };
   }
 
+  /* counts go through Intl so grouping (and, if this site is ever localised,
+     the numerals) follow the locale instead of string concatenation */
+  const COUNT_FMT = (typeof Intl !== 'undefined' && Intl.NumberFormat)
+    ? new Intl.NumberFormat('en-PH')
+    : { format: (n) => String(n) };
+
   function initLocator() {
     const wrap = document.getElementById('branchGroups');
     const countEl = document.getElementById('branchCount');
     const emptyEl = document.getElementById('branchEmpty');
     const searchEl = document.getElementById('branchSearch');
+    const clearEl = document.getElementById('branchClear');
     const chips = Array.from(document.querySelectorAll('.locator-filters .chip'));
     if (!wrap) return;
 
     const mapApi = initMap();
+    const DEFAULT_LIMIT = 6;
     let region = 'all';
+    let regionPicked = false;
     let query = '';
+
+    function shuffled(list) {
+      const out = list.slice();
+      for (let i = out.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const t = out[i];
+        out[i] = out[j];
+        out[j] = t;
+      }
+      return out;
+    }
 
     /* The filter is part of the view, so it lives in the URL: a refresh, a
        Back/Forward step or a pasted link lands on the same branch list. */
@@ -898,7 +946,10 @@
       catch (e) { return; }
 
       const want = (params.get('region') || '').toLowerCase();
-      if (want && chips.some((c) => c.dataset.region === want)) region = want;
+      if (want && chips.some((c) => c.dataset.region === want)) {
+        region = want;
+        regionPicked = true;
+      }
 
       const q = (params.get('q') || '').trim();
       if (q) {
@@ -910,7 +961,7 @@
     function writeState() {
       try {
         const url = new URL(window.location.href);
-        if (region === 'all') url.searchParams.delete('region');
+        if (!regionPicked) url.searchParams.delete('region');
         else url.searchParams.set('region', region);
 
         const q = searchEl ? searchEl.value.trim() : '';
@@ -925,10 +976,28 @@
 
     function syncChips() {
       chips.forEach((c) => {
-        const on = c.dataset.region === region;
+        const on = regionPicked && c.dataset.region === region;
         c.classList.toggle('is-active', on);
         c.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
+    }
+
+    /* the X only shows while there is something to clear */
+    function syncClear() {
+      if (clearEl) clearEl.hidden = !(searchEl && searchEl.value.trim());
+    }
+
+    /* clearing the box puts the whole locator back to its landing state:
+       no query, no filter, six random branches, no region headings */
+    function resetToDefault() {
+      region = 'all';
+      regionPicked = false;
+      query = '';
+      if (searchEl) searchEl.value = '';
+      syncChips();
+      syncClear();
+      writeState();
+      render();
     }
 
     // fill the filter counters once
@@ -938,13 +1007,13 @@
         ? BRANCHES.length
         : BRANCHES.filter((b) => b[2] === key).length;
       const slot = chip.querySelector('[data-count-for]');
-      if (slot) slot.textContent = '(' + n + ')';
+      if (slot) slot.textContent = '(' + COUNT_FMT.format(n) + ')';
     });
 
     function matches(entry) {
       const [name, addr, reg] = entry;
       if (region !== 'all' && reg !== region) return false;
-      if (query && !((name || '') + ' ' + (addr || '')).toLowerCase().includes(query)) return false;
+      if (query && !((name || '') + ' ' + (addr || '') + ' ' + (REGION_LABEL[reg] || '')).toLowerCase().includes(query)) return false;
       return true;
     }
 
@@ -964,7 +1033,8 @@
       '<path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/></svg>';
 
     function render() {
-      const visible = BRANCHES.filter(matches);
+      let visible = BRANCHES.filter(matches);
+      if (!query && !regionPicked) visible = shuffled(visible).slice(0, DEFAULT_LIMIT);
       wrap.innerHTML = '';
       if (mapApi) mapApi.setVisible(visible);
 
@@ -979,11 +1049,15 @@
         .map((reg) => [reg, visible.filter((b) => b[2] === reg)])
         .filter(([, list]) => list.length);
 
+      const showRegionHeads = Boolean(query) || regionPicked;
+
       groups.forEach(([reg, list]) => {
-        const h = document.createElement('h3');
-        h.className = 'branch-region';
-        h.textContent = REGION_LABEL[reg] + ' · ' + list.length;
-        wrap.appendChild(h);
+        if (showRegionHeads) {
+          const h = document.createElement('h3');
+          h.className = 'branch-region';
+          h.textContent = REGION_LABEL[reg] + ' · ' + COUNT_FMT.format(list.length);
+          wrap.appendChild(h);
+        }
 
         list.forEach((entry) => {
           const [name, addr] = entry;
@@ -1050,7 +1124,8 @@
       });
 
       countEl.textContent =
-        'Showing ' + visible.length + ' of ' + BRANCHES.length + ' branches';
+        'Showing ' + COUNT_FMT.format(visible.length) +
+        ' of ' + COUNT_FMT.format(BRANCHES.length) + ' branches';
 
       equalizeRows();
     }
@@ -1101,6 +1176,7 @@
     chips.forEach((chip) => {
       chip.addEventListener('click', () => {
         region = chip.dataset.region;
+        regionPicked = true;
         syncChips();
         writeState();
         render();
@@ -1109,14 +1185,29 @@
 
     if (searchEl) {
       searchEl.addEventListener('input', () => {
-        query = searchEl.value.trim().toLowerCase();
+        const next = searchEl.value.trim().toLowerCase();
+        if (!next && query) {
+          region = 'all';
+          regionPicked = false;
+          syncChips();
+        }
+        query = next;
+        syncClear();
         writeState();
         render();
       });
     }
 
+    if (clearEl && searchEl) {
+      clearEl.addEventListener('click', () => {
+        resetToDefault();
+        searchEl.focus();
+      });
+    }
+
     readState();
     syncChips();
+    syncClear();
     render();
   }
 
@@ -1136,6 +1227,23 @@
     const statusEl = document.getElementById('formStatus');
     const subjectEl = document.getElementById('cfSubject');
     let code = '';
+
+    /* the form hands off to the visitor's mail app instead of posting, so a
+       half-typed message has no server copy to fall back on. Warn before the
+       tab goes away, and stop warning once the message has been handed off. */
+    let dirty = false;
+    form.addEventListener('input', () => { dirty = true; });
+    window.addEventListener('beforeunload', (e) => {
+      if (!dirty) return;
+      e.preventDefault();
+      e.returnValue = '';
+    });
+    if (statusEl) {
+      statusEl.addEventListener('click', (e) => {
+        const link = e.target.closest('a[href^="mailto:"]');
+        if (link) dirty = false;
+      });
+    }
 
     const FIELDS = {
       cfName: {

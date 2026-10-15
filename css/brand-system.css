@@ -241,6 +241,40 @@ a.dropdown-item:hover, a.dropdown-item:focus, a.dropdown-item:focus-visible {
                      back to the page behind it.
    ========================================================================== */
 
+/* This site ships a light palette only, so tell the UA up front: form
+   controls, scrollbars and native widgets render light rather than picking
+   up a dark OS preference behind the design's back. */
+html { color-scheme: light; }
+
+/* ==========================================================================
+   6. Skip link
+   --------------------------------------------------------------------------
+   First tab stop on every page. It sits above the grain overlay, the sticky
+   nav and the floating controls (z-index 1200) and is parked off-canvas with
+   a transform — never with `display`/`visibility`/`top: -9999px`, so it stays
+   in the tab order and is announced, then slides in on focus.
+   ========================================================================== */
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 1200;
+  padding: 0.7rem 1.1rem;
+  background: #2A180C;
+  color: #F5EBE0;
+  font-weight: 600;
+  border-radius: 6px;
+  transform: translateY(calc(-100% - 1.5rem));
+  transition: transform 0.2s ease;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--brand-accent-bright);
+  outline-offset: 2px;
+  text-decoration: none;
+}
+
 /* controls stay put under a double tap; pinch zoom is untouched */
 a, button, input, select, textarea, summary, label,
 [role="button"], [role="tab"], [role="link"], [role="menuitem"] {

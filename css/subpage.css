@@ -17,7 +17,7 @@
   --charcoal-soft: #4C3119;
   --amber:         #D48C28;
   --amber-bright:  #E9A63F;
-  --amber-deep:    #B87418;
+  --amber-deep:    #8C5A14;
   --herb:          #3E6B34;
   --herb-bright:   #5A8C4B;
   --banana:        #8C9E5B;
@@ -44,9 +44,13 @@
   --bs-body-line-height: 1.62;
   --bs-emphasis-color: #2A180C;
   --bs-heading-color: #2A180C;
-  --bs-secondary-color: rgba(58, 35, 18, .72);
+  /* Bootstrap's .text-secondary utility resolves --bs-secondary-rgb, not
+     --bs-secondary-color — both have to be overridden or the default grey
+     #6c757d leaks through on cream. */
+  --bs-secondary-rgb: 92, 74, 58;
+  --bs-secondary-color: rgb(92, 74, 58);
   --bs-tertiary-bg: #EDE0D2;
-  --bs-link-color: #B87418;
+  --bs-link-color: #8C5A14;
   --bs-link-hover-color: #3A2312;
   --bs-focus-ring-color: rgba(212, 140, 40, .35);
 
@@ -93,16 +97,28 @@ h2 {
   text-wrap: balance;
 }
 h2 em { font-style: italic; color: var(--amber-deep); }
-h3 { font-size: clamp(1.2rem, 2vw, 1.42rem); line-height: 1.18; margin: 0 0 .5rem; }
+h3 { font-size: clamp(1.2rem, 2vw, 1.42rem); line-height: 1.18; margin: 0 0 .5rem; text-wrap: balance; }
 
 ::selection { background: var(--amber); color: var(--charcoal-deep); }
 
 :focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
-.btn:focus-visible { outline: 0; box-shadow: 0 0 0 .25rem rgba(212, 140, 40, .4); }
+.btn:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+.btn-ghost:focus-visible,
+.btn-dark:focus-visible,
+.btn-outline-light:focus-visible {
+  outline-color: var(--cream);
+}
 
 section[id] { scroll-margin-top: 5.25rem; }
 /* deep links to #main (old bookmarks) must clear the fixed navbar too */
 main[id] { scroll-margin-top: 5.25rem; }
+/* heading anchors too — a link straight to #galleryHeading would otherwise
+   park the heading underneath the sticky navbar */
+h1, h2, h3, h4, h5, h6 { scroll-margin-top: 5.25rem; }
 
 /* ---------- brand atoms ---------- */
 .eyebrow {
@@ -151,14 +167,20 @@ main[id] { scroll-margin-top: 5.25rem; }
   font-size: .95rem;
   color: var(--amber-deep);
   text-decoration: none;
-  border-bottom: 1.5px solid rgba(184, 116, 24, .35);
+  border-bottom: 1.5px solid rgba(140, 90, 20, .35);
   padding-bottom: 2px;
-  transition: gap .22s var(--ease), border-color .22s var(--ease), color .22s var(--ease);
+  transition: border-color .22s var(--ease), color .22s var(--ease);
 }
+/* arrow slides on hover — animating `gap` relayouts the line boxes */
+.text-link > span,
+.text-link > i.bi { transition: transform .22s var(--ease); }
 .text-link:hover, .text-link:focus-visible {
-  gap: .7rem;
   border-color: var(--amber-deep);
   color: var(--amber-deep);
+}
+.text-link:hover > span, .text-link:focus-visible > span,
+.text-link:hover > i.bi, .text-link:focus-visible > i.bi {
+  transform: translateX(.3rem);
 }
 
 /* ---------- Bootstrap button API: brand colours, pill radius ---------- */
@@ -173,8 +195,8 @@ main[id] { scroll-margin-top: 5.25rem; }
   --bs-btn-hover-bg: #E9A63F;
   --bs-btn-hover-border-color: #E9A63F;
   --bs-btn-hover-color: #2A180C;
-  --bs-btn-active-bg: #B87418;
-  --bs-btn-active-border-color: #B87418;
+  --bs-btn-active-bg: #8C5A14;
+  --bs-btn-active-border-color: #8C5A14;
   --bs-btn-active-color: #2A180C;
   --bs-btn-disabled-bg: #D48C28;
   --bs-btn-disabled-border-color: #D48C28;
@@ -208,7 +230,7 @@ main[id] { scroll-margin-top: 5.25rem; }
 
 /* ---------- Bootstrap badge + brand colour ---------- */
 .badge-soft {
-  font-size: .66rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .14em;
   text-transform: uppercase;
@@ -266,7 +288,7 @@ main[id] { scroll-margin-top: 5.25rem; }
 .bl-brand-text span {
   display: block;
   font-family: var(--f-body);
-  font-size: .62rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .2em;
   text-transform: uppercase;
@@ -418,7 +440,7 @@ main[id] { scroll-margin-top: 5.25rem; }
   text-align: left;
   padding: clamp(2.5rem, 8vw, 5rem) clamp(1.1rem, 4vw, 3rem) clamp(1.35rem, 4vw, 2.5rem);
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, .3) 0%, rgba(0, 0, 0, .55) 45%, rgba(0, 0, 0, .88) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, .6) 0%, rgba(0, 0, 0, .68) 45%, rgba(0, 0, 0, .9) 100%),
     linear-gradient(180deg, transparent, rgba(20, 12, 6, .88));
   color: #ffffff !important;
   text-shadow: 0 2px 4px rgba(0, 0, 0, .7);
@@ -495,24 +517,71 @@ main[id] { scroll-margin-top: 5.25rem; }
 .news-card .bl-cover { height: 200px; aspect-ratio: auto; }
 
 /* ---------- news card is the whole story trigger ----------
-   No "Read the story" button any more: the card itself is the target, so it
-   needs pointer affordance, a visible focus ring and a press state on top of
-   the .card-hover lift. */
+   The control is a real <button> around the headline: the headline text is
+   its accessible name, and the article keeps badge, date and body as content
+   a screen reader can read. Bootstrap's .stretched-link ::after carries that
+   button's hit area over the whole card, which is what the pointer
+   affordance, the press state and the focus ring below promise. */
 .news-card { cursor: pointer; }
+.news-card-trigger {
+  display: inline-block;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-align: inherit;
+  text-transform: inherit;
+  text-rendering: inherit;
+  cursor: pointer;
+}
 .news-card:active { transform: translateY(-2px); box-shadow: var(--lift-md); }
-.news-card:focus-visible {
-  /* the global :focus-visible rule drops every control to a 3px radius —
-     keep the card's own rounded corners while it is focused */
+
+/* focus belongs to the card the visitor is standing on rather than to the
+   headline inside it, so the ring keeps the card's own rounded corners; the
+   @supports fallback rings the button for engines without :has() */
+.news-card:has(.news-card-trigger:focus-visible) {
   border-radius: var(--bs-card-border-radius, .75rem);
   outline: 3px solid var(--amber);
   outline-offset: 3px;
   box-shadow: var(--lift-md);
 }
+.news-card-trigger:focus-visible { outline: 0; box-shadow: none; }
+@supports not selector(:has(*)) {
+  .news-card-trigger:focus-visible {
+    outline: 3px solid var(--amber);
+    outline-offset: 3px;
+  }
+}
+
+/* card body copy is the tinted brown of .text-secondary, where a crimson
+   #9A2C2C link lands at 1.11:1 against the words around it — colour cannot
+   be the only thing that says "link" (WCAG 1.4.1). The hairline carries
+   what the hue cannot, so the crimson stays and so does its oak hover */
+.card-text a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* the stretched hit area sits above the card body: a story link (the
+   catering number) lifts above it so it keeps its own job, and the badge
+   lets clicks through so no corner of the card goes dead */
+.news-card .card-text a { position: relative; z-index: 2; }
 
 /* the badge is absolutely positioned over the cover photo — it needs an
-   opaque plate, otherwise the tinted background disappears against the image */
+   opaque plate, otherwise the tinted background disappears against the image.
+   It sits above the stretched hit area, so it hands clicks straight through */
 .news-card .badge-soft {
   z-index: 2;
+  pointer-events: none;
   background: rgba(251, 245, 238, .95);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
@@ -521,11 +590,11 @@ main[id] { scroll-margin-top: 5.25rem; }
 
 .news-card-date {
   display: block;
-  font-size: .68rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: var(--bs-secondary-color);
+  color: rgba(58, 35, 18, .74);
   margin-bottom: .45rem;
 }
 
@@ -544,7 +613,7 @@ main[id] { scroll-margin-top: 5.25rem; }
   font-weight: 700;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: var(--bs-secondary-color);
+  color: rgba(58, 35, 18, .74);
 }
 .news-modal-media { flex: 0 0 auto; overflow: hidden; }
 .news-modal-media .card-img-top,
@@ -578,11 +647,11 @@ main[id] { scroll-margin-top: 5.25rem; }
 /* visible group label — the chips keep their own aria-labels, so the old
    native title tooltips are gone but every icon stays named for AT */
 .news-share-label {
-  font-size: .68rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: rgba(58, 35, 18, .62);
+  color: rgba(58, 35, 18, .72);
   white-space: nowrap;
   margin-right: .1rem;
 }
@@ -645,7 +714,7 @@ main[id] { scroll-margin-top: 5.25rem; }
 }
 .nav-pills .nav-link:focus-visible { outline-offset: 2px; }
 
-/* ---------- footer ---------- */
+/* legacy footer — delivery / what's new only (.bg-dark on the element) */
 .bl-footer .nav-link {
   color: rgba(245, 235, 224, .74);
   padding: .25rem 0;
@@ -662,6 +731,10 @@ main[id] { scroll-margin-top: 5.25rem; }
   color: var(--cream);
 }
 .bl-footer small { font-size: .84rem; }
+/* The back-to-top control is fixed bottom-right and never docks on these
+   pages (no .footer-bottom bar), so the footer clears it at every width.
+   .py-5 on the footer ships !important, so this has to outrank it. */
+.bg-dark.bl-footer { padding-bottom: 6.5rem !important; }
 
 /* ---------- sticky mobile action bar (delivery partner page) ---------- */
 .bl-actionbar {
@@ -681,7 +754,9 @@ main[id] { scroll-margin-top: 5.25rem; }
 
 @media (max-width: 991.98px) {
   .has-actionbar { padding-bottom: calc(5.75rem + env(safe-area-inset-bottom, 0px)); }
-  .has-actionbar .bl-top { bottom: calc(6.25rem + env(safe-area-inset-bottom, 0px)); }
+  /* !important or the bottom-0 utility keeps the control glued to the
+     viewport edge and under the action bar */
+  .has-actionbar .bl-top { bottom: calc(6.25rem + env(safe-area-inset-bottom, 0px)) !important; }
 }
 
 /* ---------- small-screen refinements ---------- */
