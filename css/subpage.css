@@ -594,7 +594,7 @@ h1, h2, h3, h4, h5, h6 { scroll-margin-top: 5.25rem; }
   font-weight: 700;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: var(--bs-secondary-color);
+  color: rgba(58, 35, 18, .74);
   margin-bottom: .45rem;
 }
 
@@ -613,7 +613,7 @@ h1, h2, h3, h4, h5, h6 { scroll-margin-top: 5.25rem; }
   font-weight: 700;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: var(--bs-secondary-color);
+  color: rgba(58, 35, 18, .74);
 }
 .news-modal-media { flex: 0 0 auto; overflow: hidden; }
 .news-modal-media .card-img-top,
