@@ -488,9 +488,77 @@ h3 {
   width: 100%; height: clamp(60px, 8vw, 96px);
   z-index: 2;
   pointer-events: none;
+  /* one place to retune the whole intro: the cord draws itself, and each
+     pennant unfurling from the cord exactly as the draw passes it */
+  --draw-dur: 1.4s;
+  --in-dur: .45s;
+  --gust-cycle: 9s;                            // how often the wind gusts
 }
-.banderitas .flag { transform-box: fill-box; transform-origin: top center; animation: flagSway 3.4s var(--ease) infinite alternate; }
-@keyframes flagSway { from { transform: rotate(-3.5deg); } to { transform: rotate(3.5deg); } }
+
+/* The cord wipes on left to right. The base state is the finished string
+   (dashoffset 0), so a missing animation still renders a solid line. */
+.banderitas .string {
+  stroke-dasharray: var(--string-len, 1400px);
+  animation: stringDraw var(--draw-dur) var(--ease) backwards;
+}
+@keyframes stringDraw {
+  from { stroke-dashoffset: var(--string-len, 1400px); }
+  to   { stroke-dashoffset: 0; }
+}
+
+/* Sway and unfurl animate `transform` on two nested nodes rather than one:
+   the group's rotate composes outside the pennant's scaleY, so the flag
+   squashes in its own frame and is then swung as a rigid body. Baking both
+   into a single transform would let one animation overwrite the other.
+   --flag-delay is set per flag in main.js, timed to the cord's draw. */
+.banderitas .flag-sway {
+  transform-box: fill-box;
+  transform-origin: top center;
+  /* Two animations, two channels: flagSway writes `transform`, flagGust writes
+     the individual `rotate` property. Both compose into the same matrix and
+     both pivot on this one origin, and rotations about a shared axis commute,
+     so the gust adds to the sway instead of clobbering it.
+     flagGust inherits --flag-delay, which is positional — so every gust sweeps
+     down the string the way the cord drew and the wave already travels. */
+  animation:
+    flagSway var(--flag-dur, 3.4s) var(--ease) var(--flag-delay, 0s) infinite alternate,
+    flagGust var(--gust-cycle, 9s) ease-in-out var(--flag-delay, 0s) infinite;
+}
+.banderitas .flag {
+  transform-box: fill-box;
+  transform-origin: top center;
+  /* backwards keeps each pennant collapsed until its moment arrives */
+  animation: flagIn var(--in-dur, .45s) var(--ease) var(--flag-delay, 0s) backwards;
+}
+@keyframes flagIn {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+@keyframes flagSway {
+  from { transform: rotate(calc(var(--flag-amp, 3.5) * -1deg)); }
+  to   { transform: rotate(calc(var(--flag-amp, 3.5) * 1deg)); }
+}
+
+/* Wind gust — an occasional whip, not a permanent lean: 58% of every cycle is
+   dead calm, then the line gets hit, overshoots each way and decays back to
+   rest. A decaying oscillation reads as wind; a constant extra tilt would just
+   look like the string was hung crooked. The swing runs ~2x faster than the
+   base pendulum so it reads as agitation rather than the flags' natural mode. */
+@keyframes flagGust {
+  0%, 58%   { rotate: 0deg; }
+  66%       { rotate: var(--gust-amp, 7deg); }
+  74%       { rotate: calc(var(--gust-amp, 7deg) * -0.72); }
+  82%       { rotate: calc(var(--gust-amp, 7deg) * 0.45); }
+  90%       { rotate: calc(var(--gust-amp, 7deg) * -0.22); }
+  96%, 100% { rotate: 0deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* the string is already drawn and the pennants already hung — no reveal */
+  .banderitas .string,
+  .banderitas .flag,
+  .banderitas .flag-sway { animation: none; }
+}
 
 .hero-grid {
   position: relative; z-index: 3;

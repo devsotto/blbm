@@ -9,10 +9,59 @@
   /* ----------------------------------------------------------------------
      1. Banderitas — festive fiesta pennants strung across the hero
      ---------------------------------------------------------------------- */
+
+  /* The cord wipes on with an eased stroke-dashoffset, and each pennant has to
+     appear at the instant the cord's tip reaches it. That requires inverting
+     the easing curve from JS, so --ease is read out of the stylesheet rather
+     than copied: retuning it in CSS re-times the whole intro. */
+
+  // one axis of the unit cubic bezier (P0 = 0, P3 = 1)
+  function bez(t, a, b) {
+    const m = 1 - t;
+    return 3 * m * m * t * a + 3 * m * t * t * b + t * t * t;
+  }
+
+  function readEase(el) {
+    const m = (getComputedStyle(el).getPropertyValue('--ease') || '')
+      .match(/cubic-bezier\(\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,\s*([-\d.]+)\s*,\s*([-\d.]+)\s*\)/);
+    return m ? [1, 2, 3, 4].map((n) => Number(m[n])) : null;
+  }
+
+  // Normalised elapsed time (0–1) at which an eased animation reaches `p`.
+  // Solve the y axis for the curve parameter, then read that parameter back
+  // off the x axis — stabler than inverting the time mapping directly.
+  function timeAt(ease, p) {
+    if (!ease) return p;                       // no parseable curve → draw linearly
+    const target = Math.min(Math.max(p, 0), 1);
+    let lo = 0, hi = 1;
+    // ease = [x1, y1, x2, y2]; solve the y axis (y1, y2), read back the x axis
+    for (let i = 0; i < 32; i++) {             // y is monotonic while y1,y2 ∈ [0,1]
+      const mid = (lo + hi) / 2;
+      if (bez(mid, ease[1], ease[3]) < target) lo = mid; else hi = mid;
+    }
+    return bez((lo + hi) / 2, ease[0], ease[2]);
+  }
+
+  // Cord geometry. stroke-dashoffset advances by arc length, so flag timing has
+  // to be measured along arc length too rather than by the bezier parameter —
+  // the two only coincide when the curve happens to be swept at constant speed.
+  const segSpeed = (s, t) => Math.hypot(
+    2 * ((1 - t) * (s.c[0] - s.p0[0]) + t * (s.p1[0] - s.c[0])),
+    2 * ((1 - t) * (s.c[1] - s.p0[1]) + t * (s.p1[1] - s.c[1]))
+  );
+  function segLength(s, t0, t1) {
+    const n = 64, dt = (t1 - t0) / n;          // trapezoid, far more precision than timing needs
+    let sum = (segSpeed(s, t0) + segSpeed(s, t1)) / 2;
+    for (let k = 1; k < n; k++) sum += segSpeed(s, t0 + k * dt);
+    return sum * dt;
+  }
+
   function buildBanderitas() {
     const group = document.querySelector('.banderitas .flags');
     if (!group) return;
 
+    const svg = group.closest('.banderitas');
+    const cord = svg && svg.querySelector('.string');
     const NS = 'http://www.w3.org/2000/svg';
     const colors = ['#D48C28', '#3E6B34', '#8C9E5B', '#F5EBE0', '#E9A63F'];
     const count = 30;
@@ -34,9 +83,46 @@
       ];
     };
 
+    const arcAt = (t) => t <= 0.5
+      ? segLength(seg[0], 0, t * 2)
+      : segLength(seg[0], 0, 1) + segLength(seg[1], 0, (t - 0.5) * 2);
+    const cordLen = segLength(seg[0], 0, 1) + segLength(seg[1], 0, 1);
+
+    const cs = getComputedStyle(svg);
+    const drawDur = parseFloat(cs.getPropertyValue('--draw-dur')) || 1.4;
+    const ease = readEase(svg);
+    if (cord) cord.style.setProperty('--string-len', cord.getTotalLength() + 'px');
+
+    // Well-distributed fractional sequence (n * φ mod 1). A plain `i % 5` style
+    // pattern repeats every few flags and reads as a beat; this decorrelates the
+    // flags without true randomness, so the build stays deterministic.
+    const golden = (n) => (n * 0.6180339887498949) % 1;
+
     for (let i = 0; i < count; i++) {
       const t = (i + 0.5) / count;
       const [x, y] = pointAt(t);
+
+      // Sway and unfurl live on separate nodes: the group sways, the pennant
+      // unfurls inside it, so neither animation can overwrite the other's
+      // transform. Custom properties are set here and inherited by the polygon.
+      const sway = document.createElementNS(NS, 'g');
+      sway.setAttribute('class', 'flag-sway');
+      // Amplitude 2.4°–4.8° and period 2.6s–4.4s, both straddling the old fixed
+      // 3.5° / 3.4s. Offset streams keep sway size and speed from correlating.
+      // Because the periods differ the flags drift out of phase, so the wave
+      // the stagger launches loosens into a flutter instead of a metronome.
+      sway.style.setProperty('--flag-amp', (2.4 + golden(i + 1) * 2.4).toFixed(2));
+      sway.style.setProperty('--flag-dur', (2.6 + golden(i + 7) * 1.8).toFixed(2) + 's');
+      // Gust strength varies per pennant too (5.5°–8°), from a third offset so
+      // it correlates with neither sway size nor speed — each one reacts to the
+      // same wind a little differently.
+      sway.style.setProperty('--gust-amp', (5.5 + golden(i + 13) * 2.5).toFixed(2) + 'deg');
+      // Reveal exactly when the cord's tip arrives at this point on the string.
+      sway.style.setProperty(
+        '--flag-delay',
+        (drawDur * timeAt(ease, arcAt(t) / cordLen)).toFixed(3) + 's'
+      );
+      group.appendChild(sway);
 
       const tri = document.createElementNS(NS, 'polygon');
       tri.setAttribute('points',
@@ -44,8 +130,7 @@
       tri.setAttribute('fill', colors[i % colors.length]);
       tri.setAttribute('opacity', '0.94');
       tri.setAttribute('class', 'flag');
-      tri.style.animationDelay = (i * 0.11).toFixed(2) + 's';
-      group.appendChild(tri);
+      sway.appendChild(tri);
     }
   }
 
