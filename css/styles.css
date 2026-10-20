@@ -493,6 +493,13 @@ h3 {
   --draw-dur: 1.4s;
   --in-dur: .45s;
   --gust-cycle: 9s;                            // how often the wind gusts
+  /* 1 until JS measures the viewport; see initBanderitasMotion in main.js */
+  --amp-damp: 1;
+  /* Horizontal compensation for the same stretch --amp-damp divides out of the
+     rotation. preserveAspectRatio="none" squashes the pennant *shape* too, so
+     on a narrow viewport a 16x26 triangle renders as a thin sliver. Widening it
+     by the stretch ratio restores the authored aspect on screen. */
+  --shape-damp: 1;
 }
 
 /* The cord wipes on left to right. The base state is the finished string
@@ -524,9 +531,17 @@ h3 {
     flagSway var(--flag-dur, 3.4s) var(--ease) var(--flag-delay, 0s) infinite alternate,
     flagGust var(--gust-cycle, 9s) ease-in-out var(--flag-delay, 0s) infinite;
 }
+/* Offscreen, park both loops — CSS animations never pause themselves, so they
+   would tick for the whole session once the hero scrolls away. Paused holds
+   currentTime, so they resume exactly where they stopped. */
+.banderitas.is-parked .flag-sway { animation-play-state: paused; }
 .banderitas .flag {
   transform-box: fill-box;
   transform-origin: top center;
+  /* scaleX stretches the authored 16x26 triangle back to its on-screen
+     aspect; the individual `scale` property composes ahead of `transform`, so
+     it never collides with flagIn's scaleY — both are diagonal and commute. */
+  scale: var(--shape-damp, 1) 1;
   /* backwards keeps each pennant collapsed until its moment arrives */
   animation: flagIn var(--in-dur, .45s) var(--ease) var(--flag-delay, 0s) backwards;
 }
@@ -534,9 +549,11 @@ h3 {
   from { transform: scaleY(0); }
   to   { transform: scaleY(1); }
 }
+/* --amp-damp divides the viewBox's non-uniform stretch back out, so the
+   authored degrees survive the trip to the screen at any viewport width. */
 @keyframes flagSway {
-  from { transform: rotate(calc(var(--flag-amp, 3.5) * -1deg)); }
-  to   { transform: rotate(calc(var(--flag-amp, 3.5) * 1deg)); }
+  from { transform: rotate(calc(var(--flag-amp, 3.5) * var(--amp-damp, 1) * -1deg)); }
+  to   { transform: rotate(calc(var(--flag-amp, 3.5) * var(--amp-damp, 1) * 1deg)); }
 }
 
 /* Wind gust — an occasional whip, not a permanent lean: 58% of every cycle is
@@ -546,15 +563,19 @@ h3 {
    base pendulum so it reads as agitation rather than the flags' natural mode. */
 @keyframes flagGust {
   0%, 58%   { rotate: 0deg; }
-  66%       { rotate: var(--gust-amp, 7deg); }
-  74%       { rotate: calc(var(--gust-amp, 7deg) * -0.72); }
-  82%       { rotate: calc(var(--gust-amp, 7deg) * 0.45); }
-  90%       { rotate: calc(var(--gust-amp, 7deg) * -0.22); }
+  66%       { rotate: calc(var(--gust-amp, 7deg) * var(--amp-damp, 1)); }
+  74%       { rotate: calc(var(--gust-amp, 7deg) * var(--amp-damp, 1) * -0.72); }
+  82%       { rotate: calc(var(--gust-amp, 7deg) * var(--amp-damp, 1) * 0.45); }
+  90%       { rotate: calc(var(--gust-amp, 7deg) * var(--amp-damp, 1) * -0.22); }
   96%, 100% { rotate: 0deg; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* the string is already drawn and the pennants already hung — no reveal */
+  /* The string is already drawn and the pennants already hung — no reveal.
+     Contract with the blanket at the foot of this file: that rule stops an
+     animation by dropping it back to its *base* style, not to a keyframe, so
+     anything whose resting look lives only inside @keyframes must author that
+     look in its own rule (`.hero-heat` did not, and glowed at full strength). */
   .banderitas .string,
   .banderitas .flag,
   .banderitas .flag-sway { animation: none; }
@@ -683,6 +704,10 @@ h3 {
                     rgba(212, 140, 40, .14) 44%, transparent 72%);
   mix-blend-mode: screen;
   pointer-events: none;
+  /* Resting intensity, authored here rather than only inside the keyframes:
+     reduced motion drops the animation back to this rule, and without it the
+     glow fell back to opacity 1 — twice its designed floor of .5. */
+  opacity: .5;
   animation: heatFlicker 5.4s ease-in-out infinite;
 }
 @keyframes heatFlicker {
@@ -1393,7 +1418,9 @@ body.modal-open .bl-sound-float { opacity: 0; visibility: hidden; }
   color: var(--charcoal);
   width: 100%; min-width: 0;
 }
-.locator-search input::placeholder { color: rgba(58, 35, 18, .45); }
+/* .65 keeps the muted look but clears 4.5:1 on the white field (WCAG AA
+   applies to placeholder text too) */
+.locator-search input::placeholder { color: rgba(58, 35, 18, .65); }
 /* the browser's own cancel glyph is replaced by .search-clear below */
 .locator-search input[type="search"]::-webkit-search-cancel-button,
 .locator-search input[type="search"]::-webkit-search-decoration {
@@ -2035,7 +2062,7 @@ a.contact-card:hover {
               background-color .2s var(--ease);
 }
 .field textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
-.field ::placeholder { color: rgba(58, 35, 18, .38); }
+.field ::placeholder { color: rgba(58, 35, 18, .65); }
 
 .field input:focus,
 .field textarea:focus,
@@ -2181,6 +2208,12 @@ a.contact-card:hover {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  /* Blanket stop, not blanket disable: each effect finishes and the element
+     falls back to its base style, so transitions still apply their end state
+     instantly — state change and hierarchy survive — and no motion keeps
+     running. The price of the blanket is that a resting look living only
+     inside @keyframes is lost with it, so every such element has to author
+     its still in its own rule (`.hero-heat` now does; see its opacity). */
   *, *::before, *::after {
     animation-duration: .001ms !important;
     animation-iteration-count: 1 !important;

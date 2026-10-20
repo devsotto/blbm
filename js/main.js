@@ -42,56 +42,32 @@
     return bez((lo + hi) / 2, ease[0], ease[2]);
   }
 
-  // Cord geometry. stroke-dashoffset advances by arc length, so flag timing has
-  // to be measured along arc length too rather than by the bezier parameter —
-  // the two only coincide when the curve happens to be swept at constant speed.
-  const segSpeed = (s, t) => Math.hypot(
-    2 * ((1 - t) * (s.c[0] - s.p0[0]) + t * (s.p1[0] - s.c[0])),
-    2 * ((1 - t) * (s.c[1] - s.p0[1]) + t * (s.p1[1] - s.c[1]))
-  );
-  function segLength(s, t0, t1) {
-    const n = 64, dt = (t1 - t0) / n;          // trapezoid, far more precision than timing needs
-    let sum = (segSpeed(s, t0) + segSpeed(s, t1)) / 2;
-    for (let k = 1; k < n; k++) sum += segSpeed(s, t0 + k * dt);
-    return sum * dt;
-  }
-
   function buildBanderitas() {
     const group = document.querySelector('.banderitas .flags');
     if (!group) return;
 
     const svg = group.closest('.banderitas');
     const cord = svg && svg.querySelector('.string');
+    if (!cord) return;                 // the pennants hang from the string
     const NS = 'http://www.w3.org/2000/svg';
     const colors = ['#D48C28', '#3E6B34', '#8C9E5B', '#F5EBE0', '#E9A63F'];
     const count = 30;
     const w = 16, h = 26;
 
-    // two quadratic segments mirroring the drawn string path
-    const seg = [
-      { p0: [0, 12], c: [300, 62], p1: [600, 22] },
-      { p0: [600, 22], c: [900, -18], p1: [1200, 30] }
-    ];
-
-    const pointAt = (t) => {
-      const s = seg[t <= 0.5 ? 0 : 1];
-      const u = t <= 0.5 ? t * 2 : (t - 0.5) * 2;
-      const m = 1 - u;
-      return [
-        m * m * s.p0[0] + 2 * m * u * s.c[0] + u * u * s.p1[0],
-        m * m * s.p0[1] + 2 * m * u * s.c[1] + u * u * s.p1[1]
-      ];
-    };
-
-    const arcAt = (t) => t <= 0.5
-      ? segLength(seg[0], 0, t * 2)
-      : segLength(seg[0], 0, 1) + segLength(seg[1], 0, (t - 0.5) * 2);
-    const cordLen = segLength(seg[0], 0, 1) + segLength(seg[1], 0, 1);
-
     const cs = getComputedStyle(svg);
     const drawDur = parseFloat(cs.getPropertyValue('--draw-dur')) || 1.4;
     const ease = readEase(svg);
-    if (cord) cord.style.setProperty('--string-len', cord.getTotalLength() + 'px');
+    // The path itself is the one source of truth. stroke-dashoffset advances by
+    // arc length, so sampling the real curve keeps placement, spacing and timing
+    // on the same measure — a hand-copied model of `d` would drift the moment
+    // someone edits it, and the flags would hang off the string they came from.
+    const len = cord.getTotalLength();
+    cord.style.setProperty('--string-len', len + 'px');
+    // Widest a pennant may get, in user units, before it touches its
+    // neighbours: flags sit `len / count` apart along the cord, and 18% of that
+    // gap stays as air. --shape-damp clamps against this so the aspect
+    // correction never fuses the string into one solid ribbon.
+    svg.style.setProperty('--flag-gap', (len / count) * 0.82);
 
     // Well-distributed fractional sequence (n * φ mod 1). A plain `i % 5` style
     // pattern repeats every few flags and reads as a beat; this decorrelates the
@@ -100,7 +76,7 @@
 
     for (let i = 0; i < count; i++) {
       const t = (i + 0.5) / count;
-      const [x, y] = pointAt(t);
+      const { x, y } = cord.getPointAtLength(t * len);
 
       // Sway and unfurl live on separate nodes: the group sways, the pennant
       // unfurls inside it, so neither animation can overwrite the other's
@@ -117,11 +93,10 @@
       // it correlates with neither sway size nor speed — each one reacts to the
       // same wind a little differently.
       sway.style.setProperty('--gust-amp', (5.5 + golden(i + 13) * 2.5).toFixed(2) + 'deg');
-      // Reveal exactly when the cord's tip arrives at this point on the string.
-      sway.style.setProperty(
-        '--flag-delay',
-        (drawDur * timeAt(ease, arcAt(t) / cordLen)).toFixed(3) + 's'
-      );
+      // Reveal exactly when the cord's tip arrives. The tip sits at arc fraction
+      // `t` the moment eased progress reaches `t`, so invert --ease for `t`.
+      sway.style.setProperty('--flag-delay',
+        (drawDur * timeAt(ease, t)).toFixed(3) + 's');
       group.appendChild(sway);
 
       const tri = document.createElementNS(NS, 'polygon');
@@ -131,6 +106,54 @@
       tri.setAttribute('opacity', '0.94');
       tri.setAttribute('class', 'flag');
       sway.appendChild(tri);
+    }
+  }
+
+  /* ----------------------------------------------------------------------
+     1a. Banderitas motion — fit the swing to the viewport, park it offscreen
+     ---------------------------------------------------------------------- */
+
+  /* preserveAspectRatio="none" maps the viewBox onto the box with independent
+     x and y scales, so a rotation authored in user-space degrees renders at a
+     different size on every viewport: y/x is 0.89 at 1440px but 2.13 at 375px,
+     where a 12.8° peak swing would land as ~26°. Divide the stretch back out so
+     a pennant leans the same amount wherever it is seen. */
+  function initBanderitasMotion() {
+    const svg = document.querySelector('.banderitas');
+    if (!svg) return;
+
+    const fit = () => {
+      const vb = svg.viewBox && svg.viewBox.baseVal;
+      if (!vb || !vb.width || !vb.height) return;
+      let w = svg.clientWidth, h = svg.clientHeight;
+      if (!w || !h) {                    // SVG layout size, without ancestor transforms
+        const r = svg.getBoundingClientRect();
+        w = r.width; h = r.height;
+      }
+      if (!w || !h) return;
+      const stretch = (h / vb.height) / (w / vb.width);
+      svg.style.setProperty('--amp-damp', (1 / stretch).toFixed(4));
+      // The same non-uniform scale that skews the rotation squashes the
+      // pennant's shape, so widen it back out to the authored aspect. The
+      // authored width is 16 user units; clamp against the gap so dense
+      // strings on very narrow viewports keep their air between flags.
+      const gap = parseFloat(svg.style.getPropertyValue('--flag-gap'));
+      const wUser = 16 * stretch;
+      svg.style.setProperty('--shape-damp',
+        (gap ? Math.min(wUser, gap) / 16 : stretch).toFixed(4));
+    };
+
+    fit();
+    window.addEventListener('resize', fit, { passive: true });
+
+    // CSS animations never pause themselves, so without this the two infinite
+    // loops would tick for the whole session once the hero scrolls away.
+    // Paused holds currentTime, so they resume exactly where they stopped.
+    const hero = document.querySelector('.hero');
+    if (hero && 'IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        svg.classList.toggle('is-parked', !entries[0].isIntersecting);
+      }, { threshold: 0 }).observe(hero);
     }
   }
 
@@ -498,7 +521,7 @@
     },
     {
       name: 'Chili (spicy line)', cebu: 'Sili',
-      text: 'Added only to BL Spicy and Balambanok Spicy. Sili is worked into the same herb bundle so the heat infuses the meat rather than sitting on the skin.',
+      text: 'Added only to Balamban Spicy and Balambanok Spicy. Sili is worked into the same herb bundle so the heat infuses the meat rather than sitting on the skin.',
       note: 'Why it matters: heat inside the roast, not a sauce on top.'
     }
   ];
@@ -1496,6 +1519,7 @@
 
   function boot() {
     buildBanderitas();
+    initBanderitasMotion();
     initEmbers();
     initReveal();
     initNav();

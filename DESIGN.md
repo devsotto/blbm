@@ -393,6 +393,67 @@ border is carrying the affordance.
 `88–96px` blowout, and only on non-interactive illustration frames. Two leaf
 corners on one element read as a mistake.
 
+## Motion
+
+Motion here is **physical and few**. Nothing moves for decoration alone:
+strings draw, pennants unfurl, heat flickers, wind passes. The house easing is
+`--ease` (`cubic-bezier(.22, .68, .24, 1)`) — a decisive ease-out with a long
+tail, used for entrances and the cord draw, and read back out of the
+stylesheet into JS so retuning it in CSS re-times the animation it drives.
+Oscillation (pennant sway, gusts) uses `ease-in-out` instead, because a spring
+accelerates into each swing rather than out of it.
+
+### Timing Vocabulary
+
+- **`--ease`** (`cubic-bezier(.22, .68, .24, 1)`): entrances, the cord draw,
+  and the JS mirror of both. The single value that most determines pace.
+- **`--draw-dur`** (`1.4s`): how long the banderitas cord wipes on.
+- **`--in-dur`** (`.45s`): each pennant's unfurl as the cord passes it.
+- **`--gust-cycle`** (`9s`): how often the wind gusts.
+- **`--flag-amp`** (`2.4–4.8°`) and **`--flag-dur`** (`2.6–4.4s`): per-pennant
+  sway size and period, so the line flutters rather than metronomes.
+- **`--gust-amp`** (`5.5–8°`): per-pennant gust strength.
+- **`--flag-delay`** (`0–1.03s`): positional, derived from the cord's tip.
+- **`--amp-damp`** (viewport-driven): cancels the hero SVG's non-uniform
+  stretch so a degree authored in the viewBox is a degree on screen.
+- **`--shape-damp`** (viewport-driven): the same stretch's effect on the
+  pennant's *shape*. Widens the authored 16×26 triangle back to its on-screen
+  aspect, clamped by the flag gap so dense strings keep their air.
+- **`--flag-gap`** (measured): widest a pennant may grow, in user units, before
+  it touches its neighbours — 82% of the spacing along the cord.
+- **`--string-len`** (measured): cord length, set from `getTotalLength()`.
+
+The duration tokens live on `.banderitas` in `css/styles.css`, so the whole
+intro retunes in one place. The per-pennant values are written onto each
+`.flag-sway` by `buildBanderitas()` in `js/main.js`.
+
+The gust's keyframe grammar is fixed: dead calm to 58%, a single peak at 66%,
+then a decaying overshoot (−72%, +45%, −22%) home by 96%. It decays rather
+than holds, because a constant lean reads as a string hung crooked, not wind.
+
+### Named Rules
+
+**The One-Delay Rule.** `--flag-delay` is the only timing variable the
+banderitas use, and it is positional — so the cord's draw, each pennant's
+unfurl, its sway phase and its gust phase all travel left to right off one
+clock instead of four.
+
+**The Deterministic Rule.** Per-pennant variation comes from `n · φ mod 1`
+(the golden ratio), never `Math.random()`. Every load renders the same string,
+and the low-order beat `i % n` would have produced stays absent.
+
+**The Still-Frame Rule.** A reduced-motion still must be authored in the
+element's own base rule. The site's blanket stop drops an animation back to
+its base style rather than to a keyframe, so a resting value living only
+inside `@keyframes` renders as its un-authored default instead.
+
+**The Compose Rule.** Two animations never write the same property. The
+banderitas spread across four channels — `transform` on `.flag-sway`,
+`rotate` on that same node, the individual `scale` property and `transform` on
+the pennant — so sway, gust, aspect correction and unfurl add together instead
+of overwriting one another. The pennant's two are both diagonal, so they
+commute.
+
 ## Components
 
 ### Buttons
